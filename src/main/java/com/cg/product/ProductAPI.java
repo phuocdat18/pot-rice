@@ -1,12 +1,17 @@
-package com.cg.api;
+package com.cg.product;
 
 
 import com.cg.exception.DataInputException;
 import com.cg.model.Category;
 import com.cg.model.Product;
 import com.cg.model.dto.product.*;
+<<<<<<< HEAD:src/main/java/com/cg/api/ProductAPI.java
 import com.cg.category.ICategoryService;
 import com.cg.service.product.IProductService;
+=======
+import com.cg.service.category.ICategoryService;
+import com.cg.product.service.IProductService;
+>>>>>>> hoan-dev:src/main/java/com/cg/product/ProductAPI.java
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

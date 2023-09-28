@@ -1,8 +1,8 @@
-package com.cg.dto.product;
+package com.cg.product.dto;
 
 import com.cg.model.Category;
 import com.cg.model.ProductAvatar;
-import com.cg.dto.productAvatar.ProductAvatarResDTO;
+import com.cg.model.dto.productAvatar.ProductAvatarResDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 @Setter
 @Accessors(chain = true)
 public class ProductDTO {
+
     private Long id;
     private String title;
     private BigDecimal price;
@@ -35,7 +36,9 @@ public class ProductDTO {
         this.unit = unit;
         this.category = category;
         this.avatar = productAvatar.toProductAvatarResDTO();
+
     }
+
     public ProductDTO(Long id, String title, BigDecimal price, String description, String unit, Category category, ProductAvatar productAvatar) {
         this.id = id;
         this.title = title;

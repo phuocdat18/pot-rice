@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 
 @Component
 public class RoleMapper {
-    public Role toEntity(RoleCreationParam dto) {
+    public Role toEntity(RoleCreationParam creationParam) {
         return new Role()
-                .setCode(dto.getCode())
-                .setName(dto.getName());
+                .setCode(creationParam.getCode())
+                .setName(creationParam.getName());
     }
 
     public Role toEntity(RoleUpdateParam dto) {

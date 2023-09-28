@@ -1,5 +1,11 @@
 package com.cg.cartDetail.dto;
 
+<<<<<<< HEAD:src/main/java/com/cg/cartDetail/dto/CartDetailDTO.java
+=======
+import com.cg.model.Product;
+import com.cg.product.dto.ProductDTO;
+import lombok.AllArgsConstructor;
+>>>>>>> hoan-dev:src/main/java/com/cg/dto/cart/CartDetailDTO.java
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
