@@ -32,7 +32,7 @@ public class BillDetailDTO {
         this.price = price;
         this.quantity = quantity;
         this.amount = amount;
-        this.billDTO= bill.toBillDTO();
+//        this.billDTO= bill.toBillDTO();
     }
 
     public BillDetailDTO(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, Bill bill, EPayment status) {
@@ -43,7 +43,7 @@ public class BillDetailDTO {
         this.price = price;
         this.quantity = quantity;
         this.amount = amount;
-        this.billDTO= bill.toBillDTO();
+//        this.billDTO= bill.toBillDTO();
         this.status = status;
     }
 
