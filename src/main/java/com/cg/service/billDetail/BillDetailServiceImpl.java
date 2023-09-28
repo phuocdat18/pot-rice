@@ -4,7 +4,7 @@ import com.cg.model.BillDetail;
 import com.cg.model.CartDetail;
 import com.cg.model.dto.bill.BillDetailDTO;
 import com.cg.repository.BillDetailRepository;
-import com.cg.repository.CartDetailRepository;
+import com.cg.cartDetail.CartDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

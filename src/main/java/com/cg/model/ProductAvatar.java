@@ -1,10 +1,8 @@
 package com.cg.model;
 
 
-import com.cg.model.dto.productAvatar.ProductAvatarResDTO;
-import lombok.AllArgsConstructor;
+import com.cg.dto.productAvatar.ProductAvatarResDTO;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
