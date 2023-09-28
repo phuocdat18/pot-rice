@@ -26,8 +26,8 @@ public class RoleDTO {
     }
     public Role toRole() {
         return new Role()
-                .setId(id)
-                .setCode(code);
+                .setId(id);
+//                .setCode(code);
     }
 
 }

@@ -74,7 +74,7 @@ public class User extends BaseEntity {
                 .setPassword(password)
                 .setEmail(email)
                 .setPhone(phone)
-                .setRole(role.toRoleDTO())
+//                .setRole(role.toRoleDTO())
                 ;
     }
 

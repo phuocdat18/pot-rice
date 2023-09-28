@@ -1,14 +1,10 @@
 package com.cg.model;
 
-import com.cg.model.dto.user.RoleDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Getter
@@ -23,18 +19,9 @@ public class Role {
     private Long id;
 
     @Column(length = 20)
-    private String code;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ERole name;
-
-    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
-    private List<User> users;
-
-    public RoleDTO toRoleDTO() {
-        return new RoleDTO()
-                .setId(id)
-                .setCode(code);
-    }
+    private ERole code;
 }
