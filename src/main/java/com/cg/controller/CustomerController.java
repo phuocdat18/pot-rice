@@ -71,7 +71,7 @@ public class CustomerController {
         }
 
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = role.getCode().getValue();
 
 //        username = username.substring(0, username.indexOf("@"));
         model.addAttribute("username", username);
@@ -88,7 +88,7 @@ public class CustomerController {
             throw new DataInputException("User not valid");
         }
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = role.getCode().getValue();
 
 
         model.addAttribute("username", username);
