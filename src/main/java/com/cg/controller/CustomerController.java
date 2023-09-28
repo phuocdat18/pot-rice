@@ -228,7 +228,7 @@ public class CustomerController {
         List<BillDetailDTO> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
         model.addAttribute("billDetailDTOS", billDetailDTOS);
 
-        String roleCode = user.getRole().getCode();
+        String roleCode = user.getRole().getCode().getValue();
         model.addAttribute("username", username);
         model.addAttribute("user", user);
         model.addAttribute("roleCode", roleCode);
