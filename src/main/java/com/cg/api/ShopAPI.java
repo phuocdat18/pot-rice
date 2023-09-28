@@ -1,8 +1,13 @@
 package com.cg.api;
 
 import com.cg.model.dto.product.ProductDTO;
+<<<<<<< HEAD
 import com.cg.category.ICategoryService;
 import com.cg.service.product.IProductService;
+=======
+import com.cg.service.category.ICategoryService;
+import com.cg.product.service.IProductService;
+>>>>>>> hoan-dev
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

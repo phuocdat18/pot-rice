@@ -9,10 +9,12 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Entity
+
 @Getter
 @Setter
 @Accessors(chain = true)
+@NoArgsConstructor
+@Entity
 @Table(name = "product_avatar")
 public class ProductAvatar extends BaseEntity {
     @Id
@@ -34,6 +36,10 @@ public class ProductAvatar extends BaseEntity {
 
     @Column(name = "cloud_id")
     private String cloudId;
+
+    public ProductAvatar(String id) {
+        this.id = id;
+    }
 
     public ProductAvatarResDTO toProductAvatarResDTO() {
         return new ProductAvatarResDTO()

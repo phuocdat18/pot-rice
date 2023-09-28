@@ -1,4 +1,4 @@
-package com.cg.repository;
+package com.cg.product;
 
 import com.cg.model.Product;
 import com.cg.model.dto.product.ProductDTO;

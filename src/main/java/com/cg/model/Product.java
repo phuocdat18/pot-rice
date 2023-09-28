@@ -31,59 +31,39 @@ public class Product extends BaseEntity {
 
     private String unit;
 
-//    @Setter(AccessLevel.NONE)
+    //    @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "fk_category_product"))
     private Category category;
 
     @Column(name = "category_id", insertable = false, updatable = false)
-    private long categoryId;
+    private Long categoryId;
 
     @OneToOne
     @JoinColumn(name = "product_avatar_id", nullable = false)
     private ProductAvatar productAvatar;
+    @Column(name = "product_avatar_id", insertable = false, updatable = false)
+    private String productAvatarId;
 
     public Product setCategoryId(long categoryId) {
         category = new Category(this.categoryId = categoryId);
-//        this.categoryId = categoryId;
         return this;
     }
 
+    public Product setProductAvatarId(String productAvatarId) {
+        productAvatar = new ProductAvatar(this.productAvatarId = productAvatarId);
+        return this;
+    }
 
     public ProductDTO toProductDTO() {
-        return new ProductDTO()
-                .setId(id)
-                .setTitle(title)
-                .setPrice(price)
-                .setQuantity(quantity)
-                .setUnit(unit)
-                .setDescription(description)
-                .setCategory(category)
-                .setAvatar(productAvatar.toProductAvatarResDTO())
-                ;
+        return new ProductDTO().setId(id).setTitle(title).setPrice(price).setQuantity(quantity).setUnit(unit).setDescription(description).setCategory(category).setAvatar(productAvatar.toProductAvatarResDTO());
     }
+
     public ProductCreateResDTO toProductCreateResDTO() {
-        return new ProductCreateResDTO()
-                .setId(id)
-                .setTitle(title)
-                .setPrice(price)
-                .setUnit(unit)
-                .setQuantity(quantity)
-                .setDescription(description)
-                .setCategoryTitle(category.getTitle())
-                .setAvatar(productAvatar.toProductAvatarResDTO())
-                ;
+        return new ProductCreateResDTO().setId(id).setTitle(title).setPrice(price).setUnit(unit).setQuantity(quantity).setDescription(description).setCategoryTitle(category.getTitle()).setAvatar(productAvatar.toProductAvatarResDTO());
     }
+
     public ProductUpdateResDTO toProductUpdateResDTO() {
-        return new ProductUpdateResDTO()
-                .setId(id)
-                .setTitle(title)
-                .setPrice(price)
-                .setUnit(unit)
-                .setQuantity(String.valueOf(quantity))
-                .setDescription(description)
-                .setCategoryTitle(category.getTitle())
-                .setAvatar(productAvatar.toProductAvatarResDTO())
-                ;
+        return new ProductUpdateResDTO().setId(id).setTitle(title).setPrice(price).setUnit(unit).setQuantity(String.valueOf(quantity)).setDescription(description).setCategoryTitle(category.getTitle()).setAvatar(productAvatar.toProductAvatarResDTO());
     }
 }
