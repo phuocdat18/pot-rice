@@ -1,4 +1,4 @@
-package com.cg.api;
+package com.cg.product;
 
 
 import com.cg.exception.DataInputException;
@@ -6,7 +6,7 @@ import com.cg.model.Category;
 import com.cg.model.Product;
 import com.cg.model.dto.product.*;
 import com.cg.service.category.ICategoryService;
-import com.cg.service.product.IProductService;
+import com.cg.product.service.IProductService;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

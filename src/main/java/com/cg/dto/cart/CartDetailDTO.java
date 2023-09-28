@@ -1,7 +1,7 @@
 package com.cg.dto.cart;
 
 import com.cg.model.Product;
-import com.cg.dto.product.ProductDTO;
+import com.cg.product.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

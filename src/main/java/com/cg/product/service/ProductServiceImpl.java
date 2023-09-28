@@ -1,4 +1,4 @@
-package com.cg.service.product;
+package com.cg.product.service;
 
 import com.cg.exception.DataInputException;
 import com.cg.model.Category;
@@ -8,7 +8,7 @@ import com.cg.model.dto.product.ProductCreateReqDTO;
 import com.cg.model.dto.product.ProductDTO;
 import com.cg.model.dto.product.ProductUpdateReqDTO;
 import com.cg.repository.ProductAvatarRepository;
-import com.cg.repository.ProductRepository;
+import com.cg.product.ProductRepository;
 import com.cg.service.category.ICategoryService;
 import com.cg.service.upload.IUploadService;
 import com.cg.utils.AppUtils;

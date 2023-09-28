@@ -1,10 +1,9 @@
 package com.cg.api;
 
 import com.cg.model.dto.bill.BillDTO;
-import com.cg.model.dto.product.ProductDTO;
 import com.cg.service.bill.IBillService;
 import com.cg.service.category.ICategoryService;
-import com.cg.service.product.IProductService;
+import com.cg.product.service.IProductService;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

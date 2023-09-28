@@ -5,12 +5,11 @@ import com.cg.model.Category;
 import com.cg.model.Product;
 import com.cg.model.dto.product.*;
 import com.cg.service.category.ICategoryService;
-import com.cg.service.product.IProductService;
+import com.cg.product.service.IProductService;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 

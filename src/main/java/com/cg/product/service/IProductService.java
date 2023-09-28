@@ -1,4 +1,4 @@
-package com.cg.service.product;
+package com.cg.product.service;
 
 import com.cg.model.Category;
 import com.cg.model.Product;

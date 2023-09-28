@@ -6,7 +6,7 @@ import com.cg.model.dto.bill.BillDTO;
 import com.cg.model.dto.bill.BillDetailDTO;
 import com.cg.service.bill.IBillService;
 import com.cg.service.billDetail.IBillDetailService;
-import com.cg.service.product.IProductService;
+import com.cg.product.service.IProductService;
 import com.cg.service.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;

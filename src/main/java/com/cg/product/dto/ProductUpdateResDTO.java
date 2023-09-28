@@ -1,4 +1,4 @@
-package com.cg.dto.product;
+package com.cg.product.dto;
 
 
 
