@@ -1,6 +1,4 @@
-package com.cg.dto.cart;
-
-import com.cg.dto.product.ProductDTO;
+package com.cg.cart.dto;
 
 import java.math.BigDecimal;
 

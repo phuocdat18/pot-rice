@@ -1,4 +1,4 @@
-package com.cg.dto.category;
+package com.cg.category.dto;
 
 
 import lombok.Getter;

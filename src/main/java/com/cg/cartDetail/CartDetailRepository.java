@@ -1,9 +1,9 @@
-package com.cg.repository;
+package com.cg.cartDetail;
 
+import com.cg.cartDetail.dto.CartDetailDTO;
 import com.cg.model.Cart;
 import com.cg.model.CartDetail;
 import com.cg.model.Product;
-import com.cg.model.dto.cart.CartDetailDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

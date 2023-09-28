@@ -1,8 +1,7 @@
-package com.cg.service.category;
+package com.cg.category;
 
 import com.cg.model.Category;
 import com.cg.model.dto.category.CategoryDTO;
-import com.cg.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

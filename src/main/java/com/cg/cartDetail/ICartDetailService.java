@@ -1,4 +1,4 @@
-package com.cg.service.cartDetail;
+package com.cg.cartDetail;
 
 import com.cg.model.Cart;
 import com.cg.model.CartDetail;

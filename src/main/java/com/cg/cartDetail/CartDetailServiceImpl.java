@@ -1,12 +1,11 @@
-package com.cg.service.cartDetail;
+package com.cg.cartDetail;
 
 
+import com.cg.cartDetail.dto.CartDetailDTO;
 import com.cg.model.Cart;
 import com.cg.model.CartDetail;
 import com.cg.model.Product;
-import com.cg.model.dto.cart.CartDetailDTO;
-import com.cg.repository.CartDetailRepository;
-import com.cg.repository.CartRepository;
+import com.cg.cart.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

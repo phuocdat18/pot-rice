@@ -1,14 +1,19 @@
-package com.cg.dto.cart;
+package com.cg.cart.dto;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartDetailChangeReqDTO {
+public class CartItemReqDTO {
+
+    private Long productId;
+
     private Long quantity;
 }

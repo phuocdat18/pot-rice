@@ -1,8 +1,5 @@
-package com.cg.dto.cart;
+package com.cg.cartDetail.dto;
 
-import com.cg.model.Product;
-import com.cg.dto.product.ProductDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,19 +10,16 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CartDetailDTO {
     private Long id;
-    private ProductDTO productDTO;
     private String title;
     private String unit;
     private BigDecimal price;
     private Long quantity;
     private BigDecimal amount;
 
-    public CartDetailDTO (Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount) {
+    public CartDetailDTO (Long id, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount) {
         this.id = id;
-        this.productDTO = product.toProductDTO();
         this.title = title;
         this.unit = unit;
         this.price = price;

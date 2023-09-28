@@ -1,4 +1,4 @@
-package com.cg.mapper;
+package com.cg.category;
 
 import com.cg.model.Category;
 import com.cg.model.dto.category.CategoryDTO;

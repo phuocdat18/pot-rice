@@ -1,4 +1,4 @@
-package com.cg.dto.cart;
+package com.cg.cart.dto;
 
 import com.cg.model.Cart;
 import com.cg.model.User;

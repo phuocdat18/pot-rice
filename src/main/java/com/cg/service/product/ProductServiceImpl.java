@@ -9,7 +9,7 @@ import com.cg.model.dto.product.ProductDTO;
 import com.cg.model.dto.product.ProductUpdateReqDTO;
 import com.cg.repository.ProductAvatarRepository;
 import com.cg.repository.ProductRepository;
-import com.cg.service.category.ICategoryService;
+import com.cg.category.ICategoryService;
 import com.cg.service.upload.IUploadService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.UploadUtils;

@@ -1,4 +1,4 @@
-package com.cg.repository;
+package com.cg.category;
 
 
 import com.cg.model.Category;

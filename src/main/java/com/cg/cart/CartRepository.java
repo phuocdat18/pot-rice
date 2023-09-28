@@ -1,4 +1,4 @@
-package com.cg.repository;
+package com.cg.cart;
 
 import com.cg.model.Cart;
 import com.cg.model.User;

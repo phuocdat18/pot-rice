@@ -1,11 +1,7 @@
 package com.cg.model;
 
-import com.cg.model.dto.user.UserDTO;
-import com.cg.model.dto.user.UserLoginDTO;
-import com.cg.model.dto.user.UserUpdateResDTO;
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 

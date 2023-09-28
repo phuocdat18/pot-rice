@@ -4,13 +4,10 @@ package com.cg.api;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
 import com.cg.bill.dto.BillReqDTO;
-import com.cg.model.dto.cart.CartDetailChangeReqDTO;
-import com.cg.model.dto.cart.CartDetailDTO;
-import com.cg.model.dto.cart.CartItemReqDTO;
-import com.cg.bill.IBillService;
-import com.cg.bill.IBillDetailService;
-import com.cg.service.cart.ICartService;
-import com.cg.service.cartDetail.ICartDetailService;
+
+import com.cg.cart.ICartService;
+import com.cg.cartDetail.ICartDetailService;
+
 import com.cg.service.product.IProductService;
 import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
