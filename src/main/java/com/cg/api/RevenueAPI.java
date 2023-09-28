@@ -1,8 +1,7 @@
 package com.cg.api;
 
-import com.cg.model.dto.bill.BillDTO;
-import com.cg.model.dto.product.ProductDTO;
-import com.cg.service.bill.IBillService;
+import com.cg.bill.dto.BillDTO;
+import com.cg.bill.IBillService;
 import com.cg.service.category.ICategoryService;
 import com.cg.service.product.IProductService;
 import com.cg.utils.ValidateUtils;

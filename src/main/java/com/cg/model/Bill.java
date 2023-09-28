@@ -1,9 +1,7 @@
 package com.cg.model;
 
-import com.cg.model.dto.bill.BillDTO;
-import lombok.AllArgsConstructor;
+import com.cg.bill.dto.BillDTO;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;

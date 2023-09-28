@@ -9,7 +9,7 @@ import com.cg.model.dto.user.UserLoginDTO;
 import com.cg.model.dto.user.UserReqDTO;
 import com.cg.service.jwt.JwtService;
 import com.cg.service.role.IRoleService;
-import com.cg.service.user.IUserService;
+import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

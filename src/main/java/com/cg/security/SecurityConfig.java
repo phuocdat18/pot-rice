@@ -1,6 +1,6 @@
 package com.cg.security;
 
-import com.cg.service.user.IUserService;
+import com.cg.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

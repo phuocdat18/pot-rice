@@ -2,12 +2,12 @@ package com.cg.controller;
 
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
-import com.cg.model.dto.bill.BillDTO;
-import com.cg.model.dto.bill.BillDetailDTO;
-import com.cg.service.bill.IBillService;
-import com.cg.service.billDetail.IBillDetailService;
+import com.cg.bill.dto.BillDTO;
+import com.cg.bill.dto.BillDetailDTO;
+import com.cg.bill.IBillService;
+import com.cg.bill.IBillDetailService;
 import com.cg.service.product.IProductService;
-import com.cg.service.user.IUserService;
+import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
