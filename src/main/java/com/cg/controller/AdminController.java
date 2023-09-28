@@ -125,7 +125,7 @@ public class AdminController {
         }
 
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = role.getCode().getValue();
 
 //        username = username.substring(0, username.indexOf("@"));
         model.addAttribute("username", username);
