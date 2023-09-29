@@ -23,4 +23,5 @@ public class ProductUpdateParam {
     private String unit;
     @Column(nullable = false)
     private Long categoryId;
+    private String productAvatarId;
 }

@@ -52,15 +52,4 @@ public class Product extends BaseEntity {
         return this;
     }
 
-//    public ProductDTO toProductDTO() {
-//        return new ProductDTO().setId(id).setTitle(title).setPrice(price).setQuantity(quantity).setUnit(unit).setDescription(description).setCategory(category).setAvatar(productAvatar.toProductAvatarResDTO());
-//    }
-//
-//    public ProductCreateResDTO toProductCreateResDTO() {
-//        return new ProductCreateResDTO().setId(id).setTitle(title).setPrice(price).setUnit(unit).setQuantity(quantity).setDescription(description).setCategoryTitle(category.getTitle()).setAvatar(productAvatar.toProductAvatarResDTO());
-//    }
-//
-//    public ProductUpdateResDTO toProductUpdateResDTO() {
-//        return new ProductUpdateResDTO().setId(id).setTitle(title).setPrice(price).setUnit(unit).setQuantity(String.valueOf(quantity)).setDescription(description).setCategoryTitle(category.getTitle()).setAvatar(productAvatar.toProductAvatarResDTO());
-//    }
 }

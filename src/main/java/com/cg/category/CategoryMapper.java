@@ -1,29 +1,30 @@
 package com.cg.category;
 
 import com.cg.model.Category;
+import org.springframework.stereotype.Component;
+import java.util.List;
+import java.util.stream.Collectors;
 
+@Component
 public class CategoryMapper {
 
-    private static CategoryMapper INSTANCE;
-
-    public static CategoryMapper getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new CategoryMapper();
-        }
-
-        return INSTANCE;
+    public Category toEntity(CategoryCreationParam param){
+        return new Category().setTitle(param.getTitle());
     }
 
-    public Category toEntity(CategoryDTO roleDTO) {
-        Category category = new Category();
-        category.setTitle(roleDTO.getTitle());
-        return category;
+    public void transferFields(Category entity, CategoryUpdateParam updateParam){
+        entity.setTitle(updateParam.getTitle());
     }
 
-    public CategoryDTO toDTO(Category category) {
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setTitle(category.getTitle());
-        categoryDTO.setId(category.getId());
-        return categoryDTO;
+    public CategoryResult toDTO(Category entity){
+        return new CategoryResult()
+                .setId(entity.getId())
+                .setTitle(entity.getTitle())
+                ;
     }
+
+    public List<CategoryResult> toDTOList(List<Category> entities) {
+        return entities.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
 }

@@ -23,4 +23,5 @@ public class ProductCreationParam {
     private String unit;
     @Column(nullable = false)
     private Long categoryId;
-}
+    @Column(nullable = false)
+    private String productAvatarId;}

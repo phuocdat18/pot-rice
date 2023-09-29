@@ -19,7 +19,8 @@ public class ProductMapper {
                 .setUnit(creationParam.getUnit())
                 .setDescription(creationParam.getDescription())
                 .setQuantity(creationParam.getQuantity())
-                .setCategoryId(creationParam.getCategoryId());
+                .setCategoryId(creationParam.getCategoryId())
+                .setProductAvatarId(creationParam.getProductAvatarId());
 
     }
 
@@ -31,6 +32,7 @@ public class ProductMapper {
         entity.setDescription(updateParam.getDescription());
         entity.setQuantity(updateParam.getQuantity());
         entity.setCategoryId(updateParam.getCategoryId());
+        entity.setProductAvatarId(updateParam.getProductAvatarId());
 
     }
 
@@ -49,7 +51,7 @@ public class ProductMapper {
     }
 
     public List<ProductResult> toDTOList(List<Product> entities){
-        return entities.stream().map(this::toDTOList).collect(Collectors.toList());
+        return entities.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
 
