@@ -1,7 +1,7 @@
 package com.cg.bill;
 
 
-import com.cg.bill.dto.BillDTO;
+import com.cg.bill.dto.BillCreation;
 import com.cg.model.Bill;
 import com.cg.model.LocationRegion;
 import com.cg.repository.LocationRegionRepository;
@@ -50,37 +50,37 @@ public class BillServiceImpl implements IBillService {
     }
 
     @Override
-    public List<BillDTO> findAllBillDTO() {
+    public List<BillCreation> findAllBillDTO() {
         return billRepository.findAllBillDTO();
     }
 
     @Override
-    public List<BillDTO> findBillByDate() {
+    public List<BillCreation> findBillByDate() {
         return billRepository.findAllBillByDate();
     }
 
     @Override
-    public List<BillDTO> findAllBillDTOORDER() {
+    public List<BillCreation> findAllBillDTOORDER() {
         return billRepository.findAllBillDTOORDER();
     }
 
     @Override
-    public List<BillDTO> findAllBillDTOLOADING() {
+    public List<BillCreation> findAllBillDTOLOADING() {
         return billRepository.findAllBillDTOLOADING();
     }
     @Override
-    public List<BillDTO> findAllBillDTOSHIPPING() {
+    public List<BillCreation> findAllBillDTOSHIPPING() {
         return billRepository.findAllBillDTOSHIPPING();
     }
 
 
     @Override
-    public List<BillDTO> findBillDTOByIdUser(Long id) {
+    public List<BillCreation> findBillDTOByIdUser(Long id) {
         return billRepository.findBillDTOByIdUser(id);
     }
 
     @Override
-    public List<BillDTO> findBillDTOByIdBill(Long id) {
+    public List<BillCreation> findBillDTOByIdBill(Long id) {
         return billRepository.findBillDTOByIdBill(id);
     }
 
