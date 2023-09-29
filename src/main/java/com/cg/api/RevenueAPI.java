@@ -2,43 +2,34 @@ package com.cg.api;
 
 import com.cg.bill.IBillService;
 
-import com.cg.bill.dto.BillCreationParam;
 import com.cg.category.ICategoryService;
 
 
 import com.cg.product.service.IProductService;
 
 import com.cg.utils.ValidateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/revenue")
+@RequiredArgsConstructor
 public class RevenueAPI {
-
-    @Autowired
-    private IProductService productService;
-
-    @Autowired
-    private IBillService billService;
-    @Autowired
+    private final IProductService productService;
+    private final IBillService billService;
     private ICategoryService categoryService;
-
-    @Autowired
-    private ValidateUtils validateUtils;
+    private final ValidateUtils validateUtils;
 
     @GetMapping
-    public ResponseEntity<?> getAllBills() {
-
-        List<BillCreationParam> billDTOS = billService.findAllBillDTO();
-
-        return new ResponseEntity<>(billDTOS, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<?> getAllBills() {
+       return billService.findAll();
     }
 
 

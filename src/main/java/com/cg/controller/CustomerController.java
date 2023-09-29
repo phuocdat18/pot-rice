@@ -6,19 +6,13 @@ import com.cg.model.*;
 
 
 import com.cg.bill.dto.BillDTO;
-import com.cg.bill.dto.BillDetailDTO;
+import com.cg.bill.dto.BillDetailResult;
 import com.cg.bill.IBillService;
 import com.cg.bill.IBillDetailService;
 import com.cg.product.service.IProductService;
 import com.cg.user.IUserService;
 =======
 import com.cg.bill.dto.BillCreation;
-import com.cg.bill.dto.BillDetailDTO;
-import com.cg.bill.IBillService;
-import com.cg.bill.IBillDetailService;
-import com.cg.user.IUserService;
-
-import com.cg.product.service.IProductService;
 
 >>>>>>> thi-dev
 import com.cg.utils.AppUtils;
@@ -229,7 +223,7 @@ public class CustomerController {
         User user = userOptional.get();
         Long userId = user.getId();
 
-        List<BillCreation> userBillDTOs = billService.findBillDTOByIdUser(userId);
+        List<BillCreation> userBillDTOs = billService.findAllByUserId(userId);
         model.addAttribute("bill", userBillDTOs);
 
         List<BillCreation> billDTOsById = billService.findBillDTOByIdBill(id);
@@ -238,7 +232,7 @@ public class CustomerController {
         }
         model.addAttribute("billById", billDTOsById.get(0));
 
-        List<BillDetailDTO> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
+        List<BillDetailResult> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
         model.addAttribute("billDetailDTOS", billDetailDTOS);
 
         String roleCode = user.getRole().getCode().getValue();

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BillDetailDTO {
+public class BillDetailResult {
     private Long id;
     private Product product;
     private String title;
@@ -20,10 +20,10 @@ public class BillDetailDTO {
     private BigDecimal price;
     private Long quantity;
     private BigDecimal amount;
-    private BillCreationParam billCreationParam;
+    private BillResult billResult;
     private EPayment status;
 
-    public BillDetailDTO(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, Bill bill) {
+    public BillDetailResult(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, BillResult billResult) {
         this.id = id;
         this.product = product;
         this.title = title;
@@ -31,10 +31,10 @@ public class BillDetailDTO {
         this.price = price;
         this.quantity = quantity;
         this.amount = amount;
-        this.billDTO= bill.toBillDTO();
+        this.billResult= billResult;
     }
 
-    public BillDetailDTO(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, Bill bill, EPayment status) {
+    public BillDetailResult(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, BillResult billResult, EPayment status) {
         this.id = id;
         this.product = product;
         this.title = title;
@@ -42,7 +42,7 @@ public class BillDetailDTO {
         this.price = price;
         this.quantity = quantity;
         this.amount = amount;
-        this.billDTO= bill.toBillDTO();
+        this.billResult= billResult;
         this.status = status;
     }
 

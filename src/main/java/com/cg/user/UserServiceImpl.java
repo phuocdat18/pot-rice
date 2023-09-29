@@ -2,7 +2,7 @@ package com.cg.user;
 
 import com.cg.location.LocationRegionRepository;
 import com.cg.model.User;
-import com.cg.model.UserPrinciple;
+import com.cg.model.UserPrincipal;
 import com.cg.user.dto.UserUpdateParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -90,7 +90,7 @@ public class UserServiceImpl implements IUserService {
         if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException(username);
         }
-        return UserPrinciple.build(userOptional.get());
+        return UserPrincipal.build(userOptional.get());
     }
 
 }

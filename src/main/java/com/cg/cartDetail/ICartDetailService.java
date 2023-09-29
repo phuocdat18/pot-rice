@@ -10,8 +10,10 @@ import java.util.List;
 
 public interface ICartDetailService extends IGeneralService<CartDetail, Long> {
     boolean existsCartDetailByCart(Cart cart);
-    CartDetail findCartDetailsByProductAndCart (Product product, Cart cart);
+
+    CartDetail findCartDetailsByProductAndCart(Product product, Cart cart);
 
     List<CartDetailResult> findAllCartDetailDTO(Long id);
-    List<CartDetail> findCartDetailsByCart(Cart cart);
+
+    List<CartDetail> findCartDetailsByCartId(Long cartId);
 }
