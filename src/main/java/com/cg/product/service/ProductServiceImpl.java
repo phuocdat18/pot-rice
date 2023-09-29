@@ -91,7 +91,7 @@ public class ProductServiceImpl implements IProductService {
 
     private void uploadAndSaveProductImage(ProductCreationParam param, ProductAvatar productAvatar) {
         try {
-            Map uploadResult = uploadService.uploadImage(param.getAvatar(), uploadUtils.buildImageUploadParams(productAvatar));
+            Map uploadResult = uploadService.uploadImage(param.getProductAvatarId(), uploadUtils.buildImageUploadParams(productAvatar));
             String fileUrl = (String) uploadResult.get("secure_url");
             String fileFormat = (String) uploadResult.get("format");
 

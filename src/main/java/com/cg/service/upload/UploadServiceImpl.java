@@ -3,7 +3,6 @@ package com.cg.service.upload;
 import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -18,7 +17,7 @@ public class UploadServiceImpl implements IUploadService {
     private Cloudinary cloudinary;
 
     @Override
-    public Map uploadImage(MultipartFile multipartFile, Map options) throws IOException {
+    public Map uploadImage(String multipartFile, Map options) throws IOException {
         return cloudinary.uploader().upload(multipartFile.getBytes(), options);
     }
 

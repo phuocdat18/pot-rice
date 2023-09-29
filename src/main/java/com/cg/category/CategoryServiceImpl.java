@@ -1,50 +1,23 @@
 package com.cg.category;
 
 import com.cg.model.Category;
-import com.cg.model.dto.category.CategoryDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
-@Transactional
-public class CategoryServiceImpl implements ICategoryService{
-
-    @Autowired
-    private CategoryRepository categoryRepository;
-
+@RequiredArgsConstructor
+public class CategoryServiceImpl implements ICategoryService {
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
-    public List<Category> findAll() {
-        return null;
+    @Transactional(readOnly = true)
+    public List<CategoryResult> findAll() {
+        List<Category> entity =categoryRepository.findAll();
+        return categoryMapper.toDTOList(entity);
     }
 
-    @Override
-    public List<CategoryDTO> findAllCategoryDTO() {
-        return categoryRepository.findAllCategoryDTO();
-    }
-
-    @Override
-    public Optional<Category> findById(Long id) {
-        return categoryRepository.findById(id);
-    }
-
-    @Override
-    public Category save(Category category) {
-        return null;
-    }
-
-    @Override
-    public void delete(Category category) {
-
-    }
-
-    @Override
-    public void deleteById(Long id) {
-
-    }
 }

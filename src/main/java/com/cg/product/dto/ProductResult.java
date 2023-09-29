@@ -2,14 +2,18 @@ package com.cg.product.dto;
 
 import com.cg.model.Category;
 import com.cg.model.ProductAvatar;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
-@Setter
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Accessors(chain = true)
 public class ProductResult {
 
