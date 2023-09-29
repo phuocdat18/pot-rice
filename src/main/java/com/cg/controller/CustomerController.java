@@ -2,6 +2,7 @@ package com.cg.controller;
 
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
+<<<<<<< HEAD
 
 
 import com.cg.bill.dto.BillDTO;
@@ -10,6 +11,16 @@ import com.cg.bill.IBillService;
 import com.cg.bill.IBillDetailService;
 import com.cg.product.service.IProductService;
 import com.cg.user.IUserService;
+=======
+import com.cg.bill.dto.BillCreation;
+import com.cg.bill.dto.BillDetailDTO;
+import com.cg.bill.IBillService;
+import com.cg.bill.IBillDetailService;
+import com.cg.user.IUserService;
+
+import com.cg.product.service.IProductService;
+
+>>>>>>> thi-dev
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -218,10 +229,10 @@ public class CustomerController {
         User user = userOptional.get();
         Long userId = user.getId();
 
-        List<BillDTO> userBillDTOs = billService.findBillDTOByIdUser(userId);
+        List<BillCreation> userBillDTOs = billService.findBillDTOByIdUser(userId);
         model.addAttribute("bill", userBillDTOs);
 
-        List<BillDTO> billDTOsById = billService.findBillDTOByIdBill(id);
+        List<BillCreation> billDTOsById = billService.findBillDTOByIdBill(id);
         if (billDTOsById.isEmpty()) {
             throw new DataInputException("Bill not found");
         }

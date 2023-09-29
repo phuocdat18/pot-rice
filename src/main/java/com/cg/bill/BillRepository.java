@@ -1,7 +1,7 @@
 package com.cg.bill;
 
 import com.cg.model.Bill;
-import com.cg.bill.dto.BillDTO;
+import com.cg.bill.dto.BillCreation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,7 +22,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             "b.status) " +
             "FROM Bill b " +
             "WHERE b.status = 0")
-    List<BillDTO> findAllBillDTOORDER ();
+    List<BillCreation> findAllBillDTOORDER ();
 
     @Query("SELECT NEW com.cg.model.dto.bill.BillDTO(" +
             "b.id, " +
@@ -33,7 +33,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             "b.status) " +
             "FROM Bill b " +
             "WHERE b.status = 1")
-    List<BillDTO> findAllBillDTOLOADING ();
+    List<BillCreation> findAllBillDTOLOADING ();
 
     @Query("SELECT NEW com.cg.model.dto.bill.BillDTO(" +
             "b.id, " +
@@ -44,7 +44,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             "b.status) " +
             "FROM Bill b " +
             "WHERE b.status = 2")
-    List<BillDTO> findAllBillDTOSHIPPING ();
+    List<BillCreation> findAllBillDTOSHIPPING ();
 
     @Query("SELECT NEW com.cg.model.dto.bill.BillDTO(" +
             "b.id, " +
@@ -55,17 +55,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             "b.status) " +
             "FROM Bill b " +
             "WHERE b.status = 3")
-    List<BillDTO> findAllBillDTO ();
-//    @Query("SELECT NEW com.cg.bill.dto.BillDTO(" +
-//            "b.id, " +
-//            "b.totalAmount, " +
-//            "b.user," +
-//            "b.locationRegion," +
-//            "b.createdAt, " +
-//            "b.status) " +
-//            "FROM Bill b " +
-//            "WHERE b.status = 3" )
-//    List<BillDTO> findBillDTOByMonth ();
+    List<BillCreation> findAllBillDTO ();
     @Query("SELECT NEW com.cg.model.dto.bill.BillDTO(" +
             "b.id, " +
             "b.totalAmount, " +
@@ -76,7 +66,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             "FROM Bill b " +
             "WHERE b.status = 3" +
             "AND b.createdAt = toDate(CURRENT_DATE)")
-    List<BillDTO> findAllBillByDate ();
+    List<BillCreation> findAllBillByDate ();
 
     @Query("SELECT NEW com.cg.model.dto.bill.BillDTO(" +
             "b.id, " +
@@ -87,7 +77,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             "b.status) " +
             "FROM Bill b " +
             "WHERE b.user.id = :id")
-    List<BillDTO> findBillDTOByIdUser (Long id);
+    List<BillCreation> findBillDTOByIdUser (Long id);
 
     @Query("SELECT NEW com.cg.model.dto.bill.BillDTO(" +
             "b.id, " +
@@ -98,6 +88,6 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
             "b.status) " +
             "FROM Bill b " +
             "WHERE b.id = :id")
-    List<BillDTO> findBillDTOByIdBill (Long id);
+    List<BillCreation> findBillDTOByIdBill (Long id);
 
 }
