@@ -8,8 +8,12 @@ import com.cg.model.User;
 import com.cg.role.IRoleService;
 import com.cg.service.jwt.JwtService;
 import com.cg.user.IUserService;
+<<<<<<< HEAD
 import com.cg.user.dto.UserLoginDTO;
 import com.cg.user.dto.UserReqDTO;
+=======
+import com.cg.user.dto.UserCreationParam;
+>>>>>>> thi-dev
 import com.cg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -55,7 +59,7 @@ public class AuthAPI {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody UserReqDTO userReqDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserCreationParam userReqDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return appUtils.mapErrorToResponse(bindingResult);

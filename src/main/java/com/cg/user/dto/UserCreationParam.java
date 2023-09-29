@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class UserReqDTO {
+public class UserCreationParam {
 
     @NotBlank(message = "The Full Name is required")
     @Size(min = 5, max = 50, message = "The length of Full Name must be between 5 and 50 characters")

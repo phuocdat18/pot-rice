@@ -8,10 +8,23 @@ import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
+<<<<<<< HEAD:src/main/java/com/cg/cart/CartAPI.java
+=======
+
+>>>>>>> thi-dev:src/main/java/com/cg/api/CartAPI.java
 import com.cg.bill.dto.BillReqDTO;
 import com.cg.cartDetail.ICartDetailService;
+<<<<<<< HEAD:src/main/java/com/cg/cart/CartAPI.java
 import com.cg.user.IUserService;
 import com.cg.product.service.IProductService;
+=======
+
+
+import com.cg.user.IUserService;
+
+import com.cg.product.service.IProductService;
+
+>>>>>>> thi-dev:src/main/java/com/cg/api/CartAPI.java
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;

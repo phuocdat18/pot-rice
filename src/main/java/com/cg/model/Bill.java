@@ -1,6 +1,6 @@
 package com.cg.model;
 
-import com.cg.bill.dto.BillDTO;
+import com.cg.bill.dto.BillCreation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,8 +49,8 @@ public class Bill extends BaseEntity {
 
     }
 
-    public BillDTO toBillDTO() {
-        return new BillDTO()
+    public BillCreation toBillDTO() {
+        return new BillCreation()
                 .setId(id)
                 .setTotalAmount(totalAmount)
                 .setUserDTO(user.toUserDTO())
