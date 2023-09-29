@@ -1,22 +1,17 @@
-package com.cg.product.dto;
+package com.cg.product.mapper;
 
-
-import com.cg.dto.productAvatar.ProductAvatarResDTO;
-import lombok.AllArgsConstructor;
+import com.cg.model.Category;
+import com.cg.model.ProductAvatar;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Setter
+@Getter
 @Accessors(chain = true)
-public class ProductCreateResDTO {
+public class ProductResult {
 
     private Long id;
     private String title;
@@ -24,6 +19,6 @@ public class ProductCreateResDTO {
     private Long quantity;
     private String description;
     private String unit;
-    private String categoryTitle;
-    private ProductAvatarResDTO avatar;
+    private Category category;
+    private ProductAvatar productAvatar;
 }

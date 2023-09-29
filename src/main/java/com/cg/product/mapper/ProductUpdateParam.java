@@ -5,13 +5,12 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @Accessors(chain = true)
-public class ProductCreationParam {
+public class ProductUpdateParam {
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)

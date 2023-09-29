@@ -3,15 +3,13 @@ package com.cg.api;
 import com.cg.exception.DataInputException;
 import com.cg.model.Category;
 import com.cg.model.Product;
-import com.cg.model.dto.product.*;
-<<<<<<< HEAD
 import com.cg.category.ICategoryService;
-import com.cg.service.product.IProductService;
-=======
-import com.cg.service.category.ICategoryService;
+import com.cg.product.mapper.ProductCreationParam;
+import com.cg.product.mapper.ProductResult;
+import com.cg.product.mapper.ProductUpdateParam;
 import com.cg.product.service.IProductService;
->>>>>>> hoan-dev
 import com.cg.utils.ValidateUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,91 +21,33 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/dashboard")
+@RequiredArgsConstructor
 public class DashboardAPI {
-    @Autowired
-    private IProductService productService;
-    @Autowired
-    private ICategoryService categoryService;
-
-    @Autowired
-    private ValidateUtils validateUtils;
+    private final IProductService productService;
+    private final ICategoryService categoryService;
+    private final ValidateUtils validateUtils;
     @GetMapping
-    public ResponseEntity<?> getAllProducts() {
-
-        List<ProductDTO> productDTOS = productService.findAllProductDTO();
-
-        return new ResponseEntity<>(productDTOS, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<?> getAllProducts() {
+        return productService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findProductById(@PathVariable String id) {
-        if (!validateUtils.isNumberValid(id)) {
-            throw new DataInputException("Mã sản phẩm không hợp lệ");
-        }
-        Long productId = Long.parseLong(id);
-
-        try {
-            Optional<Product> product = productService.findById(productId);
-
-            if (product.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(product.get().toProductDTO(), HttpStatus.OK);
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public ProductResult findProductById(@PathVariable Long id) {
+        return productService.getById(id);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> create(@ModelAttribute ProductCreateReqDTO productCreateReqDTO, BindingResult bindingResult) {
+    @PostMapping
+    public ProductResult create(@RequestBody ProductCreationParam param, Category category) {
+        return  productService.create(param, category);
 
-        new ProductCreateReqDTO().validate(productCreateReqDTO, bindingResult);
-
-        Category category = categoryService.findById(productCreateReqDTO.getCategoryId()).orElseThrow(() -> {
-            throw new DataInputException("Danh mục không tồn tại");
-        });
-
-        Product product = productService.create(productCreateReqDTO, category);
-        ProductCreateResDTO productCreateResDTO = product.toProductCreateResDTO();
-
-        return new ResponseEntity<>(productCreateResDTO, HttpStatus.CREATED);
     }
 
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @ModelAttribute ProductUpdateReqDTO productUpdateReqDTO, BindingResult bindingResult) {
+    @PatchMapping("/{id}")
+    public ProductResult update(@PathVariable Long id, @RequestBody ProductUpdateParam param, Category category) {
 
-        new ProductUpdateReqDTO().validate(productUpdateReqDTO, bindingResult);
-
-        if (!validateUtils.isNumberValid(id)) {
-            throw new DataInputException("Mã sản phẩm không hợp lệ");
-        }
-        Long productId = Long.parseLong(id);
-
-        Optional<Product> productOptional = productService.findById(productId);
-
-        Category category = categoryService.findById(productUpdateReqDTO.getCategoryId()).orElseThrow(() -> {
-            throw new DataInputException("Danh mục không tồn tại");
-        });
-
-        if (productUpdateReqDTO.getAvatar() == null) {
-            Product product = productUpdateReqDTO.toProductNoChangeImage(category);
-            product.setId(productOptional.get().getId());
-            product.setProductAvatar(productOptional.get().getProductAvatar());
-            productService.save(product);
-            return new ResponseEntity<>(product.toProductCreateResDTO(), HttpStatus.OK);
-        }
-
-        if (productOptional.isPresent()) {
-            Product product = productService.update(productOptional.get().getId() ,productUpdateReqDTO, category);
-            ProductUpdateResDTO productUpdateResDTO = product.toProductUpdateResDTO();
-
-            return new ResponseEntity<>(productUpdateResDTO, HttpStatus.OK);
-        } else {
-            throw new DataInputException("Invalid product information");
-        }
-
+        return productService.update(id, param, category);
     }
 
 }

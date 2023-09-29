@@ -1,7 +1,6 @@
 package com.cg.category;
 
 import com.cg.model.Category;
-import com.cg.model.dto.category.CategoryDTO;
 
 public class CategoryMapper {
 

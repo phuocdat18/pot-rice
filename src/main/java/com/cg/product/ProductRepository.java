@@ -1,7 +1,7 @@
 package com.cg.product;
 
 import com.cg.model.Product;
-import com.cg.model.dto.product.ProductDTO;
+import com.cg.product.mapper.ProductResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT NEW com.cg.model.dto.product.ProductDTO ( " +
+    @Query("SELECT  " +
             "pr.id, " +
             "pr.title, " +
             "pr.price, " +
@@ -23,13 +23,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "pr.unit, " +
             "pr.category, " +
             "pr.productAvatar " +
-            ") " +
             "FROM Product AS pr " +
             "WHERE pr.quantity > -1"
     )
-    List<ProductDTO> findAllProductDTO();
+    List<ProductResult> findAllProductDTO();
 
-    @Query("SELECT NEW com.cg.model.dto.product.ProductDTO ( " +
+    @Query("SELECT  " +
             "pr.id, " +
             "pr.title, " +
             "pr.price, " +
@@ -37,7 +36,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "pr.unit, " +
             "pr.category, " +
             "pr.productAvatar " +
-            ") " +
             "FROM Product AS pr " +
             "WHERE lower(pr.title)LIKE CONCAT('%', LOWER(?1), '%') " +
             "AND pr.category.id IN (?2) " +
@@ -45,9 +43,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "AND pr.quantity > -1" +
             "ORDER BY pr.id ASC"
     )
-    Page<ProductDTO> findAllProductDTOByKeyWordAndCategoryAndPrice (String search, List<Long> category, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
+    Page<ProductResult> findAllProductDTOByKeyWordAndCategoryAndPrice (String search, List<Long> category, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
-     @Query("SELECT NEW com.cg.model.dto.product.ProductDTO ( " +
+     @Query("SELECT  " +
             "pr.id, " +
             "pr.title, " +
             "pr.price, " +
@@ -55,17 +53,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "pr.unit, " +
             "pr.category, " +
             "pr.productAvatar " +
-            ") " +
             "FROM Product AS pr " +
             "WHERE lower(pr.title)LIKE CONCAT('%', LOWER(?1), '%') " +
             "AND pr.category.id IN (?2) " +
             "AND pr.quantity > -1" +
             "ORDER BY pr.id ASC"
     )
-    Page<ProductDTO> findAllProductDTOByKeyWordAndCategory (String search, List<Long> category, Pageable pageable);
+    Page<ProductResult> findAllProductDTOByKeyWordAndCategory (String search, List<Long> category, Pageable pageable);
 
 
-    @Query("SELECT NEW com.cg.model.dto.product.ProductDTO ( " +
+    @Query("SELECT " +
             "pr.id, " +
             "pr.title, " +
             "pr.price, " +
@@ -74,11 +71,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "pr.unit, " +
             "pr.category, " +
             "pr.productAvatar " +
-            ") " +
             "FROM Product AS pr " +
             "WHERE pr.quantity > -1" +
             "ORDER BY pr.id DESC"
     )
-    Page<ProductDTO> findAllProductDTOPage(Pageable pageable);
+    Page<ProductResult> findAllProductDTOPage(Pageable pageable);
     Boolean existsProductById(Long id);
 }
