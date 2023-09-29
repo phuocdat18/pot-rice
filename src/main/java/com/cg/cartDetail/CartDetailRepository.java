@@ -25,7 +25,6 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
             "cd.price, " +
             "cd.quantity, " +
             "cd.amount " +
-            ") " +
             "FROM CartDetail AS cd " +
             "JOIN Cart c ON cd.cart.id = c.id " +
             "WHERE c.user.id = :id"
