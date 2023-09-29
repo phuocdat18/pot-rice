@@ -1,9 +1,6 @@
 package com.cg.model;
 
-import com.cg.model.dto.cart.CartDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -32,9 +29,4 @@ public class Cart extends BaseEntity {
     @Column(name = "user_id", insertable = false, updatable = false)
     private int userId;
 
-//    public CartDTO toCartDTO() {
-//        return new CartDTO()
-//                .setId(id)
-//                .setTotalAmount(totalAmount);
-//    }
 }
