@@ -1,7 +1,6 @@
-package com.cg.bill.dto;
+package com.cg.order.dto;
 
-import com.cg.model.Bill;
-import com.cg.model.EPayment;
+import com.cg.model.OrderStatus;
 import com.cg.model.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +19,10 @@ public class BillDetailResult {
     private BigDecimal price;
     private Long quantity;
     private BigDecimal amount;
-    private BillResult billResult;
-    private EPayment status;
+    private OrderResult orderResult;
+    private OrderStatus status;
 
-    public BillDetailResult(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, BillResult billResult) {
+    public BillDetailResult(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, OrderResult orderResult) {
         this.id = id;
         this.product = product;
         this.title = title;
@@ -31,10 +30,10 @@ public class BillDetailResult {
         this.price = price;
         this.quantity = quantity;
         this.amount = amount;
-        this.billResult= billResult;
+        this.orderResult = orderResult;
     }
 
-    public BillDetailResult(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, BillResult billResult, EPayment status) {
+    public BillDetailResult(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, OrderResult orderResult, OrderStatus status) {
         this.id = id;
         this.product = product;
         this.title = title;
@@ -42,7 +41,7 @@ public class BillDetailResult {
         this.price = price;
         this.quantity = quantity;
         this.amount = amount;
-        this.billResult= billResult;
+        this.orderResult = orderResult;
         this.status = status;
     }
 

@@ -1,6 +1,6 @@
 package com.cg.api;
 
-import com.cg.bill.IBillService;
+import com.cg.order.IOrderService;
 
 import com.cg.category.ICategoryService;
 
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RevenueAPI {
     private final IProductService productService;
-    private final IBillService billService;
+    private final IOrderService billService;
     private ICategoryService categoryService;
     private final ValidateUtils validateUtils;
 

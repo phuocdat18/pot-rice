@@ -13,11 +13,10 @@ import javax.persistence.*;
 
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-@Entity
 @Accessors(chain = true)
+@Entity
 @Table(name = "location_region")
 public class LocationRegion {
 
@@ -39,32 +38,8 @@ public class LocationRegion {
 
     private String address;
 
-    public LocationRegion (Long id) {
+    public LocationRegion(Long id) {
         this.id = id;
-    }
-    public LocationRegionDTO toLocationRegionDTO() {
-        return new LocationRegionDTO()
-                .setId(id)
-                .setProvinceId(provinceId)
-                .setProvinceName(provinceName)
-                .setDistrictId(districtId)
-                .setDistrictName(districtName)
-                .setWardId(wardId)
-                .setWardName(wardName)
-                .setAddress(address)
-                ;
-    }
-    public LocationRegionResDTO toLocationRegionResDTO() {
-        return new LocationRegionResDTO()
-                .setId(id)
-                .setProvinceId(provinceId)
-                .setProvinceName(provinceName)
-                .setDistrictId(districtId)
-                .setDistrictName(districtName)
-                .setWardId(wardId)
-                .setWardName(wardName)
-                .setAddress(address)
-                ;
     }
 
 }

@@ -213,7 +213,7 @@
 
   page.elements.tbBill = $('#tbBill tbody')
 
-  page.elements.totalAmountBill = $('#totalAmount-bill')
+  page.elements.totalAmountBill = $('#totalAmount-order')
   page.elements.tfInvoiceHeader = $('.tf__invoice_header')
 
   page.dialogs.elements.orderDetail = $('#orderDetail tbody')
@@ -354,13 +354,13 @@
 
   page.commands.getPaymentDONE = (id) => {
     const url = `${page.urls.getStatusBill}/${id}`;
-    const bill = {
+    const order = {
       status: 'DONE'
     };
     return $.ajax({
       type: 'PATCH',
       url: url,
-      data: JSON.stringify(bill),
+      data: JSON.stringify(order),
       contentType: 'application/json',
     })
       .done((data) => {

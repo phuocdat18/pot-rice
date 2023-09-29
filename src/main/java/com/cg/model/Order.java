@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "bills")
 @Accessors(chain = true)
-public class Bill extends BaseEntity {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,16 +37,17 @@ public class Bill extends BaseEntity {
     private Long locationRegionId;
 
     @Column(name = "bill_status")
-    private EPayment status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
-    public Bill(BigDecimal totalAmount, User user, LocationRegion locationRegion, EPayment status) {
+    public Order(BigDecimal totalAmount, User user, LocationRegion locationRegion, OrderStatus status) {
         this.totalAmount = totalAmount;
         this.user = user;
         this.locationRegion = locationRegion;
         this.status = status;
     }
 
-    public Bill() {
+    public Order() {
 
     }
 

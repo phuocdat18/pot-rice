@@ -15,5 +15,5 @@ public interface ICartDetailService extends IGeneralService<CartDetail, Long> {
 
     List<CartDetailResult> findAllCartDetailDTO(Long id);
 
-    List<CartDetail> findCartDetailsByCartId(Long cartId);
+    List<CartDetail> findAllByCartId(Long cartId);
 }

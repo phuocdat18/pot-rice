@@ -1,8 +1,6 @@
 package com.cg.user;
 
 import com.cg.model.User;
-import com.cg.role.dto.RoleResult;
-import com.cg.service.IGeneralService;
 import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
@@ -14,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface IUserService {
+public interface IUserService extends UserDetailsService {
 
     List<UserResult> findAll();
 
@@ -23,6 +21,7 @@ public interface IUserService {
     UserResult getById(Long id);
 
     User getByUsername(String username);
+
     List<UserResult> findAllUserDTO();
 
     Optional<User> findByUsername(String username);

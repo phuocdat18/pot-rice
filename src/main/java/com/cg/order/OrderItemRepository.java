@@ -1,7 +1,7 @@
-package com.cg.bill;
+package com.cg.order;
 
-import com.cg.model.BillDetail;
-import com.cg.bill.dto.BillDetailResult;
+import com.cg.model.OrderItem;
+import com.cg.order.dto.BillDetailResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
+public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
     @Query("SELECT  " +
             "bd.id, " +
@@ -20,8 +20,8 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "bd.quantity, " +
             "bd.amount, " +
             "bd.bill " +
-            "FROM BillDetail AS bd " +
-            "JOIN Bill b ON bd.bill.id = b.id " +
+            "FROM OrderItem AS bd " +
+            "JOIN Order b ON bd.bill.id = b.id " +
             "WHERE b.user.id = :id"
     )
     List<BillDetailResult> findAllBillDetailDTO(Long id);
@@ -34,7 +34,7 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "bd.quantity, " +
             "bd.amount, " +
             "bd.bill " +
-            "FROM BillDetail AS bd " +
+            "FROM OrderItem AS bd " +
             "WHERE bd.bill.id = :id "
     )
     List<BillDetailResult> findBillDetailByBillId (Long id);

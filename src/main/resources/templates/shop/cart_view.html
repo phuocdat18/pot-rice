@@ -759,9 +759,9 @@
     page.commands.getPayment = () => {
         let pay = $('.payment_defult:checked').val();
 
-        let bill = new Bill();
+        let order = new Bill();
         if (pay === 'momo') {
-            bill = {
+            order = {
                 locationRegionReqDTO: {
                     provinceId: page.dialogs.elements.provinceCr.val(),
                     provinceName: page.dialogs.elements.provinceCr.find('option:selected').text(),
@@ -775,7 +775,7 @@
             }
         }
         if (pay === 'cod') {
-            bill = {
+            order = {
                 locationRegionReqDTO: {
                     provinceId: page.dialogs.elements.provinceCr.val(),
                     provinceName: page.dialogs.elements.provinceCr.find('option:selected').text(),
@@ -788,7 +788,7 @@
                 status: "ORDER"
             }
         }
-        console.log(JSON.stringify(bill))
+        console.log(JSON.stringify(order))
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -796,7 +796,7 @@
             },
             type: 'POST',
             url: page.urls.getPayment,
-            data: JSON.stringify(bill)
+            data: JSON.stringify(order)
         })
             .done((data) => {
                 console.log(data)

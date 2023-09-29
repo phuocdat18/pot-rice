@@ -254,7 +254,7 @@
     page.dialogs.elements.addressCr = $('#addressCr')
 
     page.elements.tbBill = $('#tbBill tbody')
-    page.elements.totalAmountBill = $('#totalAmount-bill')
+    page.elements.totalAmountBill = $('#totalAmount-order')
 
     page.elements.btnBillDetailModal = $("#btnBillDetail");
     page.dialogs.elements.tbBillDetail = $('#tbBillDetail tbody')
@@ -484,14 +484,14 @@
 
     page.commands.getPaymentRECEIVE = (id) => {
         const url = `${page.urls.getStatusBill}/${id}`;
-        const bill = {
+        const order = {
             status: 'LOADING',
         };
 
         $.ajax({
             type: 'PATCH',
             url: url,
-            data: JSON.stringify(bill),
+            data: JSON.stringify(order),
             contentType: 'application/json',
             dataType: 'json',
         })
@@ -505,14 +505,14 @@
 
     page.commands.getPaymentSHIPPING = (id) => {
         const url = `${page.urls.getStatusBill}/${id}`;
-        const bill = {
+        const order = {
             status: 'SHIPPING',
         };
 
         $.ajax({
             type: 'PATCH',
             url: url,
-            data: JSON.stringify(bill),
+            data: JSON.stringify(order),
             contentType: 'application/json',
             dataType: 'json',
         })
@@ -526,14 +526,14 @@
 
     page.commands.getPaymentDONE = (id) => {
         const url = `${page.urls.getStatusBill}/${id}`;
-        const bill = {
+        const order = {
             status: 'DONE'
         };
 
         $.ajax({
             type: 'PATCH',
             url: url,
-            data: JSON.stringify(bill),
+            data: JSON.stringify(order),
             contentType: 'application/json',
             dataType: 'json'
         })
@@ -661,7 +661,7 @@
                 <span class="province">${obj.locationRegionDTO.provinceName},${obj.locationRegionDTO.districtName},${obj.locationRegionDTO.wardName},${obj.locationRegionDTO.address}</span>
             </td>
             <td>
-                <button class="views view-bill-detail" data-bill-id="${obj.id}" type="button">Xem</button>
+                <button class="views view-order-detail" data-order-id="${obj.id}" type="button">Xem</button>
             </td>
             <td>
                 <button class="accept" type="button">Nhận đơn</button>
@@ -1244,20 +1244,20 @@
             page.commands.search(1, 10);
         });
 
-        page.elements.newOrder.on('click', '.view-bill-detail', function () {
-            const billId = $(this).data('bill-id')
+        page.elements.newOrder.on('click', '.view-order-detail', function () {
+            const billId = $(this).data('order-id')
             page.commands.showModalBillDetail(billId);
         })
-        page.elements.orderLoading.on('click', '.view-bill-detail', function () {
-            const billId = $(this).data('bill-id')
+        page.elements.orderLoading.on('click', '.view-order-detail', function () {
+            const billId = $(this).data('order-id')
             page.commands.showModalBillDetail(billId);
         })
-        page.elements.orderShipping.on('click', '.view-bill-detail', function () {
-            const billId = $(this).data('bill-id')
+        page.elements.orderShipping.on('click', '.view-order-detail', function () {
+            const billId = $(this).data('order-id')
             page.commands.showModalBillDetail(billId);
         })
-        page.elements.orderDone.on('click', '.view-bill-detail', function () {
-            const billId = $(this).data('bill-id')
+        page.elements.orderDone.on('click', '.view-order-detail', function () {
+            const billId = $(this).data('order-id')
             page.commands.showModalBillDetail(billId);
         })
 

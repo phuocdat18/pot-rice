@@ -1,7 +1,7 @@
-package com.cg.bill.dto;
+package com.cg.order.dto;
 
 import com.cg.location.dto.LocationRegionReqDTO;
-import com.cg.model.EPayment;
+import com.cg.model.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BillReqDTO {
     private LocationRegionReqDTO locationRegionReqDTO;
-    private EPayment status;
+    private OrderStatus status;
 }

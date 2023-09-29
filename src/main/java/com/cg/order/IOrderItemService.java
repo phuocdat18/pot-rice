@@ -1,15 +1,15 @@
-package com.cg.bill;
+package com.cg.order;
 
-import com.cg.model.BillDetail;
+import com.cg.model.OrderItem;
 import com.cg.model.CartDetail;
-import com.cg.bill.dto.BillDetailResult;
+import com.cg.order.dto.BillDetailResult;
 import com.cg.service.IGeneralService;
 
 import java.util.List;
 
-public interface IBillDetailService extends IGeneralService<BillDetail, Long> {
+public interface IOrderItemService extends IGeneralService<OrderItem, Long> {
 
-    BillDetail addBillDetail(BillDetail billDetail, CartDetail cartDetail);
+    OrderItem addBillDetail(OrderItem orderItem, CartDetail cartDetail);
     List<BillDetailResult> findAllBillDetailDTO(Long id);
     List<BillDetailResult> findBillDetailByBillId (Long id);
 
