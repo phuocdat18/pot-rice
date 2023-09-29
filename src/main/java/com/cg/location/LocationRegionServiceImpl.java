@@ -1,7 +1,6 @@
-package com.cg.service.locationRegion;
+package com.cg.location;
 
 import com.cg.model.LocationRegion;
-import com.cg.repository.LocationRegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

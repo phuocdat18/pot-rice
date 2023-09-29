@@ -1,6 +1,6 @@
 package com.cg.cartDetail;
 
-import com.cg.cartDetail.dto.CartDetailDTO;
+import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.model.Cart;
 import com.cg.model.CartDetail;
 import com.cg.model.Product;
@@ -17,7 +17,7 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
     CartDetail findCartDetailsByProductAndCart (Product product, Cart cart);
 
     List<CartDetail> findCartDetailsByCart(Cart cart);
-    @Query("SELECT NEW com.cg.model.dto.cart.CartDetailDTO ( " +
+    @Query("SELECT " +
             "cd.id, " +
             "cd.product, " +
             "cd.title, " +
@@ -30,5 +30,5 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
             "JOIN Cart c ON cd.cart.id = c.id " +
             "WHERE c.user.id = :id"
     )
-    List<CartDetailDTO> findAllCartDetailDTO(Long id);
+    List<CartDetailResult> findAllCartDetailDTO(Long id);
 }

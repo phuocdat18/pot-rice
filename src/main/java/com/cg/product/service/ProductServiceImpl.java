@@ -5,12 +5,23 @@ import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.Category;
 import com.cg.model.Product;
 import com.cg.model.ProductAvatar;
+<<<<<<< HEAD
 import com.cg.product.ProductMapper;
 import com.cg.product.mapper.ProductCreationParam;
 import com.cg.product.mapper.ProductResult;
 import com.cg.product.mapper.ProductUpdateParam;
 import com.cg.repository.ProductAvatarRepository;
 
+=======
+import com.cg.model.dto.product.ProductCreateReqDTO;
+import com.cg.model.dto.product.ProductDTO;
+import com.cg.model.dto.product.ProductUpdateReqDTO;
+import com.cg.avatar.ProductAvatarRepository;
+<<<<<<< HEAD:src/main/java/com/cg/service/product/ProductServiceImpl.java
+import com.cg.repository.ProductRepository;
+import com.cg.category.ICategoryService;
+=======
+>>>>>>> 7c57b4faf17e5a2142b133e37376f6e77cb45cce
 import com.cg.product.ProductRepository;
 import com.cg.service.upload.IUploadService;
 import com.cg.utils.UploadUtils;

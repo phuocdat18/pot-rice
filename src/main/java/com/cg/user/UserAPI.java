@@ -3,11 +3,11 @@ package com.cg.user;
 
 import com.cg.exception.DataInputException;
 import com.cg.model.User;
-import com.cg.model.dto.user.RoleDTO;
-import com.cg.model.dto.user.UserDTO;
-import com.cg.model.dto.user.UserUpdateReqDTO;
-import com.cg.model.dto.user.UserUpdateResDTO;
-import com.cg.service.role.IRoleService;
+import com.cg.role.IRoleService;
+import com.cg.role.dto.RoleResult;
+import com.cg.user.dto.UserDTO;
+import com.cg.user.dto.UserUpdateReqDTO;
+import com.cg.user.dto.UserUpdateResDTO;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,6 @@ public class UserAPI {
     @Autowired
     private IRoleService roleService;
 
-
-
     @Autowired
     private AppUtils appUtils;
 
@@ -50,7 +48,7 @@ public class UserAPI {
     }
     @GetMapping("/roles")
     public ResponseEntity<?> getAllRoles() {
-        List<RoleDTO> roleDTOS = roleService.findAllRoleDTO();
+        List<RoleResult> roleDTOS = roleService.findAll();
 
         if (roleDTOS.isEmpty()) {
             return new ResponseEntity<>("No roles found.", HttpStatus.NO_CONTENT);

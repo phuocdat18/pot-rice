@@ -32,9 +32,9 @@ public class Cart extends BaseEntity {
     @Column(name = "user_id", insertable = false, updatable = false)
     private int userId;
 
-    public CartDTO toCartDTO() {
-        return new CartDTO()
-                .setId(id)
-                .setTotalAmount(totalAmount);
-    }
+//    public CartDTO toCartDTO() {
+//        return new CartDTO()
+//                .setId(id)
+//                .setTotalAmount(totalAmount);
+//    }
 }

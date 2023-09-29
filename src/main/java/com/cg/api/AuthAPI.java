@@ -8,6 +8,7 @@ import com.cg.model.User;
 import com.cg.role.IRoleService;
 import com.cg.service.jwt.JwtService;
 import com.cg.user.IUserService;
+import com.cg.user.dto.UserLoginDTO;
 import com.cg.user.dto.UserReqDTO;
 import com.cg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,11 +69,6 @@ public class AuthAPI {
 
         Optional<Role> optRole = roleService.findById(userReqDTO.getRole().getId());
 
-        if (optRole.isEmpty()) {
-
-            throw new DataInputException("Invalid account role");
-        }
-
         try {
             String passwordEncode = passwordEncoder.encode(userReqDTO.getPassword());
             userReqDTO.setPassword(passwordEncode);
@@ -121,15 +117,6 @@ public class AuthAPI {
                         .maxAge(1000L * 60 * 60 * 24 * 30)
                         .domain("localhost")
                         .build();
-
-//                ResponseCookie springCookie = ResponseCookie.from("JWT", jwt)
-//                        .httpOnly(false)
-//                        .secure(false)
-//                        .path("/")
-//                        .domain("192.168.1.73")
-//                        .maxAge(1000L * 60 * 60 * 24 * 30)
-//                        .build();
-
 
                 System.out.println(jwtResponse);
 

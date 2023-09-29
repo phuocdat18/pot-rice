@@ -2,9 +2,9 @@ package com.cg.user;
 
 import com.cg.model.User;
 import com.cg.model.UserPrinciple;
-import com.cg.model.dto.user.UserDTO;
-import com.cg.model.dto.user.UserUpdateReqDTO;
-import com.cg.repository.LocationRegionRepository;
+import com.cg.location.LocationRegionRepository;
+import com.cg.user.dto.UserDTO;
+import com.cg.user.dto.UserUpdateReqDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
