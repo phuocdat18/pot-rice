@@ -2,11 +2,10 @@ package com.cg.user;
 
 import com.cg.model.Role;
 import com.cg.model.User;
-import com.cg.role.dto.RoleCreationParam;
-import com.cg.role.dto.RoleResult;
 import com.cg.role.dto.RoleUpdateParam;
 import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserResult;
+import com.cg.user.dto.UserUpdateParam;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,19 +20,20 @@ public class UserMapper {
                 .setUsername(creationParam.getUsername())
                 .setPassword(creationParam.getPassword())
                 .setEmail(creationParam.getEmail())
-                .setPhone(creationParam.getPhone());
+                .setPhone(creationParam.getPhone())
+                .setRoleId(creationParam.getRoleResult().getId());
     }
 
-    public Role toEntity(RoleUpdateParam dto) {
-//        return new Role()
-//                .setName(dto.getName());
+    public User toEntity(UserUpdateParam dto) {
+//        return new User()
+//                .setFullName(dto.getFullName());
         return null;
     }
 
-    public void transferFields(Role entity, RoleUpdateParam dto) {
-        entity.setName(dto.getName());
-//        return new Role()
-//                .setName(dto.getName());
+    public void transferFields(User entity, UserUpdateParam dto) {
+        entity.setFullName(dto.getFullName());
+        entity.setEmail(dto.getEmail());
+        entity.setPhone(dto.getPhone());
     }
 
     public UserResult toDTO(User entity) {
@@ -46,9 +46,7 @@ public class UserMapper {
                 .setPhone(entity.getPhone());
     }
 
-    public List<RoleResult> toDTOList(List<Role> entities) {
+    public List<UserResult> toDTOList(List<User> entities) {
         return entities.stream().map(this::toDTO).collect(Collectors.toList());
     }
-
-
 }

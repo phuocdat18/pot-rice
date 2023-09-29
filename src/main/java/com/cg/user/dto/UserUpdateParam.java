@@ -7,73 +7,24 @@ import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 @Getter
 @Setter
-public class UserUpdateParam implements Validator {
-    ValidateUtils validateUtils = new ValidateUtils();
+public class UserUpdateParam {
+    @NotBlank(message = "The Full Name is required")
+    @Size(min = 5, max = 50, message = "The length of Full Name must be between 5 and 50 characters")
     private String fullName;
+
+    @NotBlank(message = "The email is required")
+    @Email(message = "The email address is invalid")
+    @Size(max = 100, message = "The length of email maximum 100 characters")
     private String email;
+
+    @NotBlank(message = "The phone is required")
+    @Pattern(regexp = "^(\\\\+?84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-9])[0-9]{7}$", message = "Invalid phone number")
     private String phone;
-
-    public User toUser(User oldUser) {
-        return new User()
-                .setId(oldUser.getId())
-                .setUsername(oldUser.getUsername())
-                .setPassword(oldUser.getPassword())
-                .setRole(oldUser.getRole())
-                .setFullName(fullName)
-                .setEmail(email)
-                .setPhone(phone)
-                ;
-    }
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return UserUpdateParam.class.isAssignableFrom(clazz);
-    }
-
-    @Override
-    public void validate(Object target, Errors errors) {
-        UserUpdateParam userUpdateReqDTO = (UserUpdateParam) target;
-
-        String fullName = userUpdateReqDTO.fullName;
-        String email = userUpdateReqDTO.email;
-        String phone = userUpdateReqDTO.phone;
-
-
-        if (fullName == null) {
-            errors.rejectValue("fullName", "fullName.null", "Tên là bắt buộc ");
-        } else {
-            if (fullName.trim().length() == 0) {
-                errors.rejectValue("fullName", "fullName.empty", "Tên không được để trống");
-            } else {
-                if (!validateUtils.isLetterWithoutNumberValid(fullName)) {
-                    errors.rejectValue("fullName", "fullName.match", "Tên không được chứa chữ số và ký tự đặc biệt");
-                }
-            }
-        }
-
-        if (email == null) {
-            errors.rejectValue("email", "email.null", "Email là bắt buộc");
-        } else {
-            if (email.trim().length() == 0) {
-                errors.rejectValue("email", "email.empty", "Email không được để trống");
-            } else {
-                if (!validateUtils.isEmailValid(email)) {
-                    errors.rejectValue("email", "email.match", "Email không đúng cú pháp");
-                }
-            }
-        }
-
-        if (phone == null) {
-            errors.rejectValue("phone", "phone.null", "Số điện thoại là bắt buộc");
-        } else {
-            if (phone.trim().length() == 0) {
-                errors.rejectValue("phone", "phone.empty", "Số điện thoại không được để trống");
-            } else {
-                if (!validateUtils.isPhoneValid(phone)) {
-                    errors.rejectValue("phone", "phone.match", "Số điện thoại có 10 chữ số và bắt đầu bằng 0");
-                }
-            }
-        }
-    }
 }

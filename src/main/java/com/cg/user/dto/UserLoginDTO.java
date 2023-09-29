@@ -14,7 +14,6 @@ import javax.validation.constraints.NotBlank;
 @Accessors(chain = true)
 public class UserLoginDTO {
     @NotBlank(message = "The username is required")
-//    @Length(min = 1, message = "The username is required")
     private String username;
 
     @NotBlank(message = "The password is required")

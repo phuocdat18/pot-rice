@@ -5,11 +5,12 @@ import com.cg.exception.DataInputException;
 import com.cg.model.User;
 import com.cg.role.IRoleService;
 import com.cg.role.dto.RoleResult;
-import com.cg.user.dto.UserDTO;
+import com.cg.role.dto.RoleUpdateParam;
+import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
-import com.cg.user.dto.UserUpdateResDTO;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,144 +22,157 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class UserAPI {
-
-    @Autowired
-    private IUserService userService;
-    @Autowired
-    private IRoleService roleService;
-
-    @Autowired
-    private AppUtils appUtils;
-
-    @Autowired
-    private ValidateUtils validateUtils;
-
-
-    @GetMapping
-    public ResponseEntity<?> getAllCustomers() {
-        List<UserResult> userDTOS = userService.findAllUserDTO();
-
-        if (userDTOS.isEmpty()) {
-            return new ResponseEntity<>("No customer found.", HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
-    }
-    @GetMapping("/roles")
-    public ResponseEntity<?> getAllRoles() {
-        List<RoleResult> roleDTOS = roleService.findAll();
-
-        if (roleDTOS.isEmpty()) {
-            return new ResponseEntity<>("No roles found.", HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(roleDTOS, HttpStatus.OK);
-    }
-    @PatchMapping("/update/{id}")
-
-    public ResponseEntity<?> updateUser(@PathVariable String id, @ModelAttribute UserUpdateParam userUpdateParam, BindingResult bindingResult) {
-
-        new UserUpdateParam().validate(userUpdateParam, bindingResult);
-
-        if (bindingResult.hasErrors())
-            return appUtils.mapErrorToResponse(bindingResult);
-
-        if (!validateUtils.isNumberValid(id)) {
-            throw new DataInputException("Mã sản phẩm không hợp lệ");
-        }
-
-        Long userId = Long.parseLong(id);
-
-        Optional<User> userOptional = userService.findById(userId);
-
-        if (userOptional.isPresent()) {
-            User user = userService.update(userOptional.get(), userUpdateParam);
-            UserUpdateResDTO userUpdateResDTO = user.toUserUpdateResDTO();
-
-            return new ResponseEntity<>(userUpdateResDTO, HttpStatus.OK);
-        } else {
-            throw new DataInputException("Thông tin người dùng không hợp lệ");
-        }
-    }
+    private final IUserService userService;
+    private final IRoleService IRoleService;
+    private final AppUtils appUtils;
+    private final ValidateUtils validateUtils;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findUserById(@PathVariable String id) {
-        if (!validateUtils.isNumberValid(id)) {
-            throw new DataInputException("ID không hợp lệ");
-        }
-        Long userId = Long.parseLong(id);
-
-        try {
-            Optional<User> user = userService.findById(userId);
-
-            if (user.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(user.get().toUserDTO(), HttpStatus.OK);
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public UserResult findById(@PathVariable Long id) {
+        return userService.getById(id);
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<?> findAll() {
+        return userService.findAll();
+    }
+
+    @GetMapping("/roles")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RoleResult> getAllRoles() {
+        return IRoleService.findAll();
+    }
+
+//    @GetMapping("/roles")
+//    public ResponseEntity<?> getAllRoles() {
+//        List<RoleResult> roleResults = roleService.findAll();
+//
+//        if (roleResults.isEmpty()) {
+//            return new ResponseEntity<>("No roles found.", HttpStatus.NO_CONTENT);
+//        }
+//
+//        return new ResponseEntity<>(roleResults, HttpStatus.OK);
+//    }
+
+    @PatchMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserResult update(@PathVariable Long id, @RequestBody UserUpdateParam param) {
+        return userService.update(id, param);
+    }
+
+//    @PatchMapping("/update/{id}")
+//
+//    public ResponseEntity<?> updateUser(@PathVariable String id, @ModelAttribute UserUpdateParam userUpdateParam, BindingResult bindingResult) {
+//
+//        new UserUpdateParam();
+//
+//        if (bindingResult.hasErrors())
+//            return appUtils.mapErrorToResponse(bindingResult);
+//
+//        if (!validateUtils.isNumberValid(id)) {
+//            throw new DataInputException("Mã sản phẩm không hợp lệ");
+//        }
+//
+//        Long userId = Long.parseLong(id);
+//
+//        Optional<User> userOptional = Optional.ofNullable(userService.findById(userId));
+//
+//        if (userOptional.isPresent()) {
+//            User user = userService.update(userOptional.get(), userUpdateParam);
+//            UserUpdateParam userUpdateParam1 = user.toUserUpdateResDTO();
+//
+//            return new ResponseEntity<>(userUpdateParam1, HttpStatus.OK);
+//        } else {
+//            throw new DataInputException("Thông tin người dùng không hợp lệ");
+//        }
+//    }
+
+
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<?> findUserById(@PathVariable String id) {
+//        if (!validateUtils.isNumberValid(id)) {
+//            throw new DataInputException("ID không hợp lệ");
+//        }
+//        Long userId = Long.parseLong(id);
+//
+//        try {
+//            Optional<User> user = userService.findById(userId);
+//
+//            if (user.isEmpty()) {
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//
+//            return new ResponseEntity<>(user.get().toUserDTO(), HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) throws IOException {
-        if (!validateUtils.isNumberValid(id)) {
-            throw new DataInputException("ID user không hợp lệ");
-        }
-        Long userId = Long.parseLong(id);
-
-        Optional<User> user = userService.findById(userId);
-
-        if (user.isPresent()) {
-            userService.delete(user.get());
-
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        } else {
-            throw new DataInputException("Invalid product information");
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable Long id) {
+        userService.deleteById(id);
     }
 
-    @PatchMapping("/disable/{id}")
-    public ResponseEntity<?> markProductAsDeleted(@PathVariable String id) {
-        if (!validateUtils.isNumberValid(id)) {
-            throw new DataInputException("ID không hợp lệ");
-        }
-        Long userId = Long.parseLong(id);
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<?> delete(@PathVariable String id) throws IOException {
+//        if (!validateUtils.isNumberValid(id)) {
+//            throw new DataInputException("ID user không hợp lệ");
+//        }
+//        Long userId = Long.parseLong(id);
+//
+//        Optional<User> user = userService.findById(userId);
+//
+//        if (user.isPresent()) {
+//            userService.delete(user.get());
+//
+//            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+//        } else {
+//            throw new DataInputException("Invalid product information");
+//        }
+//    }
 
-        Optional<User> userOptional = userService.findById(userId);
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setDeleted(true); // Thay đổi thuộc tính 'deleted' thành true
-            userService.save(user);
-            return new ResponseEntity<>("Product has been marked as deleted.", HttpStatus.OK);
-        } else {
-            throw new DataInputException("Invalid product information");
-        }
-    }
-    @PatchMapping("/restore/{id}")
-    public ResponseEntity<?> restoreUser(@PathVariable String id) {
-        if (!validateUtils.isNumberValid(id)) {
-            throw new DataInputException("ID không hợp lệ");
-        }
-        Long userId = Long.parseLong(id);
-
-        Optional<User> userOptional = userService.findById(userId);
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setDeleted(false);
-            userService.save(user);
-            return new ResponseEntity<>("Product has been marked as deleted.", HttpStatus.OK);
-        } else {
-            throw new DataInputException("Invalid product information");
-        }
-    }
-
-
-
+//    @PatchMapping("/disable/{id}")
+//    public ResponseEntity<?> markProductAsDeleted(@PathVariable String id) {
+//        if (!validateUtils.isNumberValid(id)) {
+//            throw new DataInputException("ID không hợp lệ");
+//        }
+//        Long userId = Long.parseLong(id);
+//
+//        Optional<User> userOptional = userService.findById(userId);
+//
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            user.setDeleted(true); // Thay đổi thuộc tính 'deleted' thành true
+//            userService.save(user);
+//            return new ResponseEntity<>("Product has been marked as deleted.", HttpStatus.OK);
+//        } else {
+//            throw new DataInputException("Invalid product information");
+//        }
+//    }
+//    @PatchMapping("/restore/{id}")
+//    public ResponseEntity<?> restoreUser(@PathVariable String id) {
+//        if (!validateUtils.isNumberValid(id)) {
+//            throw new DataInputException("ID không hợp lệ");
+//        }
+//        Long userId = Long.parseLong(id);
+//
+//        Optional<User> userOptional = userService.findById(userId);
+//
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            user.setDeleted(false);
+//            userService.save(user);
+//            return new ResponseEntity<>("Product has been marked as deleted.", HttpStatus.OK);
+//        } else {
+//            throw new DataInputException("Invalid product information");
+//        }
+//    }
 }

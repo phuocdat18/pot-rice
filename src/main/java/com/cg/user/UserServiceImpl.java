@@ -1,38 +1,43 @@
 package com.cg.user;
 
-import com.cg.location.LocationRegionRepository;
+import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.User;
 import com.cg.model.UserPrinciple;
+import com.cg.user.dto.UserCreationParam;
+import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private LocationRegionRepository locationRegionRepository;
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<UserResult> findAll() {
+        List<User> entities = userRepository.findAll();
+        return userMapper.toDTOList(entities);
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("user not found"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserResult getById(Long id) {
+        User entity = findById(id);
+        return userMapper.toDTO(entity);
     }
 
     @Override
@@ -61,27 +66,19 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User update(User user, UserUpdateParam userUpdateReqDTO) {
-        User userUpdate = userUpdateReqDTO.toUser(user);
-        userRepository.save(userUpdate);
-
-        return userUpdate;
+    @Transactional
+    public UserResult update(Long id, UserUpdateParam param) {
+        User entity = findById(id);
+        userMapper.transferFields(entity, param);
+        return userMapper.toDTO(entity);
     }
 
     @Override
-    public User save(User user) {
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-    @Override
-    public void delete(User user) {
-
-    }
-
-    @Override
-    public void deleteById(Long id) {
-
+    @Transactional
+    public UserResult create(UserCreationParam param) {     //DTO khi request
+        User entity = userMapper.toEntity(param);
+        entity = userRepository.save(entity);
+        return userMapper.toDTO(entity);
     }
 
     @Override
@@ -93,4 +90,8 @@ public class UserServiceImpl implements IUserService {
         return UserPrinciple.build(userOptional.get());
     }
 
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
 }

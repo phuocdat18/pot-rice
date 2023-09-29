@@ -1,9 +1,6 @@
 package com.cg.model;
 
-
-import com.cg.user.dto.UserDTO;
 import com.cg.user.dto.UserLoginDTO;
-import com.cg.user.dto.UserUpdateResDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -42,9 +39,9 @@ public class User extends BaseEntity {
     private Role role;
 
     @Column(name = "role_id", insertable = false, updatable = false)
-    private int roleId;
+    private Long roleId;
 
-    public User(Long id, String fullName, String username, String password, String email,boolean deleted, String phone, Role role, Integer roleId) {
+    public User(Long id, String fullName, String username, String password, String email,boolean deleted, String phone, Role role, Long roleId) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
@@ -59,30 +56,30 @@ public class User extends BaseEntity {
 
     }
 
-    public UserLoginDTO toUserLoginDTO() {
-         return new UserLoginDTO()
-                .setUsername(username)
-                .setPassword(password);
-    }
-
-    public UserDTO toUserDTO() {
-        return new  UserDTO()
-                .setId(id)
-                .setFullName(fullName)
-                .setUsername(username)
-                .setPassword(password)
-                .setEmail(email)
-                .setPhone(phone)
-//                .setRole(role.toRoleDTO())
-                ;
-    }
-
-    public UserUpdateResDTO toUserUpdateResDTO() {
-        return new UserUpdateResDTO()
-                .setId(id)
-                .setFullName(fullName)
-                .setEmail(email)
-                .setPhone(phone)
-                ;
-    }
+//    public UserLoginDTO toUserLoginDTO() {
+//         return new UserLoginDTO()
+//                .setUsername(username)
+//                .setPassword(password);
+//    }
+//
+//    public UserDTO toUserDTO() {
+//        return new  UserDTO()
+//                .setId(id)
+//                .setFullName(fullName)
+//                .setUsername(username)
+//                .setPassword(password)
+//                .setEmail(email)
+//                .setPhone(phone)
+////                .setRole(role.toRoleDTO())
+//                ;
+//    }
+//
+//    public UserUpdateResDTO toUserUpdateResDTO() {
+//        return new UserUpdateResDTO()
+//                .setId(id)
+//                .setFullName(fullName)
+//                .setEmail(email)
+//                .setPhone(phone)
+//                ;
+//    }
 }

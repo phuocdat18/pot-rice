@@ -1,26 +1,13 @@
 package com.cg.controller;
 
+import com.cg.bill.dto.BillCreationParam;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
-<<<<<<< HEAD
-
-
-import com.cg.bill.dto.BillDTO;
-import com.cg.bill.dto.BillDetailDTO;
-import com.cg.bill.IBillService;
-import com.cg.bill.IBillDetailService;
-import com.cg.product.service.IProductService;
-import com.cg.user.IUserService;
-=======
-import com.cg.bill.dto.BillCreation;
 import com.cg.bill.dto.BillDetailDTO;
 import com.cg.bill.IBillService;
 import com.cg.bill.IBillDetailService;
 import com.cg.user.IUserService;
-
 import com.cg.product.service.IProductService;
-
->>>>>>> thi-dev
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,7 +115,7 @@ public class CustomerController {
         }
         Long productId = Long.parseLong(id);
 
-        Optional<Product> product = productService.findById(productId);
+        Optional<Product> product = Optional.ofNullable(productService.findById(productId));
 
         if (product.isEmpty()) {
             throw new DataInputException("Không tìm thấy sản phẩm");
@@ -229,10 +216,10 @@ public class CustomerController {
         User user = userOptional.get();
         Long userId = user.getId();
 
-        List<BillCreation> userBillDTOs = billService.findBillDTOByIdUser(userId);
+        List<BillCreationParam> userBillDTOs = billService.findBillDTOByIdUser(userId);
         model.addAttribute("bill", userBillDTOs);
 
-        List<BillCreation> billDTOsById = billService.findBillDTOByIdBill(id);
+        List<BillCreationParam> billDTOsById = billService.findBillDTOByIdBill(id);
         if (billDTOsById.isEmpty()) {
             throw new DataInputException("Bill not found");
         }

@@ -39,4 +39,13 @@ public class RoleMapper {
     public List<RoleResult> toDTOList(List<Role> entities) {
         return entities.stream().map(this::toDTO).collect(Collectors.toList());
     }
+
+
 }
+/**
+public class ProductMapper{
+    public Product toEntity(ProductParam creationParam);
+    public RoleResult toDTO(Role entity);
+}
+
+ **/

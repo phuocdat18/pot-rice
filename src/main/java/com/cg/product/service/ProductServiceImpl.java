@@ -3,6 +3,7 @@ package com.cg.product.service;
 import com.cg.avatar.ProductAvatarRepository;
 import com.cg.exception.DataInputException;
 import com.cg.exception.ResourceNotFoundException;
+import com.cg.mapper.MapUtils;
 import com.cg.model.Category;
 import com.cg.model.Product;
 import com.cg.model.ProductAvatar;
@@ -49,7 +50,8 @@ public class ProductServiceImpl implements IProductService {
     public ProductResult update(Long id, ProductUpdateParam productUpdateParam, Category category) {
         Product entity = findById(id);
         productMapper.transferFields(entity, productUpdateParam, category);
-        return productMapper.toDTO(entity);
+//        return productMapper.toDTO(entity);
+        return MapUtils.toDTO(entity, ProductResult.class);
     }
 
     @Override

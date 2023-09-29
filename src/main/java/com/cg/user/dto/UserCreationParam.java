@@ -37,7 +37,7 @@ public class UserCreationParam {
     private String phone;
 
     @Valid
-    private RoleResult role;
+    private RoleResult roleResult;
 
 
 //    public User toUser(Long id) {

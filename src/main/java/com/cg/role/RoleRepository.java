@@ -15,8 +15,9 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
     @Query("SELECT " +
             "r.id, " +
-            "r.code" +
-            "FROM Role r"
+            "r.name, " +
+            "r.code " +
+            "FROM Role as r"
     )
     List<RoleResult> findAllRoleDTO();
 }

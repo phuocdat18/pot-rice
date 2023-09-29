@@ -1,6 +1,7 @@
 package com.cg.user;
 
 import com.cg.model.User;
+import com.cg.user.dto.UserResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,15 +22,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "u.username, " +
             "u.email, " +
             "u.phone, " +
-            "u.role," +
-            "u.deleted"+
+            "u.role, " +
+            "u.deleted "+
             "FROM User u " +
             "WHERE u.role.id <> 1"
     )
     List<UserResult> findAllUserDTO();
     @Query("SELECT " +
                 "u.id, " +
-                "u.username" +
+                "u.username " +
             "FROM User u " +
             "WHERE u.username = ?1"
     )
