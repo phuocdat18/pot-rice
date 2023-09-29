@@ -54,7 +54,7 @@
                             <div class="tf_dashboard_body">
                                 <h3>Danh sách đơn hàng</h3>
                                 <div class="tf_dashboard_order">
-                                    <div class="table-responsive" id="account-history-bill">
+                                    <div class="table-responsive" id="account-history-order">
                                         <input type="button" id="idUser" th:value="${user.id}" hidden="true">
 
                                         <table class="table table-hover" id="tbBill">
@@ -167,7 +167,7 @@
     page.dialogs.elements.addressCr = $('#addressCr')
 
     page.elements.tbBill = $('#tbBill tbody')
-    page.elements.totalAmountBill = $('#totalAmount-bill')
+    page.elements.totalAmountBill = $('#totalAmount-order')
 
     let user = new User();
     let userId = $('#idUser').val();

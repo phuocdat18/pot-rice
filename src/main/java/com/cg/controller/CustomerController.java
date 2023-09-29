@@ -1,26 +1,22 @@
 package com.cg.controller;
 
-import com.cg.bill.dto.BillCreationParam;
+import com.cg.order.dto.OrderCreationParam;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
 <<<<<<< HEAD
-import com.cg.bill.dto.BillDetailDTO;
-import com.cg.bill.IBillService;
-import com.cg.bill.IBillDetailService;
+import com.cg.order.dto.BillDetailDTO;
+import com.cg.order.IOrderService;
+import com.cg.order.IOrderItemService;
 import com.cg.user.IUserService;
 import com.cg.product.service.IProductService;
 =======
 <<<<<<< HEAD
 
 
-import com.cg.bill.dto.BillDTO;
-import com.cg.bill.dto.BillDetailResult;
-import com.cg.bill.IBillService;
-import com.cg.bill.IBillDetailService;
-import com.cg.product.service.IProductService;
-import com.cg.user.IUserService;
+import com.cg.order.dto.BillDTO;
+import com.cg.order.dto.BillDetailResult;
 =======
-import com.cg.bill.dto.BillCreation;
+import com.cg.order.dto.BillCreation;
 
 >>>>>>> thi-dev
 >>>>>>> thi-dev
@@ -52,9 +48,9 @@ public class CustomerController {
     private IProductService productService;
 
     @Autowired
-    private IBillService billService;
+    private IOrderService billService;
     @Autowired
-    private IBillDetailService billDetailService;
+    private IOrderItemService billDetailService;
 
     @GetMapping
     public String showPageHome(Model model) {
@@ -233,15 +229,15 @@ public class CustomerController {
         Long userId = user.getId();
 
 <<<<<<< HEAD
-        List<BillCreationParam> userBillDTOs = billService.findBillDTOByIdUser(userId);
+        List<OrderCreationParam> userBillDTOs = billService.findBillDTOByIdUser(userId);
 =======
         List<BillCreation> userBillDTOs = billService.findAllByUserId(userId);
 >>>>>>> thi-dev
         model.addAttribute("bill", userBillDTOs);
 
-        List<BillCreationParam> billDTOsById = billService.findBillDTOByIdBill(id);
+        List<OrderCreationParam> billDTOsById = billService.findBillDTOByIdBill(id);
         if (billDTOsById.isEmpty()) {
-            throw new DataInputException("Bill not found");
+            throw new DataInputException("Order not found");
         }
         model.addAttribute("billById", billDTOsById.get(0));
 

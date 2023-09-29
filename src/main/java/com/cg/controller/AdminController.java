@@ -1,8 +1,8 @@
 package com.cg.controller;
 
-import com.cg.bill.IBillDetailService;
-import com.cg.bill.IBillService;
-import com.cg.bill.dto.BillResult;
+import com.cg.order.IOrderItemService;
+import com.cg.order.IOrderService;
+import com.cg.order.dto.OrderResult;
 import com.cg.exception.DataInputException;
 import com.cg.model.Role;
 import com.cg.model.User;
@@ -28,9 +28,9 @@ public class AdminController {
     @Autowired
     private IUserService userService;
     @Autowired
-    private IBillService billService;
+    private IOrderService billService;
     @Autowired
-    private IBillDetailService billDetailService;
+    private IOrderItemService billDetailService;
 
     @GetMapping
     public String showPageAdmin(Model model) {
@@ -78,7 +78,7 @@ public class AdminController {
 //
 //        Optional<User> userOptional = userService.findByUsername(username);
 //        Long userId = userOptional.get().getId();
-//        List<BillResult> billDTOS = billService.findAllByUserId(userId);
+//        List<OrderResult> billDTOS = billService.findAllByUserId(userId);
 ////        List<BillDetailDTO> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
 //
 //        if (!userOptional.isPresent()) {
@@ -97,7 +97,7 @@ public class AdminController {
 //        return "dashboard_admin/orderJob";
 
 
-        List<BillResult> billDTOS = billService.findAllByUserId(principal.getId());
+        List<OrderResult> billDTOS = billService.findAllByUserId(principal.getId());
 //        List<BillDetailDTO> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
         String roleCode = principal.getAuthorities().get(0).getAuthority();
         model.addAttribute("username", principal.getUsername());

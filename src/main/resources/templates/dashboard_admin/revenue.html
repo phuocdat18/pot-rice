@@ -315,7 +315,7 @@
     page.elements.countOrders = $('#count-orders')
 
 
-    page.dialogs.elements.btnBillDetail = $('.btn-bill-detail')
+    page.dialogs.elements.btnBillDetail = $('.btn-order-detail')
     page.dialogs.elements.mdBillDetail = $('#tbBill')
     page.dialogs.elements.tbBillDtail = $('#tbBillDetail tbody')
     page.dialogs.elements.btnCloseMdBillDetail = $('#btnCloseMdBillDetail')
@@ -342,27 +342,27 @@
                 let totalAmount = 0;
                 let monthBills = [];
 
-                data.forEach((bill) => {
-                    const billDate = new Date(bill.createAt).getDate();
-                    const billMonth = new Date(bill.createAt).getMonth() + 1;
-                    const billYear = new Date(bill.createAt).getFullYear();
+                data.forEach((order) => {
+                    const billDate = new Date(order.createAt).getDate();
+                    const billMonth = new Date(order.createAt).getMonth() + 1;
+                    const billYear = new Date(order.createAt).getFullYear();
 
                     // Kiểm tra điều kiện tìm kiếm và lấy danh sách hóa đơn phù hợp
                     if (day && month && year && billDate == day && billMonth == month && billYear == year) {
-                        totalAmount += bill.totalAmount;
-                        monthBills.push(bill);
+                        totalAmount += order.totalAmount;
+                        monthBills.push(order);
                     } else if (day == 0 && month && year && billMonth == month && billYear == year) {
-                        totalAmount += bill.totalAmount;
-                        monthBills.push(bill);
+                        totalAmount += order.totalAmount;
+                        monthBills.push(order);
                     } else if (day == 0 && month == 0 && year && billYear == year) {
-                        totalAmount += bill.totalAmount;
-                        monthBills.push(bill);
+                        totalAmount += order.totalAmount;
+                        monthBills.push(order);
                     }  
                 });
 
                 // Hiển thị danh sách hóa đơn phù hợp
-                monthBills.forEach((bill) => {
-                    const str = page.commands.renderRevenue(bill);
+                monthBills.forEach((order) => {
+                    const str = page.commands.renderRevenue(order);
                     page.elements.tbMonthRevenue.prepend(str);
                 });
 
@@ -408,11 +408,11 @@
 
                 let totalAmount = 0;
                 let monthBills = [];
-                data.forEach((bill, index) => {
-                    const billDate = new Date(bill.createAt).getMonth() + 1;
+                data.forEach((order, index) => {
+                    const billDate = new Date(order.createAt).getMonth() + 1;
                     if (billDate == month) {
-                        totalAmount += bill.totalAmount;
-                        monthBills.push(bill);
+                        totalAmount += order.totalAmount;
+                        monthBills.push(order);
                         const str = page.commands.renderRevenue(monthBills[monthBills.length - 1]);
                         page.elements.tbMonthRevenue.prepend(str)
                     }
