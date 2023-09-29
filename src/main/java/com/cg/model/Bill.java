@@ -1,8 +1,8 @@
 package com.cg.model;
 
-import com.cg.bill.dto.BillCreation;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "bills")
+@Accessors(chain = true)
 public class Bill extends BaseEntity {
 
     @Id
@@ -26,14 +27,14 @@ public class Bill extends BaseEntity {
     private User user;
 
     @Column(name = "user_id", insertable = false, updatable = false)
-    private int userId;
+    private Long userId;
 
     @OneToOne
     @JoinColumn(name = "location_region_id", foreignKey = @ForeignKey(name = "fk_user_location_region"))
     private LocationRegion locationRegion;
 
     @Column(name = "location_region_id", insertable = false, updatable = false)
-    private int locationRegionId;
+    private Long locationRegionId;
 
     @Column(name = "bill_status")
     private EPayment status;
@@ -49,12 +50,4 @@ public class Bill extends BaseEntity {
 
     }
 
-    public BillCreation toBillDTO() {
-        return new BillCreation()
-                .setId(id)
-                .setTotalAmount(totalAmount)
-                .setUserDTO(user.toUserDTO())
-                .setLocationRegionDTO(locationRegion.toLocationRegionDTO())
-                .setStatus(status);
-    }
 }

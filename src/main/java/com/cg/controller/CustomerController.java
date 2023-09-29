@@ -3,11 +3,27 @@ package com.cg.controller;
 import com.cg.bill.dto.BillCreationParam;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
+<<<<<<< HEAD
 import com.cg.bill.dto.BillDetailDTO;
 import com.cg.bill.IBillService;
 import com.cg.bill.IBillDetailService;
 import com.cg.user.IUserService;
 import com.cg.product.service.IProductService;
+=======
+<<<<<<< HEAD
+
+
+import com.cg.bill.dto.BillDTO;
+import com.cg.bill.dto.BillDetailResult;
+import com.cg.bill.IBillService;
+import com.cg.bill.IBillDetailService;
+import com.cg.product.service.IProductService;
+import com.cg.user.IUserService;
+=======
+import com.cg.bill.dto.BillCreation;
+
+>>>>>>> thi-dev
+>>>>>>> thi-dev
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,7 +232,11 @@ public class CustomerController {
         User user = userOptional.get();
         Long userId = user.getId();
 
+<<<<<<< HEAD
         List<BillCreationParam> userBillDTOs = billService.findBillDTOByIdUser(userId);
+=======
+        List<BillCreation> userBillDTOs = billService.findAllByUserId(userId);
+>>>>>>> thi-dev
         model.addAttribute("bill", userBillDTOs);
 
         List<BillCreationParam> billDTOsById = billService.findBillDTOByIdBill(id);
@@ -225,7 +245,7 @@ public class CustomerController {
         }
         model.addAttribute("billById", billDTOsById.get(0));
 
-        List<BillDetailDTO> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
+        List<BillDetailResult> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
         model.addAttribute("billDetailDTOS", billDetailDTOS);
 
         String roleCode = user.getRole().getCode().getValue();

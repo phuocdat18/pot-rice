@@ -14,9 +14,11 @@ import java.util.List;
 @Repository
 public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
     boolean existsCartDetailByCart(Cart cart);
-    CartDetail findCartDetailsByProductAndCart (Product product, Cart cart);
 
-    List<CartDetail> findCartDetailsByCart(Cart cart);
+    CartDetail findCartDetailsByProductAndCart(Product product, Cart cart);
+
+    List<CartDetail> findAllByCartId(Long cartId);
+
     @Query("SELECT " +
             "cd.id, " +
             "cd.product, " +

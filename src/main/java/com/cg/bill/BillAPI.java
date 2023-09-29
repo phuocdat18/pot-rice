@@ -1,17 +1,15 @@
 package com.cg.bill;
 
 
-import com.cg.bill.dto.BillCreationParam;
-import com.cg.bill.dto.BillDetailDTO;
+import com.cg.bill.dto.BillDetailResult;
 import com.cg.exception.DataInputException;
+import com.cg.model.EPayment;
 import com.cg.model.User;
-import com.cg.user.IUserService;
-
 import com.cg.product.service.IProductService;
-
+import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,31 +18,21 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/bills")
 public class BillAPI {
 
-    @Autowired
-    private IBillService billService;
+    private final IBillService billService;
+    private final IBillDetailService billDetailService;
+    private final IUserService userService;
+    private final IProductService productService;
+    private final AppUtils appUtils;
+    private final ValidateUtils validateUtils;
 
-    @Autowired
-    private IBillDetailService billDetailService;
-
-    @Autowired
-    private IUserService userService;
-
-    @Autowired
-    private IProductService productService;
-
-    @Autowired
-    private AppUtils appUtils;
-
-    @Autowired
-    private ValidateUtils validateUtils;
-
-    @GetMapping()
-    public ResponseEntity<List<?>> findAllBills() {
+    @GetMapping
+    public ResponseEntity<?> findAllBills() {
         try {
-            List<BillCreationParam> billDTOS = billService.findAllBillDTO();
+            List<?> billDTOS = billService.findAllByStatus(EPayment.DONE);
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -60,7 +48,7 @@ public class BillAPI {
     @GetMapping("/order")
     public ResponseEntity<List<?>> findAllBillsORDER() {
         try {
-            List<BillCreationParam> billDTOS = billService.findAllBillDTOORDER();
+            List<?> billDTOS = billService.findAllByStatus(EPayment.ORDER);
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -76,7 +64,7 @@ public class BillAPI {
     @GetMapping("/loading")
     public ResponseEntity<List<?>> findAllBillsLOADING() {
         try {
-            List<BillCreationParam> billDTOS = billService.findAllBillDTOLOADING();
+            List<?> billDTOS = billService.findAllByStatus(EPayment.LOADING);
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -90,9 +78,9 @@ public class BillAPI {
     }
 
     @GetMapping("/shipping")
-    public ResponseEntity<List<?>> findAllBillsLOADINGSHIPPING() {
+    public ResponseEntity<?> findAllBillsLOADINGSHIPPING() {
         try {
-            List<BillCreationParam> billDTOS = billService.findAllBillDTOSHIPPING();
+            List<?> billDTOS = billService.findAllByStatus(EPayment.SHIPPING);
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -107,14 +95,14 @@ public class BillAPI {
 
 
     @GetMapping("/bill-detail-by-bill/{id}")
-    public ResponseEntity<List<?>> findAllBillDetail (@PathVariable String id) {
+    public ResponseEntity<?> findAllBillDetail(@PathVariable String id) {
         if (!validateUtils.isNumberValid(id)) {
             throw new DataInputException("Mã bill không hợp lệ");
         }
         Long billId = Long.parseLong(id);
 
         try {
-            List<BillDetailDTO> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(billId);
+            List<BillDetailResult> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(billId);
 
             if (billDetailDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -128,16 +116,16 @@ public class BillAPI {
     }
 
 
-
     @GetMapping("/bill-info/{id}")
-    public ResponseEntity<List<?>> findBillDTOByIdBill (@PathVariable String id) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> findBillDTOByIdBill(@PathVariable String id) {
         if (!validateUtils.isNumberValid(id)) {
             throw new DataInputException("Mã bill không hợp lệ");
         }
         Long billId = Long.parseLong(id);
 
         try {
-            List<BillCreationParam> billDTOS = billService.findBillDTOByIdBill(billId);
+            List<?> billDTOS = billService.findBillDTOByIdBill(billId);
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -151,8 +139,6 @@ public class BillAPI {
     }
 
 
-
-
     @GetMapping("/bill-detail-by-user")
     public ResponseEntity<List<?>> findAllBillDetailByUser() {
 
@@ -164,13 +150,13 @@ public class BillAPI {
         }
 
         try {
-            List<BillCreationParam> billDTOS = billService.findBillDTOByIdUser(userOptional.get().getId());
+            List<?> billDTOS = billService.findAllByUserId(userOptional.get().getId());
 
             if (billDTOS.isEmpty()) {
                 throw new DataInputException("Bill not valid");
             }
 
-            List<BillDetailDTO> billDetailDTOS = billDetailService.findAllBillDetailDTO(userOptional.get().getId());
+            List<BillDetailResult> billDetailDTOS = billDetailService.findAllBillDetailDTO(userOptional.get().getId());
 
 
             if (billDetailDTOS.isEmpty()) {
@@ -180,7 +166,7 @@ public class BillAPI {
             return new ResponseEntity<>(billDetailDTOS, HttpStatus.OK);
 
         } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -192,7 +178,7 @@ public class BillAPI {
         Long userId = Long.parseLong(id);
 
         try {
-            List<BillCreationParam> billDTOS = billService.findBillDTOByIdUser(userId);
+            List<?> billDTOS = billService.findAllByUserId(userId);
 
             if (billDTOS.isEmpty()) {
                 throw new DataInputException("Bill not valid");

@@ -1,25 +1,39 @@
 package com.cg.bill;
 
+import com.cg.bill.dto.BillResult;
 import com.cg.model.Bill;
-import com.cg.bill.dto.BillCreationParam;
-import com.cg.service.IGeneralService;
+import com.cg.model.EPayment;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface IBillService extends IGeneralService<Bill, Long> {
-    List<BillCreationParam> findAllBillDTO ();
+public interface IBillService {
+    void delete(Bill bill);
 
-    List<BillCreationParam> findBillByDate();
-
-    List<BillCreationParam> findAllBillDTOORDER();
-
-
-    List<BillCreationParam> findAllBillDTOLOADING();
-
-    List<BillCreationParam> findAllBillDTOSHIPPING();
-
-    List<BillCreationParam> findBillDTOByIdUser (Long id);
+    void deleteById(Long id);
 
 
-    List<BillCreationParam> findBillDTOByIdBill(Long id);
+    List<BillResult> findAllByStatus(EPayment ePayment);
+
+//    List<BillResult> findBillByDate();
+
+//    List<BillResult> findAllBillDTOORDER();
+//
+//
+//    List<BillResult> findAllBillDTOLOADING();
+//
+//    List<BillResult> findAllBillDTOSHIPPING();
+
+    List<BillResult> findAllByUserId(Long userId);
+
+
+    List<BillResult> findBillDTOByIdBill(Long id);
+
+    Bill findById(Long id);
+
+    BillResult getById(Long id);
+
+
+    List<BillResult> findAll();
+
 }

@@ -2,9 +2,13 @@ package com.cg.user;
 
 import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.User;
+<<<<<<< HEAD
 import com.cg.model.UserPrinciple;
 import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserResult;
+=======
+import com.cg.model.UserPrincipal;
+>>>>>>> thi-dev
 import com.cg.user.dto.UserUpdateParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -87,7 +91,7 @@ public class UserServiceImpl implements IUserService {
         if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException(username);
         }
-        return UserPrinciple.build(userOptional.get());
+        return UserPrincipal.build(userOptional.get());
     }
 
     @Override

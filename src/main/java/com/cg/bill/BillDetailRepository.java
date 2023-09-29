@@ -1,7 +1,7 @@
 package com.cg.bill;
 
 import com.cg.model.BillDetail;
-import com.cg.bill.dto.BillDetailDTO;
+import com.cg.bill.dto.BillDetailResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,7 +24,7 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "JOIN Bill b ON bd.bill.id = b.id " +
             "WHERE b.user.id = :id"
     )
-    List<BillDetailDTO> findAllBillDetailDTO(Long id);
+    List<BillDetailResult> findAllBillDetailDTO(Long id);
     @Query("SELECT " +
             "bd.id, " +
             "bd.product, " +
@@ -37,7 +37,7 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "FROM BillDetail AS bd " +
             "WHERE bd.bill.id = :id "
     )
-    List<BillDetailDTO> findBillDetailByBillId (Long id);
+    List<BillDetailResult> findBillDetailByBillId (Long id);
 
     @Query("SELECT " +
             "bd.id, " +
@@ -53,5 +53,5 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "JOIN Bill AS b ON bd.bill.id = b.id " +
             "WHERE bd.bill.id = :id "
     )
-    List<BillDetailDTO> findBillDetailByBillIdStatus (Long id);
+    List<BillDetailResult> findBillDetailByBillIdStatus (Long id);
 }
