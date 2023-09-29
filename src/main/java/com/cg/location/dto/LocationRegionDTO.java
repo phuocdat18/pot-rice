@@ -1,4 +1,5 @@
-package com.cg.dto.locationRegion;
+package com.cg.location.dto;
+
 
 import com.cg.model.LocationRegion;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,8 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class LocationRegionResDTO {
+public class LocationRegionDTO {
+
     private Long id;
     private String provinceId;
     private String provinceName;
@@ -22,15 +24,15 @@ public class LocationRegionResDTO {
     private String wardName;
     private String address;
 
+
     public LocationRegion toLocationRegion() {
         return new LocationRegion()
-                .setId(id)
-                .setProvinceId(provinceId)
-                .setProvinceName(provinceName)
-                .setDistrictId(districtId)
-                .setDistrictName(districtName)
-                .setWardId(wardId)
-                .setWardName(wardName)
-                .setAddress(address);
+                .setProvinceId(this.provinceId)
+                .setProvinceName(this.provinceName)
+                .setDistrictId(this.districtId)
+                .setDistrictName(this.districtName)
+                .setWardId(this.wardId)
+                .setWardName(this.wardName)
+                .setAddress(this.address);
     }
 }

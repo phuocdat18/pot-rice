@@ -1,7 +1,6 @@
-package com.cg.service.productAvatar;
+package com.cg.avatar;
 
 import com.cg.model.ProductAvatar;
-import com.cg.repository.ProductAvatarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

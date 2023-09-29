@@ -4,7 +4,7 @@ package com.cg.bill;
 import com.cg.bill.dto.BillDTO;
 import com.cg.model.Bill;
 import com.cg.model.LocationRegion;
-import com.cg.repository.LocationRegionRepository;
+import com.cg.location.LocationRegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

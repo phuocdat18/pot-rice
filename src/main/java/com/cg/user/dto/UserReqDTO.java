@@ -1,6 +1,7 @@
 package com.cg.user.dto;
 
 import com.cg.model.User;
+import com.cg.role.dto.RoleResult;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,18 +37,18 @@ public class UserReqDTO {
     private String phone;
 
     @Valid
-    private RoleDTO role;
+    private RoleResult role;
 
 
-    public User toUser(Long id) {
-        return new User()
-                .setId(id)
-                .setFullName(fullName)
-                .setUsername(username)
-                .setPassword(password)
-                .setEmail(email)
-                .setPhone(phone)
-                .setRole(role.toRole());
-    }
+//    public User toUser(Long id) {
+//        return new User()
+//                .setId(id)
+//                .setFullName(fullName)
+//                .setUsername(username)
+//                .setPassword(password)
+//                .setEmail(email)
+//                .setPhone(phone)
+//                .setRole();
+//    }
 
 }

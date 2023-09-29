@@ -1,4 +1,4 @@
-package com.cg.repository;
+package com.cg.location;
 
 import com.cg.model.LocationRegion;
 import org.springframework.data.jpa.repository.JpaRepository;

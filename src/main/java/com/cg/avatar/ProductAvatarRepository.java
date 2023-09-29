@@ -1,4 +1,4 @@
-package com.cg.repository;
+package com.cg.avatar;
 
 
 import com.cg.model.ProductAvatar;

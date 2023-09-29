@@ -1,5 +1,6 @@
 package com.cg.user.dto;
 
+import com.cg.role.dto.RoleResult;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,6 +15,6 @@ public class UserResDTO {
     private String password;
     private String email;
     private String phone;
-    private RoleDTO role;
+    private RoleResult roleResult;
 //    private boolean deleted;
 }

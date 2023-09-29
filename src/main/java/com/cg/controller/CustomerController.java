@@ -2,21 +2,14 @@ package com.cg.controller;
 
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
-<<<<<<< HEAD
+
+
 import com.cg.bill.dto.BillDTO;
 import com.cg.bill.dto.BillDetailDTO;
 import com.cg.bill.IBillService;
 import com.cg.bill.IBillDetailService;
-import com.cg.service.product.IProductService;
-import com.cg.user.IUserService;
-=======
-import com.cg.model.dto.bill.BillDTO;
-import com.cg.model.dto.bill.BillDetailDTO;
-import com.cg.service.bill.IBillService;
-import com.cg.service.billDetail.IBillDetailService;
 import com.cg.product.service.IProductService;
-import com.cg.service.user.IUserService;
->>>>>>> hoan-dev
+import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +53,7 @@ public class CustomerController {
         }
 
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = String.valueOf(role.getCode());
 
 //        username = username.substring(0, username.indexOf("@"));
         model.addAttribute("username", username);
@@ -116,7 +109,7 @@ public class CustomerController {
             throw new DataInputException("User not valid");
         }
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = String.valueOf(role.getCode());
 
 
         if (!validateUtils.isNumberValid(id)) {
@@ -147,7 +140,7 @@ public class CustomerController {
             throw new DataInputException("User not valid");
         }
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = String.valueOf(role.getCode());
         model.addAttribute("username", username);
 
         model.addAttribute("user", userOptional.get());
@@ -168,7 +161,7 @@ public class CustomerController {
         }
 
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = String.valueOf(role.getCode());
 
         model.addAttribute("username", username);
 
@@ -187,7 +180,7 @@ public class CustomerController {
         }
 
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = String.valueOf(role.getCode());
 
         model.addAttribute("username", username);
         model.addAttribute("user", userOptional.get());
@@ -205,7 +198,7 @@ public class CustomerController {
         }
 
         Role role = userOptional.get().getRole();
-        String roleCode = role.getCode();
+        String roleCode = String.valueOf(role.getCode());
 
         model.addAttribute("username", username);
         model.addAttribute("user", userOptional.get());

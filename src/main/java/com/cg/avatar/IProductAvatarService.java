@@ -1,4 +1,4 @@
-package com.cg.service.productAvatar;
+package com.cg.avatar;
 
 import com.cg.model.ProductAvatar;
 import com.cg.service.IGeneralService;

@@ -1,4 +1,4 @@
-package com.cg.service.locationRegion;
+package com.cg.location;
 
 import com.cg.model.LocationRegion;
 import com.cg.service.IGeneralService;

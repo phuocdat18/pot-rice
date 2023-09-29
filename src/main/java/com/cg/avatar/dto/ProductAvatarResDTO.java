@@ -1,4 +1,4 @@
-package com.cg.dto.productAvatar;
+package com.cg.avatar.dto;
 
 import lombok.Getter;
 import lombok.Setter;

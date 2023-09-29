@@ -2,6 +2,7 @@ package com.cg.user.dto;
 
 import com.cg.model.Role;
 import com.cg.model.User;
+import com.cg.role.dto.RoleResult;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,43 +21,43 @@ public class UserDTO {
     private String password;
     private String email;
     private String phone;
-    private RoleDTO role;
+    private RoleResult roleResult;
     private boolean deleted;
 
-    public UserDTO(Long id, String fullName, String username, String email, String phone, Role role ) {
+    public UserDTO(Long id, String fullName, String username, String email, String phone, RoleResult roleResult ) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.email = email;
         this.phone = phone;
-        this.role = role.toRoleDTO();
+        this.roleResult = roleResult;
     }
-    public UserDTO(Long id, String fullName, String username, String email, String phone, Role role, boolean deleted ) {
+    public UserDTO(Long id, String fullName, String username, String email, String phone, RoleResult roleResult, boolean deleted ) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.email = email;
         this.phone = phone;
-        this.role = role.toRoleDTO();
+        this.roleResult = roleResult;
         this.deleted = deleted;
     }
 
 
 
-    public UserDTO(Long id, String username) {
-        this.id = id;
-        this.username = username;
-    }
-
-    public User toUser() {
-        return new User()
-                .setId(id)
-                .setFullName(fullName)
-                .setUsername(username)
-                .setPassword(password)
-                .setEmail(email)
-                .setPhone(phone)
-                .setRole(role.toRole())
-                ;
-    }
+//    public UserDTO(Long id, String username) {
+//        this.id = id;
+//        this.username = username;
+//    }
+//
+//    public User toUser() {
+//        return new User()
+//                .setId(id)
+//                .setFullName(fullName)
+//                .setUsername(username)
+//                .setPassword(password)
+//                .setEmail(email)
+//                .setPhone(phone)
+//                .setRole(role.toRole())
+//                ;
+//    }
 }

@@ -7,7 +7,7 @@ import com.cg.model.ProductAvatar;
 import com.cg.model.dto.product.ProductCreateReqDTO;
 import com.cg.model.dto.product.ProductDTO;
 import com.cg.model.dto.product.ProductUpdateReqDTO;
-import com.cg.repository.ProductAvatarRepository;
+import com.cg.avatar.ProductAvatarRepository;
 <<<<<<< HEAD:src/main/java/com/cg/service/product/ProductServiceImpl.java
 import com.cg.repository.ProductRepository;
 import com.cg.category.ICategoryService;

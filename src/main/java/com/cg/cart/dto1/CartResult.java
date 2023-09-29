@@ -1,22 +1,19 @@
-package com.cg.role.dto;
+package com.cg.cart.dto1;
 
-import com.cg.model.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotNull;
-
+import java.math.BigDecimal;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
-public class RoleResult {
+public class CartResult {
     private Long id;
-    private ERole code;
-    private String name;
+    private BigDecimal totalAmount;
 }

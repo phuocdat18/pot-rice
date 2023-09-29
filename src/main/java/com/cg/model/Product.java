@@ -1,8 +1,5 @@
 package com.cg.model;
 
-import com.cg.model.dto.product.ProductCreateResDTO;
-import com.cg.model.dto.product.ProductDTO;
-import com.cg.model.dto.product.ProductUpdateResDTO;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -55,7 +52,7 @@ public class Product extends BaseEntity {
         return this;
     }
 
-    public ProductDTO toProductDTO() {
+    public Object toProductDTO() {
         return new ProductDTO().setId(id).setTitle(title).setPrice(price).setQuantity(quantity).setUnit(unit).setDescription(description).setCategory(category).setAvatar(productAvatar.toProductAvatarResDTO());
     }
 

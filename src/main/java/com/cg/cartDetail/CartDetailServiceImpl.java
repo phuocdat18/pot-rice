@@ -1,7 +1,7 @@
 package com.cg.cartDetail;
 
 
-import com.cg.cartDetail.dto.CartDetailDTO;
+import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.model.Cart;
 import com.cg.model.CartDetail;
 import com.cg.model.Product;
@@ -68,7 +68,7 @@ public class CartDetailServiceImpl implements ICartDetailService {
     }
 
     @Override
-    public List<CartDetailDTO> findAllCartDetailDTO(Long id) {
+    public List<CartDetailResult> findAllCartDetailDTO(Long id) {
         return cartDetailRepository.findAllCartDetailDTO(id);
     }
 

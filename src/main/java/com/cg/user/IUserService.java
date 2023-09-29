@@ -1,9 +1,9 @@
 package com.cg.user;
 
 import com.cg.model.User;
-import com.cg.model.dto.user.UserDTO;
-import com.cg.model.dto.user.UserUpdateReqDTO;
 import com.cg.service.IGeneralService;
+import com.cg.user.dto.UserDTO;
+import com.cg.user.dto.UserUpdateReqDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

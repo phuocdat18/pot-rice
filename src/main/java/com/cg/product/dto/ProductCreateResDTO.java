@@ -1,7 +1,7 @@
 package com.cg.product.dto;
 
 
-import com.cg.dto.productAvatar.ProductAvatarResDTO;
+import com.cg.avatar.dto.ProductAvatarResDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
