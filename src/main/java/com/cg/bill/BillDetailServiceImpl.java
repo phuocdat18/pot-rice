@@ -1,11 +1,12 @@
 package com.cg.bill;
 
-import com.cg.bill.dto.BillDetailDTO;
+import com.cg.bill.dto.BillDetailResult;
 import com.cg.model.BillDetail;
 import com.cg.model.CartDetail;
 
 import com.cg.cartDetail.CartDetailRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class BillDetailServiceImpl implements IBillDetailService {
 
-    @Autowired
-    private BillDetailRepository billDetailRepository;
+    private final BillDetailRepository billDetailRepository;
 
-    @Autowired
-    private CartDetailRepository cartDetailRepository;
+    private final CartDetailRepository cartDetailRepository;
 
 
 
@@ -59,16 +59,16 @@ public class BillDetailServiceImpl implements IBillDetailService {
     }
 
     @Override
-    public List<BillDetailDTO> findAllBillDetailDTO(Long id) {
+    public List<BillDetailResult> findAllBillDetailDTO(Long id) {
         return billDetailRepository.findAllBillDetailDTO(id);
     }
 
     @Override
-    public List<BillDetailDTO> findBillDetailByBillId(Long id) {
+    public List<BillDetailResult> findBillDetailByBillId(Long id) {
         return billDetailRepository.findBillDetailByBillId(id);
     }
     @Override
-    public List<BillDetailDTO> findBillDetailByBillIdStatus(Long id) {
+    public List<BillDetailResult> findBillDetailByBillIdStatus(Long id) {
         return billDetailRepository.findBillDetailByBillIdStatus(id);
     }
 }

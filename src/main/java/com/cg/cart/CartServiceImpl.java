@@ -38,7 +38,7 @@ public class CartServiceImpl implements ICartService {
     @Override
     public Cart addToCart(CartItemReqDTO cartItemReqDTO, Product product, User user) {
 
-        Optional<Cart> cartOptional = cartRepository.findByUser(user);
+        Optional<Cart> cartOptional = cartRepository.findByUserId(user.getId());
 
         if (cartOptional.isEmpty()) {
             Cart cartNew = new Cart();
@@ -64,13 +64,13 @@ public class CartServiceImpl implements ICartService {
             cartNew.setTotalAmount(amount);
             return cartRepository.save(cartNew);
         } else {
-            if(cartDetailRepository.existsCartDetailByCart(cartOptional.get())) {
+            if (cartDetailRepository.existsCartDetailByCart(cartOptional.get())) {
                 CartDetail cartDetail = cartDetailRepository.findCartDetailsByProductAndCart(product, cartOptional.get());
                 if (cartDetail != null) {
                     Cart cart = cartOptional.get();
 
                     BigDecimal price = product.getPrice();
-                    long quantity = cartDetail.getQuantity() +  cartItemReqDTO.getQuantity();
+                    long quantity = cartDetail.getQuantity() + cartItemReqDTO.getQuantity();
                     BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
 
 
@@ -80,8 +80,7 @@ public class CartServiceImpl implements ICartService {
                     BigDecimal totalAmount = cart.getTotalAmount().add(amount);
                     cart.setTotalAmount(totalAmount);
                     return cartRepository.save(cart);
-                }
-                else {
+                } else {
 
                     BigDecimal price = product.getPrice();
                     long quantity = cartItemReqDTO.getQuantity();
@@ -102,7 +101,7 @@ public class CartServiceImpl implements ICartService {
                     cart.setTotalAmount(totalAmount);
                     return cartRepository.save(cart);
                 }
-            }else {
+            } else {
 
                 BigDecimal price = product.getPrice();
                 long quantity = cartItemReqDTO.getQuantity();
@@ -127,8 +126,8 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public Optional<Cart> findByUser(User user) {
-        return cartRepository.findByUser(user);
+    public Optional<Cart> findByUserId(Long userId) {
+        return cartRepository.findByUserId(userId);
     }
 
     @Override

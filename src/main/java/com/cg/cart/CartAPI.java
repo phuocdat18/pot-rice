@@ -17,6 +17,7 @@ import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -111,21 +112,20 @@ public class CartAPI {
     }
 
     @PostMapping("/payment")
-    public ResponseEntity<?> payment(@Valid @RequestBody BillCreationParam billCreationParam) {
-        String username = appUtils.getPrincipalUsername();
+    public ResponseEntity<?> payment(@Valid @RequestBody BillCreationParam billCreationParam, @AuthenticationPrincipal UserPrincipal principal) {
+//        String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+//        Optional<User> userOptional = userService.findByUsername(principal.getUsername());
+        Long principalId = principal.getId();
+        Optional<Cart> cartOptional = cartService.findByUserId(principalId);
 
-        Optional<Cart> cartOptional = cartService.findByUser(userOptional.get());
+
+        Cart cart = cartOptional.orElseThrow(() -> new DataInputException("Cart invalid"));
 
 
-        if(cartOptional.isEmpty()) {
-            throw new DataInputException("Cart invalid");
-        }
+        List<CartDetail> cartDetails = cartDetailService.findCartDetailsByCartId(cart.getId());
 
-        List<CartDetail> cartDetails = cartDetailService.findCartDetailsByCart(cartOptional.get());
-
-        if(cartDetails.isEmpty()) {
+        if (cartDetails.isEmpty()) {
             throw new DataInputException("CartDetail invalid");
         }
         for (CartDetail cartDetail : cartDetails) {
@@ -139,30 +139,28 @@ public class CartAPI {
             productService.save(product);
         }
         BigDecimal vat = cartOptional.get().getTotalAmount().multiply(BigDecimal.valueOf(0.1));
-        BigDecimal totalBill =cartOptional.get().getTotalAmount().add(vat).add(BigDecimal.valueOf(15000)) ;
+        BigDecimal totalBill = cartOptional.get().getTotalAmount().add(vat).add(BigDecimal.valueOf(15000));
 
-        Bill bill = billService.save(new Bill(totalBill, userOptional.get(), billCreationParam.getLocationRegionReqDTO().toLocationRegion(null) , billCreationParam.getStatus()));
-        for (CartDetail cartDetail : cartDetails) {
-            billDetailService.addBillDetail(new BillDetail(cartDetail.getProduct(), cartDetail.getTitle(), cartDetail.getUnit(), cartDetail.getPrice(), cartDetail.getQuantity(),cartDetail.getAmount(), bill), cartDetail);
-        }
+//        Bill bill = billService.save(new Bill(totalBill, principalId, billCreationParam.getLocationRegionReqDTO().toLocationRegion(null), EPayment.DONE));
+//        for (CartDetail cartDetail : cartDetails) {
+//            billDetailService.addBillDetail(new BillDetail(cartDetail.getProduct(), cartDetail.getTitle(), cartDetail.getUnit(), cartDetail.getPrice(), cartDetail.getQuantity(), cartDetail.getAmount(), bill), cartDetail);
+//        }
         cartService.delete(cartOptional.get());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-
     @PatchMapping("/bill/{id}")
     public ResponseEntity<?> updateBillStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
-        Optional<Bill> billOptional = billService.findById(id);
+     Bill billOptional = billService.findById(id);
 
-        if (billOptional.isEmpty()) {
-            throw new DataInputException("Bill not found with id: " + id);
-        }
+//        if (billOptional.isEmpty()) {
+//            throw new DataInputException("Bill not found with id: " + id);
+//        }
 
-        Bill bill = billOptional.get();
-        bill.setStatus(EPayment.valueOf(request.get("status")));
-        billService.save(bill);
+//        bill.setStatus(EPayment.valueOf(request.get("status")));
+//        billService.save(bill);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -199,8 +197,9 @@ public class CartAPI {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
     @PatchMapping("/change-quantity/{id}")
-    public ResponseEntity<List<?>> changeQuantity (@PathVariable String id, @RequestBody CartDetailChangeReqDTO cartDetailChangeReqDTO) throws IOException {
+    public ResponseEntity<List<?>> changeQuantity(@PathVariable String id, @RequestBody CartDetailChangeReqDTO cartDetailChangeReqDTO) throws IOException {
         String username = appUtils.getPrincipalUsername();
 
         Optional<User> userOptional = userService.findByUsername(username);

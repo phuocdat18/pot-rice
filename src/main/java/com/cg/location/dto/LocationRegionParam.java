@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class LocationRegionDTO {
+public class LocationRegionParam {
 
     private Long id;
     private String provinceId;

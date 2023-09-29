@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class UserPrinciple implements UserDetails {
+public class UserPrincipal implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,20 +21,20 @@ public class UserPrinciple implements UserDetails {
 
     private final Collection<? extends GrantedAuthority> roles;
 
-    public UserPrinciple(Long id, String username, String password, Collection<? extends GrantedAuthority> roles) {
+    public UserPrincipal(Long id, String username, String password, Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
 
-    public static UserPrinciple build(User user) {
+    public static UserPrincipal build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getCode().getValue());
 
         authorities.add(authority);
 
-        return new UserPrinciple(
+        return new UserPrincipal(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
@@ -57,8 +57,8 @@ public class UserPrinciple implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+    public List<GrantedAuthority> getAuthorities() {
+        return (List<GrantedAuthority>) roles;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class UserPrinciple implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserPrinciple user = (UserPrinciple) o;
+        UserPrincipal user = (UserPrincipal) o;
         return Objects.equals(id, user.id);
     }
 
