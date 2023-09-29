@@ -3,7 +3,7 @@ package com.cg.controller;
 import com.cg.exception.DataInputException;
 import com.cg.model.Role;
 import com.cg.model.User;
-import com.cg.bill.dto.BillDTO;
+import com.cg.bill.dto.BillCreation;
 import com.cg.bill.IBillService;
 import com.cg.bill.IBillDetailService;
 import com.cg.user.IUserService;
@@ -75,7 +75,7 @@ public class AdminController {
 
         Optional<User> userOptional = userService.findByUsername(username);
         Long userId = userOptional.get().getId();
-        List<BillDTO> billDTOS = billService.findBillDTOByIdUser(userId);
+        List<BillCreation> billDTOS = billService.findBillDTOByIdUser(userId);
 //        List<BillDetailDTO> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
 
         if (!userOptional.isPresent()) {

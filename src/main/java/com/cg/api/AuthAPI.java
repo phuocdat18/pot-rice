@@ -8,8 +8,8 @@ import com.cg.model.User;
 import com.cg.role.IRoleService;
 import com.cg.service.jwt.JwtService;
 import com.cg.user.IUserService;
+import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserLoginDTO;
-import com.cg.user.dto.UserReqDTO;
 import com.cg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -55,7 +55,7 @@ public class AuthAPI {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody UserReqDTO userReqDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserCreationParam userReqDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return appUtils.mapErrorToResponse(bindingResult);
@@ -67,7 +67,7 @@ public class AuthAPI {
             throw new EmailExistsException("Account already exists");
         }
 
-        Optional<Role> optRole = roleService.findById(userReqDTO.getRole().getId());
+        Optional<Role> optRole = Optional.ofNullable(roleService.findById(userReqDTO.getRole().getId()));
 
         try {
             String passwordEncode = passwordEncoder.encode(userReqDTO.getPassword());

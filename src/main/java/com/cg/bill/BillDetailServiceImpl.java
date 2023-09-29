@@ -4,8 +4,6 @@ import com.cg.bill.dto.BillDetailDTO;
 import com.cg.model.BillDetail;
 import com.cg.model.CartDetail;
 
-import com.cg.model.dto.bill.BillDetailDTO;
-import com.cg.repository.BillDetailRepository;
 import com.cg.cartDetail.CartDetailRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

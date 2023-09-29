@@ -9,7 +9,7 @@ import org.springframework.validation.Validator;
 
 @Getter
 @Setter
-public class UserUpdateReqDTO implements Validator {
+public class UserUpdateParam implements Validator {
     ValidateUtils validateUtils = new ValidateUtils();
     private String fullName;
     private String email;
@@ -28,12 +28,12 @@ public class UserUpdateReqDTO implements Validator {
     }
     @Override
     public boolean supports(Class<?> clazz) {
-        return UserUpdateReqDTO.class.isAssignableFrom(clazz);
+        return UserUpdateParam.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        UserUpdateReqDTO userUpdateReqDTO = (UserUpdateReqDTO) target;
+        UserUpdateParam userUpdateReqDTO = (UserUpdateParam) target;
 
         String fullName = userUpdateReqDTO.fullName;
         String email = userUpdateReqDTO.email;

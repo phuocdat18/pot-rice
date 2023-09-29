@@ -1,7 +1,6 @@
 package com.cg.api;
-
-import com.cg.model.dto.category.CategoryDTO;
 import com.cg.category.ICategoryService;
+import com.cg.category.dto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

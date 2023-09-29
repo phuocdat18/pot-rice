@@ -1,30 +1,24 @@
 package com.cg.product.dto;
 
-
-
-import com.cg.avatar.dto.ProductAvatarResDTO;
-import lombok.AllArgsConstructor;
+import com.cg.model.Category;
+import com.cg.model.ProductAvatar;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Setter
+@Getter
 @Accessors(chain = true)
-public class ProductUpdateResDTO {
+public class ProductResult {
 
     private Long id;
     private String title;
-    private String quantity;
     private BigDecimal price;
+    private Long quantity;
     private String description;
     private String unit;
-    private String categoryTitle;
-    private ProductAvatarResDTO avatar;
-
+    private Category category;
+    private ProductAvatar productAvatar;
 }

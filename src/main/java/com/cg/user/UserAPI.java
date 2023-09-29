@@ -6,7 +6,7 @@ import com.cg.model.User;
 import com.cg.role.IRoleService;
 import com.cg.role.dto.RoleResult;
 import com.cg.user.dto.UserDTO;
-import com.cg.user.dto.UserUpdateReqDTO;
+import com.cg.user.dto.UserUpdateParam;
 import com.cg.user.dto.UserUpdateResDTO;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
@@ -38,7 +38,7 @@ public class UserAPI {
 
     @GetMapping
     public ResponseEntity<?> getAllCustomers() {
-        List<UserDTO> userDTOS = userService.findAllUserDTO();
+        List<UserResult> userDTOS = userService.findAllUserDTO();
 
         if (userDTOS.isEmpty()) {
             return new ResponseEntity<>("No customer found.", HttpStatus.NO_CONTENT);
@@ -58,9 +58,9 @@ public class UserAPI {
     }
     @PatchMapping("/update/{id}")
 
-    public ResponseEntity<?> updateUser(@PathVariable String id, @ModelAttribute UserUpdateReqDTO userUpdateReqDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> updateUser(@PathVariable String id, @ModelAttribute UserUpdateParam userUpdateParam, BindingResult bindingResult) {
 
-        new UserUpdateReqDTO().validate(userUpdateReqDTO, bindingResult);
+        new UserUpdateParam().validate(userUpdateParam, bindingResult);
 
         if (bindingResult.hasErrors())
             return appUtils.mapErrorToResponse(bindingResult);
@@ -74,7 +74,7 @@ public class UserAPI {
         Optional<User> userOptional = userService.findById(userId);
 
         if (userOptional.isPresent()) {
-            User user = userService.update(userOptional.get(), userUpdateReqDTO);
+            User user = userService.update(userOptional.get(), userUpdateParam);
             UserUpdateResDTO userUpdateResDTO = user.toUserUpdateResDTO();
 
             return new ResponseEntity<>(userUpdateResDTO, HttpStatus.OK);

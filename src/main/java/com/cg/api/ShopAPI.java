@@ -1,13 +1,9 @@
 package com.cg.api;
 
-import com.cg.model.dto.product.ProductDTO;
-<<<<<<< HEAD
+
 import com.cg.category.ICategoryService;
-import com.cg.service.product.IProductService;
-=======
-import com.cg.service.category.ICategoryService;
+import com.cg.product.dto.ProductResult;
 import com.cg.product.service.IProductService;
->>>>>>> hoan-dev
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,10 +32,10 @@ public class ShopAPI {
     private ValidateUtils validateUtils;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> getAllProductDTO(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+    public ResponseEntity<Page<ProductResult>> getAllProductDTO(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
         pageSize = 8;
         try {
-            Page<ProductDTO> productDTOS = productService.findAllProductDTOPage(PageRequest.of(page - 1, pageSize));
+            Page<ProductResult> productDTOS = productService.findAllProductDTOPage(PageRequest.of(page - 1, pageSize));
 
             if (productDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -53,7 +49,7 @@ public class ShopAPI {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<ProductDTO>> search(
+    public ResponseEntity<Page<ProductResult>> search(
             @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "ids", required = false) String categories,
             @RequestParam(name = "minPrice", required = false) String minPrice,
@@ -76,7 +72,7 @@ public class ShopAPI {
             maxPrice = "999999999";
         }
         try {
-            Page<ProductDTO> productDTOS = productService.findAllProductDTOByKeyWordAndCategoryAndPrice(search, ids, BigDecimal.valueOf(Long.parseLong(minPrice)), BigDecimal.valueOf(Long.parseLong(maxPrice)), PageRequest.of(page - 1, pageSize));
+            Page<ProductResult> productDTOS = productService.findAllProductDTOByKeyWordAndCategoryAndPrice(search, ids, BigDecimal.valueOf(Long.parseLong(minPrice)), BigDecimal.valueOf(Long.parseLong(maxPrice)), PageRequest.of(page - 1, pageSize));
 
             if (productDTOS.isEmpty()) {
                 return new ResponseEntity<>(productDTOS, HttpStatus.NO_CONTENT);

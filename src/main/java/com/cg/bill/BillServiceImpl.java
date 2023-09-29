@@ -1,7 +1,6 @@
 package com.cg.bill;
 
-
-import com.cg.bill.dto.BillDTO;
+import com.cg.bill.dto.BillCreationParam;
 import com.cg.model.Bill;
 import com.cg.model.LocationRegion;
 import com.cg.location.LocationRegionRepository;
@@ -50,37 +49,37 @@ public class BillServiceImpl implements IBillService {
     }
 
     @Override
-    public List<BillDTO> findAllBillDTO() {
+    public List<BillCreationParam> findAllBillDTO() {
         return billRepository.findAllBillDTO();
     }
 
     @Override
-    public List<BillDTO> findBillByDate() {
+    public List<BillCreationParam> findBillByDate() {
         return billRepository.findAllBillByDate();
     }
 
     @Override
-    public List<BillDTO> findAllBillDTOORDER() {
+    public List<BillCreationParam> findAllBillDTOORDER() {
         return billRepository.findAllBillDTOORDER();
     }
 
     @Override
-    public List<BillDTO> findAllBillDTOLOADING() {
+    public List<BillCreationParam> findAllBillDTOLOADING() {
         return billRepository.findAllBillDTOLOADING();
     }
     @Override
-    public List<BillDTO> findAllBillDTOSHIPPING() {
+    public List<BillCreationParam> findAllBillDTOSHIPPING() {
         return billRepository.findAllBillDTOSHIPPING();
     }
 
 
     @Override
-    public List<BillDTO> findBillDTOByIdUser(Long id) {
+    public List<BillCreationParam> findBillDTOByIdUser(Long id) {
         return billRepository.findBillDTOByIdUser(id);
     }
 
     @Override
-    public List<BillDTO> findBillDTOByIdBill(Long id) {
+    public List<BillCreationParam> findBillDTOByIdBill(Long id) {
         return billRepository.findBillDTOByIdBill(id);
     }
 

@@ -3,15 +3,15 @@ package com.cg.cart;
 
 import com.cg.bill.IBillDetailService;
 import com.cg.bill.IBillService;
+import com.cg.bill.dto.BillCreationParam;
 import com.cg.cart.dto.CartItemReqDTO;
+import com.cg.cartDetail.ICartDetailService;
 import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
-import com.cg.bill.dto.BillReqDTO;
-import com.cg.cartDetail.ICartDetailService;
-import com.cg.user.IUserService;
 import com.cg.product.service.IProductService;
+import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +83,7 @@ public class CartAPI {
         Optional<User> userOptional = userService.findByUsername(username);
 
         Long productId = cartItemReqDTO.getProductId();
-        Optional<Product> productOptional = productService.findById(productId);
+        Optional<Product> productOptional = Optional.ofNullable(productService.findById(productId));
 
         if (productOptional.isEmpty()) {
             throw new DataInputException("Product invalid");
@@ -111,8 +111,8 @@ public class CartAPI {
     }
 
     @PostMapping("/payment")
-    public ResponseEntity<?> payment(@Valid @RequestBody BillReqDTO billReqDTO) {
-        String username = appUtils.getPrincipalUsername();      //dat
+    public ResponseEntity<?> payment(@Valid @RequestBody BillCreationParam billCreationParam) {
+        String username = appUtils.getPrincipalUsername();
 
         Optional<User> userOptional = userService.findByUsername(username);
 
@@ -129,7 +129,7 @@ public class CartAPI {
             throw new DataInputException("CartDetail invalid");
         }
         for (CartDetail cartDetail : cartDetails) {
-            Optional<Product> productOptional = productService.findById(cartDetail.getProduct().getId());
+            Optional<Product> productOptional = Optional.ofNullable(productService.findById(cartDetail.getProduct().getId()));
             Product product = productOptional.get();
             if (product.getQuantity() < cartDetail.getQuantity()) {
                 throw new DataInputException("Số lượng sản phẩm " + cartDetail.getId() + " không đủ!");
@@ -141,7 +141,7 @@ public class CartAPI {
         BigDecimal vat = cartOptional.get().getTotalAmount().multiply(BigDecimal.valueOf(0.1));
         BigDecimal totalBill =cartOptional.get().getTotalAmount().add(vat).add(BigDecimal.valueOf(15000)) ;
 
-        Bill bill = billService.save(new Bill(totalBill, userOptional.get(), billReqDTO.getLocationRegionReqDTO().toLocationRegion(null) , billReqDTO.getStatus()));
+        Bill bill = billService.save(new Bill(totalBill, userOptional.get(), billCreationParam.getLocationRegionReqDTO().toLocationRegion(null) , billCreationParam.getStatus()));
         for (CartDetail cartDetail : cartDetails) {
             billDetailService.addBillDetail(new BillDetail(cartDetail.getProduct(), cartDetail.getTitle(), cartDetail.getUnit(), cartDetail.getPrice(), cartDetail.getQuantity(),cartDetail.getAmount(), bill), cartDetail);
         }
