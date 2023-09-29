@@ -1,10 +1,8 @@
 package com.cg.bill.dto;
 
-import com.cg.dto.locationRegion.LocationRegionDTO;
+import com.cg.location.dto.LocationRegionDTO;
 import com.cg.model.EPayment;
 import com.cg.model.LocationRegion;
-import com.cg.model.User;
-import com.cg.user.UserMapper;
 import com.cg.user.dto.UserResult;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,18 +16,18 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-public class BillCreation {
+public class BillCreationParam {
     private Long id;
     private BigDecimal totalAmount;
-    private UserResult userDTO;
+    private UserResult userResult;
     private LocationRegionDTO locationRegionDTO;
     private Date createAt;
     private EPayment status;
 
-    public BillCreation(Long id, BigDecimal totalAmount, UserResult user, LocationRegion locationRegion, Date createAt, EPayment status) {
+    public BillCreationParam(Long id, BigDecimal totalAmount, UserResult userResult, LocationRegion locationRegion, Date createAt, EPayment status) {
         this.id = id;
         this.totalAmount = totalAmount;
-        this.userDTO = user.getFullName();
+        this.userResult = userResult;
         this.locationRegionDTO = locationRegion.toLocationRegionDTO();
         this.createAt = createAt;
         this.status = status;

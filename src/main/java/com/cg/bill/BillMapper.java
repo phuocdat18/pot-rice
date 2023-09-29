@@ -1,9 +1,8 @@
 package com.cg.bill;
 
-import com.cg.bill.dto.BillCreation;
+import com.cg.bill.dto.BillCreationParam;
 import com.cg.model.Bill;
 import com.cg.model.Role;
-import com.cg.role.dto.RoleCreationParam;
 import com.cg.role.dto.RoleResult;
 import com.cg.role.dto.RoleUpdateParam;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class BillMapper {
-    public Bill toEntity(BillCreation creationParam) {
+    public Bill toEntity(BillCreationParam creationParam) {
         return new Bill()
                 .setUser(creationParam.getUserDTO())
                 .

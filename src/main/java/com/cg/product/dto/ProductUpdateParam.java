@@ -1,4 +1,4 @@
-package com.cg.product.mapper;
+package com.cg.product.dto;
 
 import lombok.Getter;
 import lombok.Setter;

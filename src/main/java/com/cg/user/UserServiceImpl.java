@@ -1,16 +1,9 @@
 package com.cg.user;
 
+import com.cg.location.LocationRegionRepository;
 import com.cg.model.User;
 import com.cg.model.UserPrinciple;
-<<<<<<< HEAD
-import com.cg.location.LocationRegionRepository;
-import com.cg.user.dto.UserDTO;
-import com.cg.user.dto.UserUpdateReqDTO;
-=======
-import com.cg.repository.LocationRegionRepository;
-import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
->>>>>>> thi-dev
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -58,7 +51,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Optional<UserDTO> findUserDTOByUsername(String username) {
+    public Optional<UserResult> findUserDTOByUsername(String username) {
         return userRepository.findUserDTOByUsername(username);
     }
 

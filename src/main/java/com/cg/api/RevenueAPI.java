@@ -1,10 +1,8 @@
 package com.cg.api;
 
-
-
-import com.cg.bill.dto.BillCreation;
 import com.cg.bill.IBillService;
 
+import com.cg.bill.dto.BillCreationParam;
 import com.cg.category.ICategoryService;
 
 
@@ -38,7 +36,7 @@ public class RevenueAPI {
     @GetMapping
     public ResponseEntity<?> getAllBills() {
 
-        List<BillCreation> billDTOS = billService.findAllBillDTO();
+        List<BillCreationParam> billDTOS = billService.findAllBillDTO();
 
         return new ResponseEntity<>(billDTOS, HttpStatus.OK);
     }

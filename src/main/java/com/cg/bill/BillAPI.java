@@ -1,7 +1,7 @@
 package com.cg.bill;
 
 
-import com.cg.bill.dto.BillCreation;
+import com.cg.bill.dto.BillCreationParam;
 import com.cg.bill.dto.BillDetailDTO;
 import com.cg.exception.DataInputException;
 import com.cg.model.User;
@@ -44,7 +44,7 @@ public class BillAPI {
     @GetMapping()
     public ResponseEntity<List<?>> findAllBills() {
         try {
-            List<BillCreation> billDTOS = billService.findAllBillDTO();
+            List<BillCreationParam> billDTOS = billService.findAllBillDTO();
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -60,7 +60,7 @@ public class BillAPI {
     @GetMapping("/order")
     public ResponseEntity<List<?>> findAllBillsORDER() {
         try {
-            List<BillCreation> billDTOS = billService.findAllBillDTOORDER();
+            List<BillCreationParam> billDTOS = billService.findAllBillDTOORDER();
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -76,7 +76,7 @@ public class BillAPI {
     @GetMapping("/loading")
     public ResponseEntity<List<?>> findAllBillsLOADING() {
         try {
-            List<BillCreation> billDTOS = billService.findAllBillDTOLOADING();
+            List<BillCreationParam> billDTOS = billService.findAllBillDTOLOADING();
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -92,7 +92,7 @@ public class BillAPI {
     @GetMapping("/shipping")
     public ResponseEntity<List<?>> findAllBillsLOADINGSHIPPING() {
         try {
-            List<BillCreation> billDTOS = billService.findAllBillDTOSHIPPING();
+            List<BillCreationParam> billDTOS = billService.findAllBillDTOSHIPPING();
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -137,7 +137,7 @@ public class BillAPI {
         Long billId = Long.parseLong(id);
 
         try {
-            List<BillCreation> billDTOS = billService.findBillDTOByIdBill(billId);
+            List<BillCreationParam> billDTOS = billService.findBillDTOByIdBill(billId);
 
             if (billDTOS.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -164,7 +164,7 @@ public class BillAPI {
         }
 
         try {
-            List<BillCreation> billDTOS = billService.findBillDTOByIdUser(userOptional.get().getId());
+            List<BillCreationParam> billDTOS = billService.findBillDTOByIdUser(userOptional.get().getId());
 
             if (billDTOS.isEmpty()) {
                 throw new DataInputException("Bill not valid");
@@ -192,7 +192,7 @@ public class BillAPI {
         Long userId = Long.parseLong(id);
 
         try {
-            List<BillCreation> billDTOS = billService.findBillDTOByIdUser(userId);
+            List<BillCreationParam> billDTOS = billService.findBillDTOByIdUser(userId);
 
             if (billDTOS.isEmpty()) {
                 throw new DataInputException("Bill not valid");

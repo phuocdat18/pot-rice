@@ -2,9 +2,9 @@ package com.cg.product;
 
 import com.cg.model.Category;
 import com.cg.model.Product;
-import com.cg.product.mapper.ProductCreationParam;
-import com.cg.product.mapper.ProductResult;
-import com.cg.product.mapper.ProductUpdateParam;
+import com.cg.product.dto.ProductCreationParam;
+import com.cg.product.dto.ProductResult;
+import com.cg.product.dto.ProductUpdateParam;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

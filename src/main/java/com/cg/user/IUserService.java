@@ -2,13 +2,7 @@ package com.cg.user;
 
 import com.cg.model.User;
 import com.cg.service.IGeneralService;
-<<<<<<< HEAD
-import com.cg.user.dto.UserDTO;
-import com.cg.user.dto.UserUpdateReqDTO;
-=======
-import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
->>>>>>> thi-dev
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

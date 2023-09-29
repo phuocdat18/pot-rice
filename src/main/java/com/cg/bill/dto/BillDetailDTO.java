@@ -20,7 +20,7 @@ public class BillDetailDTO {
     private BigDecimal price;
     private Long quantity;
     private BigDecimal amount;
-    private BillCreation billDTO;
+    private BillCreationParam billCreationParam;
     private EPayment status;
 
     public BillDetailDTO(Long id, Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, Bill bill) {

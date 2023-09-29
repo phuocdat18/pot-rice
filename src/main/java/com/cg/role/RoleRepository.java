@@ -13,10 +13,9 @@ import java.util.List;
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Role findByName(ERole name);
 
-    @Query("SELECT NEW com.cg.model.dto.user.RoleDTO (" +
+    @Query("SELECT " +
             "r.id, " +
             "r.code" +
-            ") " +
             "FROM Role r"
     )
     List<RoleResult> findAllRoleDTO();

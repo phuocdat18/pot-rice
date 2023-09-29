@@ -1,25 +1,25 @@
 package com.cg.bill;
 
 import com.cg.model.Bill;
-import com.cg.bill.dto.BillCreation;
+import com.cg.bill.dto.BillCreationParam;
 import com.cg.service.IGeneralService;
 
 import java.util.List;
 
 public interface IBillService extends IGeneralService<Bill, Long> {
-    List<BillCreation> findAllBillDTO ();
+    List<BillCreationParam> findAllBillDTO ();
 
-    List<BillCreation> findBillByDate();
+    List<BillCreationParam> findBillByDate();
 
-    List<BillCreation> findAllBillDTOORDER();
-
-
-    List<BillCreation> findAllBillDTOLOADING();
-
-    List<BillCreation> findAllBillDTOSHIPPING();
-
-    List<BillCreation> findBillDTOByIdUser (Long id);
+    List<BillCreationParam> findAllBillDTOORDER();
 
 
-    List<BillCreation> findBillDTOByIdBill(Long id);
+    List<BillCreationParam> findAllBillDTOLOADING();
+
+    List<BillCreationParam> findAllBillDTOSHIPPING();
+
+    List<BillCreationParam> findBillDTOByIdUser (Long id);
+
+
+    List<BillCreationParam> findBillDTOByIdBill(Long id);
 }

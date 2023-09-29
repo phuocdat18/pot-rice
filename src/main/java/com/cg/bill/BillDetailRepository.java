@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
 
-    @Query("SELECT NEW com.cg.model.dto.bill.BillDetailDTO ( " +
+    @Query("SELECT  " +
             "bd.id, " +
             "bd.product, " +
             "bd.title, " +
@@ -20,13 +20,12 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "bd.quantity, " +
             "bd.amount, " +
             "bd.bill " +
-            ") " +
             "FROM BillDetail AS bd " +
             "JOIN Bill b ON bd.bill.id = b.id " +
             "WHERE b.user.id = :id"
     )
     List<BillDetailDTO> findAllBillDetailDTO(Long id);
-    @Query("SELECT NEW com.cg.model.dto.bill.BillDetailDTO ( " +
+    @Query("SELECT " +
             "bd.id, " +
             "bd.product, " +
             "bd.title, " +
@@ -35,13 +34,12 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "bd.quantity, " +
             "bd.amount, " +
             "bd.bill " +
-            ") " +
             "FROM BillDetail AS bd " +
             "WHERE bd.bill.id = :id "
     )
     List<BillDetailDTO> findBillDetailByBillId (Long id);
 
-    @Query("SELECT NEW com.cg.model.dto.bill.BillDetailDTO ( " +
+    @Query("SELECT " +
             "bd.id, " +
             "bd.product, " +
             "bd.title, " +
@@ -51,7 +49,6 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, Long> {
             "bd.amount, " +
             "bd.bill, " +
             "b.status" +
-            ") " +
             "FROM BillDetail AS bd " +
             "JOIN Bill AS b ON bd.bill.id = b.id " +
             "WHERE bd.bill.id = :id "

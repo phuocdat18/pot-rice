@@ -1,12 +1,6 @@
 package com.cg.user;
 
 import com.cg.model.User;
-<<<<<<< HEAD
-import com.cg.user.dto.UserDTO;
-=======
-
-import com.cg.user.dto.UserResult;
->>>>>>> thi-dev
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
-    @Query("SELECT NEW com.cg.user.UserDTO (" +
+    @Query("SELECT " +
             "u.id, " +
             "u.fullName, " +
             "u.username, " +
@@ -29,15 +23,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "u.phone, " +
             "u.role," +
             "u.deleted"+
-            ") " +
             "FROM User u " +
             "WHERE u.role.id <> 1"
     )
     List<UserResult> findAllUserDTO();
-    @Query("SELECT NEW com.cg.model.dto.user.UserDTO (" +
+    @Query("SELECT " +
                 "u.id, " +
                 "u.username" +
-            ") " +
             "FROM User u " +
             "WHERE u.username = ?1"
     )
