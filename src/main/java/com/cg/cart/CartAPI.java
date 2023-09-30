@@ -41,7 +41,7 @@ public class CartAPI {
     private IOrderService billService;
 
     @Autowired
-    private IOrderItemService billDetailService;
+    private IOrderItemService orderItemService;
 
     @Autowired
     private IUserService userService;

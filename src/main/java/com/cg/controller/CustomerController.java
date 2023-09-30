@@ -3,23 +3,12 @@ package com.cg.controller;
 import com.cg.order.dto.OrderCreationParam;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
-<<<<<<< HEAD
-import com.cg.order.dto.BillDetailDTO;
+
 import com.cg.order.IOrderService;
 import com.cg.order.IOrderItemService;
+import com.cg.order.dto.OrderItemResult;
 import com.cg.user.IUserService;
 import com.cg.product.service.IProductService;
-=======
-<<<<<<< HEAD
-
-
-import com.cg.order.dto.BillDTO;
-import com.cg.order.dto.BillDetailResult;
-=======
-import com.cg.order.dto.BillCreation;
-
->>>>>>> thi-dev
->>>>>>> thi-dev
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +31,18 @@ public class CustomerController {
 
     @Autowired
     private IUserService userService;
+
     @Autowired
     private ValidateUtils validateUtils;
+
     @Autowired
     private IProductService productService;
 
     @Autowired
-    private IOrderService billService;
+    private IOrderService orderService;
+
     @Autowired
-    private IOrderItemService billDetailService;
+    private IOrderItemService orderItemService;
 
     @GetMapping
     public String showPageHome(Model model) {
@@ -228,20 +220,17 @@ public class CustomerController {
         User user = userOptional.get();
         Long userId = user.getId();
 
-<<<<<<< HEAD
-        List<OrderCreationParam> userBillDTOs = billService.findBillDTOByIdUser(userId);
-=======
-        List<BillCreation> userBillDTOs = billService.findAllByUserId(userId);
->>>>>>> thi-dev
+        List<OrderCreationParam> userBillDTOs = orderService.findBillDTOByIdUser(userId);
+
         model.addAttribute("bill", userBillDTOs);
 
-        List<OrderCreationParam> billDTOsById = billService.findBillDTOByIdBill(id);
+        List<OrderCreationParam> billDTOsById = orderService.findBillDTOByIdBill(id);
         if (billDTOsById.isEmpty()) {
             throw new DataInputException("Order not found");
         }
         model.addAttribute("billById", billDTOsById.get(0));
 
-        List<BillDetailResult> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
+        List<OrderItemResult> billDetailDTOS = orderItemService.findBillDetailByBillIdStatus(id);
         model.addAttribute("billDetailDTOS", billDetailDTOS);
 
         String roleCode = user.getRole().getCode().getValue();

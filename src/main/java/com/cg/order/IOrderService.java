@@ -15,7 +15,7 @@ public interface IOrderService {
 
     List<OrderResult> findAllByStatus(String status);
 
-    List<OrderResult> findAllByUserId(Long userId);
+    List<?> findAllByUserId(Long userId);
 
     List<?> findAllByUserIdAndStatus(Long userId, String status);
 

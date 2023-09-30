@@ -21,7 +21,6 @@ public class Cart extends BaseEntity {
     @Column(precision = 10, scale = 0, nullable = false)
     private BigDecimal totalAmount;
 
-
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user_cart"))
     private User user;

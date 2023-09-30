@@ -26,6 +26,7 @@ public class CartDetail extends BaseEntity {
     private int productId;
 
     private String title;
+
     private String unit;
 
     @Column(precision = 10, scale = 0, nullable = false)
