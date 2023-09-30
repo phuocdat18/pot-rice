@@ -1,17 +1,22 @@
 package com.cg.cartDetail;
 
 import com.cg.cartDetail.dto.CartDetailResult;
-import com.cg.model.Cart;
 import com.cg.model.CartDetail;
-import com.cg.model.Product;
-import com.cg.service.IGeneralService;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ICartDetailService extends IGeneralService<CartDetail, Long> {
-    boolean existsCartDetailByCart(Cart cart);
+public interface ICartDetailService {
+    List<CartDetail> findAll();
 
-    CartDetail findCartDetailsByProductAndCart(Product product, Cart cart);
+    Optional<CartDetail> findById(Long id);
+
+    CartDetail create(CartDetail cartDetail);
+
+    void delete(CartDetail cartDetail);
+
+    void deleteById(Long id);
+
 
     List<CartDetailResult> findAllCartDetailDTO(Long id);
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "cart_details")
+@Accessors(chain = true)
 public class CartDetail extends BaseEntity {
 
     @Id
@@ -23,7 +25,7 @@ public class CartDetail extends BaseEntity {
     private Product product;
 
     @Column(name = "product_id", insertable = false, updatable = false)
-    private int productId;
+    private Long productId;
 
     private String title;
 
@@ -42,5 +44,5 @@ public class CartDetail extends BaseEntity {
     private Cart cart;
 
     @Column(name = "cart_id", insertable = false, updatable = false)
-    private int cartId;
+    private Long cartId;
 }
