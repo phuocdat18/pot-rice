@@ -74,7 +74,6 @@ public class CartDetailServiceImpl implements ICartDetailService {
         cartDetailRepository.deleteById(id);
     }
 
-
     @Override
     public List<CartDetailResult> findAllCartDetailDTO(Long id) {
         return cartDetailRepository.findAllCartDetailDTO(id);
@@ -84,6 +83,4 @@ public class CartDetailServiceImpl implements ICartDetailService {
     public List<CartDetail> findAllByCartId(Long cartId) {
         return cartDetailRepository.findCartDetailById(cartId);
     }
-
-
 }

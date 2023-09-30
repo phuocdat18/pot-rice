@@ -69,6 +69,4 @@ public class RoleServiceImpl implements IRoleService {
     public Role findByName(ERole name) {
         return roleRepository.findByName(name);
     }
-
-
 }

@@ -34,6 +34,11 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
+    public List<?> findAllByUserIdAndCartId(Long userId, Long id) {
+        return null;
+    }
+
+    @Override
     public Cart findById(Long id) {
         return cartRepository.findById(id).orElseThrow(() -> new DataInputException("id ko hop le"));
     }
@@ -64,24 +69,23 @@ public class CartServiceImpl implements ICartService {
             cartDetail.setCart(cartNew);
             cartDetail.setProduct(product);
             cartDetail.setTitle(product.getTitle());
-            cartDetail.setPrice(product.getPrice());
+            cartDetail.setPrice(price);
             cartDetail.setUnit(product.getUnit());
-            cartDetail.setQuantity(cartUpdateParam.getQuantity());
+            cartDetail.setQuantity(quantity);
             cartDetail.setAmount(amount);
             cartDetailRepository.save(cartDetail);
 
             cartNew.setTotalAmount(amount);
             return cartRepository.save(cartNew);
         } else {
-                if (cartDetailRepository.existsCartDetailByCart(carts.get())) {
-                CartDetail cartDetail = cartDetailRepository.findCartDetailsByProductAndCart(product, carts.get());
+                if (cartDetailRepository.existsCartDetailByCart(carts.get(Math.toIntExact(user.getId())))) {
+                CartDetail cartDetail = cartDetailRepository.findCartDetailsByProductAndCart(product, carts.get(Math.toIntExact(user.getId())));
                 if (cartDetail != null) {
-                    Cart cart = carts.get();
+                    Cart cart = carts.get(Math.toIntExact(user.getId()));
 
                     BigDecimal price = product.getPrice();
                     long quantity = cartDetail.getQuantity() + cartUpdateParam.getQuantity();
                     BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
-
 
                     cartDetail.setQuantity(quantity);
                     cartDetail.setAmount(amount);
@@ -95,7 +99,7 @@ public class CartServiceImpl implements ICartService {
                     long quantity = cartUpdateParam.getQuantity();
                     BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
 
-                    Cart cart = carts.get();
+                    Cart cart = carts.get(Math.toIntExact(user.getId()));
                     CartDetail cartDetailNew = new CartDetail();
                     cartDetailNew.setCart(cart);
                     cartDetailNew.setProduct(product);
@@ -116,7 +120,7 @@ public class CartServiceImpl implements ICartService {
                 long quantity = cartUpdateParam.getQuantity();
                 BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
 
-                Cart cart = carts.get();
+                Cart cart = carts.get(Math.toIntExact(user.getId()));
                 CartDetail cartDetailNew = new CartDetail();
                 cartDetailNew.setCart(cart);
                 cartDetailNew.setProduct(product);
@@ -132,5 +136,10 @@ public class CartServiceImpl implements ICartService {
                 return cartRepository.save(cart);
             }
         }
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        cartRepository.deleteById(id);
     }
 }
