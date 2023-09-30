@@ -56,7 +56,7 @@ public class CustomerController {
     public String showPageHome(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (!userOptional.isPresent()) {
             throw new DataInputException("User not valid");
@@ -76,7 +76,7 @@ public class CustomerController {
     public String showPageMenu(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (!userOptional.isPresent()) {
             throw new DataInputException("User not valid");
@@ -95,7 +95,7 @@ public class CustomerController {
     @GetMapping("/chefs")
     public String showChefs(Model model) {
         String username = appUtils.getPrincipalUsername();
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
         if (userOptional.isEmpty()) {
             throw new DataInputException("User not valid");
         }
@@ -114,7 +114,7 @@ public class CustomerController {
     @GetMapping("/product-detail/{id}")
     private String showProductDetail(@PathVariable String id ,Model model) {
         String username = appUtils.getPrincipalUsername();
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
         if (userOptional.isEmpty()) {
             throw new DataInputException("User not valid");
         }
@@ -145,7 +145,7 @@ public class CustomerController {
     @GetMapping("/cart")
     private String viewCart(Model model) {
         String username = appUtils.getPrincipalUsername();
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
         if (userOptional.isEmpty()) {
             throw new DataInputException("User not valid");
         }
@@ -164,7 +164,7 @@ public class CustomerController {
     public String showListProduct(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (userOptional.isEmpty()) {
             throw new DataInputException("User not valid");
@@ -183,7 +183,7 @@ public class CustomerController {
     public String showUserInfoEdit(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (userOptional.isEmpty()) {
             throw new DataInputException("User not valid");
@@ -201,7 +201,7 @@ public class CustomerController {
     public String showUserOrder(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (userOptional.isEmpty()) {
             throw new DataInputException("User not valid");
@@ -220,7 +220,7 @@ public class CustomerController {
     public String showUserOrderDetail(Model model, @RequestParam long id) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
         if (userOptional.isEmpty()) {
             throw new DataInputException("User not valid");
         }

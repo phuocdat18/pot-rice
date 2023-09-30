@@ -2,9 +2,9 @@ package com.cg.user;
 
 import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.User;
+import com.cg.model.UserPrincipal;
 import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserResult;
-import com.cg.model.UserPrincipal;
 import com.cg.user.dto.UserUpdateParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,18 +45,18 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<UserResult> findAllUserDTO() {
-        return userRepository.findAllUserDTO();
+    public List<User> findAllUser() {
+        return userRepository.findAllUser();
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
+    public List<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public Optional<UserResult> findUserDTOByUsername(String username) {
-        return userRepository.findUserDTOByUsername(username);
+    public List<User> findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 
     @Override
@@ -75,19 +74,16 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public UserResult create(UserCreationParam param) {     //DTO khi request
+    public UserResult create(UserCreationParam param) {
         User entity = userMapper.toEntity(param);
         entity = userRepository.save(entity);
         return userMapper.toDTO(entity);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        if (!userOptional.isPresent()) {
-            throw new UsernameNotFoundException(username);
-        }
-        return UserPrincipal.build(userOptional.get());
+    public UserDetails loadUserByUsername(String username) {
+        List<User> userOptional = userRepository.findByUsername(username);
+        return UserPrincipal.build((User) userOptional);
     }
 
     @Override

@@ -1,25 +1,15 @@
 package com.cg.user;
 
 
-import com.cg.exception.DataInputException;
-import com.cg.model.User;
 import com.cg.role.IRoleService;
 import com.cg.role.dto.RoleResult;
-import com.cg.role.dto.RoleUpdateParam;
 import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
-import com.cg.utils.AppUtils;
-import com.cg.utils.ValidateUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,8 +17,6 @@ import java.util.Optional;
 public class UserAPI {
     private final IUserService userService;
     private final IRoleService IRoleService;
-    private final AppUtils appUtils;
-    private final ValidateUtils validateUtils;
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -47,17 +35,6 @@ public class UserAPI {
     public List<RoleResult> getAllRoles() {
         return IRoleService.findAll();
     }
-
-//    @GetMapping("/roles")
-//    public ResponseEntity<?> getAllRoles() {
-//        List<RoleResult> roleResults = roleService.findAll();
-//
-//        if (roleResults.isEmpty()) {
-//            return new ResponseEntity<>("No roles found.", HttpStatus.NO_CONTENT);
-//        }
-//
-//        return new ResponseEntity<>(roleResults, HttpStatus.OK);
-//    }
 
     @PatchMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)

@@ -36,7 +36,7 @@ public class AdminController {
     public String showPageAdmin(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (!userOptional.isPresent()) {
             throw new DataInputException("User not valid");
@@ -56,7 +56,7 @@ public class AdminController {
     public String showListProduct(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (!userOptional.isPresent()) {
             throw new DataInputException("User not valid");
@@ -112,7 +112,7 @@ public class AdminController {
     public String showListCustomer(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (!userOptional.isPresent()) {
             throw new DataInputException("User not valid");
@@ -132,7 +132,7 @@ public class AdminController {
     public String showRevenue(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (!userOptional.isPresent()) {
             throw new DataInputException("User not valid");

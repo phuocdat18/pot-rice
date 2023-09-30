@@ -40,15 +40,5 @@ public class UserCreationParam {
     private RoleResult roleResult;
 
 
-//    public User toUser(Long id) {
-//        return new User()
-//                .setId(id)
-//                .setFullName(fullName)
-//                .setUsername(username)
-//                .setPassword(password)
-//                .setEmail(email)
-//                .setPhone(phone)
-//                .setRole();
-//    }
 
 }

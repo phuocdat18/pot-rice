@@ -14,27 +14,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User getByUsername(String username);
 
-    Optional<User> findByUsername(String username);
+    List<User> findByUsername(String username);
 
-    @Query("SELECT " +
-            "u.id, " +
-            "u.fullName, " +
-            "u.username, " +
-            "u.email, " +
-            "u.phone, " +
-            "u.role, " +
-            "u.deleted "+
-            "FROM User u " +
-            "WHERE u.role.id <> 1"
-    )
-    List<UserResult> findAllUserDTO();
-    @Query("SELECT " +
-                "u.id, " +
-                "u.username " +
-            "FROM User u " +
-            "WHERE u.username = ?1"
-    )
-    Optional<UserResult> findUserDTOByUsername(String username);
+
+    List<User> findAllUser();
+
+    List<User> findUserByUsername(String username);
 
 
     Boolean existsByUsername(String username);

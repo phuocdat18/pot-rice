@@ -1,9 +1,9 @@
 package com.cg.cart;
 
 
-import com.cg.order.IOrderItemService;
-import com.cg.order.IOrderService;
-import com.cg.order.dto.OrderCreationParam;
+import com.cg.bill.IBillDetailService;
+import com.cg.bill.IBillService;
+import com.cg.bill.dto.BillCreationParam;
 import com.cg.cart.dto.CartItemReqDTO;
 import com.cg.cartDetail.ICartDetailService;
 import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
@@ -38,10 +38,10 @@ public class CartAPI {
     private ICartDetailService cartDetailService;
 
     @Autowired
-    private IOrderService billService;
+    private IBillService billService;
 
     @Autowired
-    private IOrderItemService billDetailService;
+    private IBillDetailService billDetailService;
 
     @Autowired
     private IUserService userService;
@@ -56,11 +56,11 @@ public class CartAPI {
     private ValidateUtils validateUtils;
 
     @GetMapping
-    public ResponseEntity<?> findAllCartDetail() {
+    public ResponseEntity<List<?>> findAllCartDetail() {
 
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         try {
             List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());
@@ -81,7 +81,7 @@ public class CartAPI {
 
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         Long productId = cartItemReqDTO.getProductId();
         Optional<Product> productOptional = Optional.ofNullable(productService.findById(productId));
@@ -112,18 +112,25 @@ public class CartAPI {
     }
 
     @PostMapping("/payment")
-    public ResponseEntity<?> payment(@Valid @RequestBody OrderCreationParam orderCreationParam, @AuthenticationPrincipal UserPrincipal principal) {
-        Long principalId = principal.getId();
+    public ResponseEntity<?> payment(@Valid @RequestBody BillCreationParam billCreationParam, @AuthenticationPrincipal UserPrincipal principal) {
+//        String username = appUtils.getPrincipalUsername();
 
+//        Optional<User> userOptional = userService.findByUsername(principal.getUsername());
+        Long principalId = principal.getId();
         Optional<Cart> cartOptional = cartService.findByUserId(principalId);
+
+
         Cart cart = cartOptional.orElseThrow(() -> new DataInputException("Cart invalid"));
-        List<CartDetail> cartDetails = cartDetailService.findAllByCartId(cart.getId());
+
+
+        List<CartDetail> cartDetails = cartDetailService.findCartDetailsByCartId(cart.getId());
 
         if (cartDetails.isEmpty()) {
             throw new DataInputException("CartDetail invalid");
         }
         for (CartDetail cartDetail : cartDetails) {
-            Product product = cartDetail.getProduct();
+            Optional<Product> productOptional = Optional.ofNullable(productService.findById(cartDetail.getProduct().getId()));
+            Product product = productOptional.get();
             if (product.getQuantity() < cartDetail.getQuantity()) {
                 throw new DataInputException("Số lượng sản phẩm " + cartDetail.getId() + " không đủ!");
             }
@@ -134,9 +141,9 @@ public class CartAPI {
         BigDecimal vat = cartOptional.get().getTotalAmount().multiply(BigDecimal.valueOf(0.1));
         BigDecimal totalBill = cartOptional.get().getTotalAmount().add(vat).add(BigDecimal.valueOf(15000));
 
-//        Order bill = billService.create();
+//        Bill bill = billService.save(new Bill(totalBill, principalId, billCreationParam.getLocationRegionReqDTO().toLocationRegion(null), EPayment.DONE));
 //        for (CartDetail cartDetail : cartDetails) {
-//            billDetailService.addBillDetail(new OrderItem(cartDetail.getProduct(), cartDetail.getTitle(), cartDetail.getUnit(), cartDetail.getPrice(), cartDetail.getQuantity(), cartDetail.getAmount(), bill), cartDetail);
+//            billDetailService.addBillDetail(new BillDetail(cartDetail.getProduct(), cartDetail.getTitle(), cartDetail.getUnit(), cartDetail.getPrice(), cartDetail.getQuantity(), cartDetail.getAmount(), bill), cartDetail);
 //        }
         cartService.delete(cartOptional.get());
 
@@ -146,13 +153,13 @@ public class CartAPI {
 
     @PatchMapping("/bill/{id}")
     public ResponseEntity<?> updateBillStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
-        Order orderOptional = billService.findById(id);
+     Bill billOptional = billService.findById(id);
 
-//        if (orderOptional.isEmpty()) {
-//            throw new DataInputException("Order not found with id: " + id);
+//        if (billOptional.isEmpty()) {
+//            throw new DataInputException("Bill not found with id: " + id);
 //        }
 
-//        bill.setStatus(OrderStatus.valueOf(request.get("status")));
+//        bill.setStatus(EPayment.valueOf(request.get("status")));
 //        billService.save(bill);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -163,7 +170,7 @@ public class CartAPI {
     public ResponseEntity<List<?>> delete(@PathVariable String id) throws IOException {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (!validateUtils.isNumberValid(id)) {
             throw new DataInputException("Sản phẩm không hợp lệ");
@@ -195,7 +202,7 @@ public class CartAPI {
     public ResponseEntity<List<?>> changeQuantity(@PathVariable String id, @RequestBody CartDetailChangeReqDTO cartDetailChangeReqDTO) throws IOException {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
         if (!validateUtils.isNumberValid(id)) {
             throw new DataInputException("Cart detail không hợp lệ");
         }

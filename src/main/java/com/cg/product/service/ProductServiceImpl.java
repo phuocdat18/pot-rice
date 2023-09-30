@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.MapUtils;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -35,6 +36,7 @@ public class ProductServiceImpl implements IProductService {
     private final ProductAvatarRepository productAvatarRepository;
     private final IUploadService uploadService;
     private final UploadUtils uploadUtils;
+    private final MapUtils mapUtils;
 
 
     @Override
@@ -50,8 +52,8 @@ public class ProductServiceImpl implements IProductService {
     public ProductResult update(Long id, ProductUpdateParam productUpdateParam, Category category) {
         Product entity = findById(id);
         productMapper.transferFields(entity, productUpdateParam, category);
-//        return productMapper.toDTO(entity);
-        return MapUtils.toDTO(entity, ProductResult.class);
+        return productMapper.toDTO(entity);
+//        return productMapper.toDTO(entity, ProductResult.class);
     }
 
     @Override

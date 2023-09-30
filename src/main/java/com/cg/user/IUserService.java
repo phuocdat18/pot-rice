@@ -22,11 +22,12 @@ public interface IUserService extends UserDetailsService {
 
     User getByUsername(String username);
 
-    List<UserResult> findAllUserDTO();
+    List<User> findAllUser();
 
-    Optional<User> findByUsername(String username);
+    List<User> findByUsername(String username);
 
-    Optional<UserResult> findUserDTOByUsername(String username);
+    List<User> findUserByUsername(String username);
+
 
     Boolean existsByUsername(String email);
 

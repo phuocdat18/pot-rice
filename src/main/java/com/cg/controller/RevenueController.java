@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,7 +27,7 @@ public class RevenueController {
     public String showPageRevenue(Model model) {
         String username = appUtils.getPrincipalUsername();
 
-        Optional<User> userOptional = userService.findByUsername(username);
+        List<User> userOptional = userService.findUserByUsername(username);
 
         if (!userOptional.isPresent()) {
             throw new DataInputException("User not valid");

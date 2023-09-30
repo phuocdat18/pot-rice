@@ -46,11 +46,10 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public RoleResult create(RoleCreationParam param) {     //DTO khi request
+    public RoleResult create(RoleCreationParam param) {
         Role entity = roleMapper.toEntity(param);
         entity = roleRepository.save(entity);
         return roleMapper.toDTO(entity);
-//        return MapUtils.toDTO(entity, RoleResult.class);
     }
 
     @Override
