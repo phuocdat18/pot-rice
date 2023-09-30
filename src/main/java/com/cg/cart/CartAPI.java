@@ -1,10 +1,5 @@
 package com.cg.cart;
 
-
-import com.cg.bill.IBillDetailService;
-import com.cg.bill.IBillService;
-import com.cg.bill.dto.BillCreationParam;
-import com.cg.cart.dto.CartItemReqDTO;
 import com.cg.cartDetail.ICartDetailService;
 import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
 import com.cg.cartDetail.dto.CartDetailResult;
@@ -19,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -39,13 +33,8 @@ public class CartAPI {
 
     @Autowired
     private IBillService billService;
-
     @Autowired
-<<<<<<< HEAD
-    private IBillDetailService billDetailService;
-=======
     private IOrderItemService orderItemService;
->>>>>>> 0d385242d0465de945f69962c4064008012afff2
 
     @Autowired
     private IUserService userService;
