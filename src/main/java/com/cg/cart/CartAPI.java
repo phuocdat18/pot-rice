@@ -1,14 +1,12 @@
 package com.cg.cart;
 
-<<<<<<< HEAD
 import com.cg.cart.dto.CartUpdateParam;
-=======
->>>>>>> e60d90278e5dccc378ac116c4ec742ff60641cee
 import com.cg.cartDetail.ICartDetailService;
 import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
+import com.cg.order.IOrderItemService;
 import com.cg.order.IOrderService;
 import com.cg.order.dto.OrderCreationParam;
 import com.cg.product.service.IProductService;
@@ -39,13 +37,10 @@ public class CartAPI {
     private ICartDetailService cartDetailService;
 
     @Autowired
-<<<<<<< HEAD
     private IOrderService orderService;
-=======
-    private IBillService billService;
+
     @Autowired
     private IOrderItemService orderItemService;
->>>>>>> e60d90278e5dccc378ac116c4ec742ff60641cee
 
     @Autowired
     private IUserService userService;
