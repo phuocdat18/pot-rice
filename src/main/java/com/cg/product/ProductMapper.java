@@ -25,7 +25,7 @@ public class ProductMapper {
     }
 
 // update
-    public void transferFields(Product entity, ProductUpdateParam updateParam, Category category){
+    public void transferFields(Product entity, ProductUpdateParam updateParam){
         entity.setTitle(updateParam.getTitle());
         entity.setPrice(updateParam.getPrice());
         entity.setUnit(updateParam.getUnit());

@@ -28,7 +28,7 @@ public class Product extends BaseEntity {
 
     private String unit;
 
-    //    @Setter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false, foreignKey = @ForeignKey(name = "fk_category_product"))
     private Category category;

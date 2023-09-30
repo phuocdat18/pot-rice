@@ -1,22 +1,28 @@
 package com.cg.cart;
 
+<<<<<<< HEAD
 import com.cg.cart.dto.CartUpdateParam;
+=======
+>>>>>>> main
 import com.cg.cartDetail.ICartDetailService;
 import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
+<<<<<<< HEAD
 import com.cg.order.IOrderItemService;
 import com.cg.order.IOrderService;
 import com.cg.order.dto.OrderCreationParam;
 import com.cg.product.service.IProductService;
+=======
+import com.cg.product.IProductService;
+>>>>>>> main
 import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -37,8 +43,12 @@ public class CartAPI {
     private ICartDetailService cartDetailService;
 
     @Autowired
+<<<<<<< HEAD
     private IOrderService orderService;
 
+=======
+    private IBillService billService;
+>>>>>>> main
     @Autowired
     private IOrderItemService orderItemService;
 
@@ -76,25 +86,25 @@ public class CartAPI {
     }
 
     @PostMapping("/add-to-cart")
-    public ResponseEntity<List<?>> addToCart(@RequestBody CartUpdateParam cartUpdateParam) {
+    public ResponseEntity<List<?>> addToCart(@RequestBody CartItemReqDTO cartItemReqDTO) {
 
         String username = appUtils.getPrincipalUsername();
 
         List<User> userOptional = userService.findUserByUsername(username);
 
-        Long productId = cartUpdateParam.getProductId();
+        Long productId = cartItemReqDTO.getProductId();
         Optional<Product> productOptional = Optional.ofNullable(productService.findById(productId));
 
         if (productOptional.isEmpty()) {
             throw new DataInputException("Product invalid");
         }
-        if (productOptional.get().getQuantity() < cartUpdateParam.getQuantity()) {
+        if (productOptional.get().getQuantity() < cartItemReqDTO.getQuantity()) {
             throw new DataInputException("Quantity invalid");
         }
 
         Product product = productOptional.get();
 
-        Cart cart = cartService.addToCart(cartUpdateParam, product, userOptional.get());
+        Cart cart = cartService.addToCart(cartItemReqDTO, product, userOptional.get());
 
         try {
             List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());
@@ -111,9 +121,18 @@ public class CartAPI {
     }
 
     @PostMapping("/payment")
-    @PreAuthorize("#userId == principal.id")
-    public ResponseEntity<?> payment(@Valid @RequestBody OrderCreationParam orderCreationParam) {
-        List<CartDetail> cartDetails = cartDetailService.findAllByCartId();
+    public ResponseEntity<?> payment(@Valid @RequestBody BillCreationParam billCreationParam, @AuthenticationPrincipal UserPrincipal principal) {
+//        String username = appUtils.getPrincipalUsername();
+
+//        Optional<User> userOptional = userService.findByUsername(principal.getUsername());
+        Long principalId = principal.getId();
+        Optional<Cart> cartOptional = cartService.findByUserId(principalId);
+
+
+        Cart cart = cartOptional.orElseThrow(() -> new DataInputException("Cart invalid"));
+
+
+        List<CartDetail> cartDetails = cartDetailService.findCartDetailsByCartId(cart.getId());
 
         if (cartDetails.isEmpty()) {
             throw new DataInputException("CartDetail invalid");
@@ -141,19 +160,9 @@ public class CartAPI {
     }
 
 
-    @GetMapping("/payment")
-    @PreAuthorize("#userId == principal.id")
-    @ResponseStatus(HttpStatus.OK)
-    public List<?> findAllByUserId(@PathVariable Long userId, String status) {
-        if (status != null)
-            return orderService.findAllByUserIdAndStatus(userId, status);
-        return orderService.findAllByUserId(userId);
-    }
-
-
     @PatchMapping("/bill/{id}")
     public ResponseEntity<?> updateBillStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
-     Order order = orderService.findById(id);
+     Bill billOptional = billService.findById(id);
 
 //        if (billOptional.isEmpty()) {
 //            throw new DataInputException("Bill not found with id: " + id);
@@ -166,37 +175,37 @@ public class CartAPI {
     }
 
 
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity<List<?>> delete(@PathVariable String id) throws IOException {
-//        String username = appUtils.getPrincipalUsername();
-//
-//        List<User> userOptional = userService.findUserByUsername(username);
-//
-//        if (!validateUtils.isNumberValid(id)) {
-//            throw new DataInputException("Sản phẩm không hợp lệ");
-//        }
-//        Long cartDetailId = Long.parseLong(id);
-//
-//        Optional<CartDetail> cartDetailOptional = cartDetailService.findById(cartDetailId);
-//
-//        if (cartDetailOptional.isPresent()) {
-//            cartDetailService.delete(cartDetailOptional.get());
-//        } else {
-//            throw new DataInputException("Invalid product information");
-//        }
-//        try {
-//            List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());
-//
-//            if (cartDetailResults.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//
-//            return new ResponseEntity<>(cartDetailResults, HttpStatus.OK);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<List<?>> delete(@PathVariable String id) throws IOException {
+        String username = appUtils.getPrincipalUsername();
+
+        List<User> userOptional = userService.findUserByUsername(username);
+
+        if (!validateUtils.isNumberValid(id)) {
+            throw new DataInputException("Sản phẩm không hợp lệ");
+        }
+        Long cartDetailId = Long.parseLong(id);
+
+        Optional<CartDetail> cartDetailOptional = cartDetailService.findById(cartDetailId);
+
+        if (cartDetailOptional.isPresent()) {
+            cartDetailService.delete(cartDetailOptional.get());
+        } else {
+            throw new DataInputException("Invalid product information");
+        }
+        try {
+            List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());
+
+            if (cartDetailResults.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(cartDetailResults, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @PatchMapping("/change-quantity/{id}")
     public ResponseEntity<List<?>> changeQuantity(@PathVariable String id, @RequestBody CartDetailChangeReqDTO cartDetailChangeReqDTO) throws IOException {
@@ -232,9 +241,4 @@ public class CartAPI {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable Long id) {
-        cartService.deleteById(id);
-    }
 }
