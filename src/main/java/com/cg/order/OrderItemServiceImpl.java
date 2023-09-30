@@ -1,9 +1,7 @@
 package com.cg.order;
 
-import com.cg.order.dto.BillDetailResult;
 import com.cg.model.OrderItem;
 import com.cg.model.CartDetail;
-
 import com.cg.cartDetail.CartDetailRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,10 +17,7 @@ import java.util.Optional;
 public class OrderItemServiceImpl implements IOrderItemService {
 
     private final OrderItemRepository orderItemRepository;
-
     private final CartDetailRepository cartDetailRepository;
-
-
 
     @Override
     public List<OrderItem> findAll() {
@@ -51,23 +46,8 @@ public class OrderItemServiceImpl implements IOrderItemService {
 
     @Override
     public OrderItem addBillDetail(OrderItem orderItem, CartDetail cartDetail) {
-
         OrderItem orderItem1 = orderItemRepository.save(orderItem);
         cartDetailRepository.delete(cartDetail);
         return orderItem1;
-    }
-
-    @Override
-    public List<BillDetailResult> findAllBillDetailDTO(Long id) {
-        return orderItemRepository.findAllBillDetailDTO(id);
-    }
-
-    @Override
-    public List<BillDetailResult> findBillDetailByBillId(Long id) {
-        return orderItemRepository.findBillDetailByBillId(id);
-    }
-    @Override
-    public List<BillDetailResult> findBillDetailByBillIdStatus(Long id) {
-        return orderItemRepository.findBillDetailByBillIdStatus(id);
     }
 }

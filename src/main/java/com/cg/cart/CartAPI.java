@@ -41,7 +41,11 @@ public class CartAPI {
     private IBillService billService;
 
     @Autowired
+<<<<<<< HEAD
     private IBillDetailService billDetailService;
+=======
+    private IOrderItemService orderItemService;
+>>>>>>> 0d385242d0465de945f69962c4064008012afff2
 
     @Autowired
     private IUserService userService;
@@ -216,7 +220,7 @@ public class CartAPI {
         cartDetail.setQuantity(cartDetailChangeReqDTO.getQuantity());
         cartDetail.setAmount(newAmout);
 
-        cartDetailService.save(cartDetail);
+        cartDetailService.create(cartDetail);
 
         try {
             List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());

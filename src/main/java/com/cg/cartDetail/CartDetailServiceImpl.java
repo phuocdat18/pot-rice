@@ -1,33 +1,50 @@
 package com.cg.cartDetail;
 
 
+import com.cg.cart.CartMapper;
+import com.cg.cart.dto.CartResult;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.model.Cart;
-import com.cg.model.CartDetail;
+<<<<<<< HEAD
 import com.cg.model.Product;
+=======
+import com.cg.model.CartDetail;
+>>>>>>> hoan-dev
 import com.cg.cart.CartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+<<<<<<< HEAD
 @Transactional
+=======
+>>>>>>> hoan-dev
+@RequiredArgsConstructor
 public class CartDetailServiceImpl implements ICartDetailService {
+    private final CartMapper cartMapper;
+    private final CartDetailRepository cartDetailRepository;
+    private final CartRepository cartRepository;
 
-    @Autowired
-    private CartDetailRepository cartDetailRepository;
+<<<<<<< HEAD
+//    @Override
+//    public List<CartResult> findAll() {
+//        List<Cart> entities = cartRepository.findAll();
+//        return cartMapper.toDTOList(entities);
+//    }
+=======
+    private final CartDetailRepository cartDetailRepository;
+    private final CartRepository cartRepository;
 
-    @Autowired
-    private CartRepository cartRepository;
 
     @Override
     public List<CartDetail> findAll() {
         return cartDetailRepository.findAll();
     }
+>>>>>>> hoan-dev
 
     @Override
     public Optional<CartDetail> findById(Long id) {
@@ -35,7 +52,7 @@ public class CartDetailServiceImpl implements ICartDetailService {
     }
 
     @Override
-    public CartDetail save(CartDetail cartDetail) {
+    public CartDetail create(CartDetail cartDetail) {
         return cartDetailRepository.save(cartDetail);
     }
 
@@ -57,15 +74,6 @@ public class CartDetailServiceImpl implements ICartDetailService {
         cartDetailRepository.deleteById(id);
     }
 
-    @Override
-    public boolean existsCartDetailByCart(Cart cart) {
-        return cartDetailRepository.existsCartDetailByCart(cart);
-    }
-
-    @Override
-    public CartDetail findCartDetailsByProductAndCart(Product product, Cart cart) {
-        return cartDetailRepository.findCartDetailsByProductAndCart(product, cart);
-    }
 
     @Override
     public List<CartDetailResult> findAllCartDetailDTO(Long id) {
@@ -74,7 +82,7 @@ public class CartDetailServiceImpl implements ICartDetailService {
 
     @Override
     public List<CartDetail> findAllByCartId(Long cartId) {
-        return cartDetailRepository.findAllByCartId(cartId);
+        return cartDetailRepository.findCartDetailById(cartId);
     }
 
 

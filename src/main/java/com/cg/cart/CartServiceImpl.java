@@ -1,13 +1,11 @@
 package com.cg.cart;
 
-
-import com.cg.cart.dto.CartItemReqDTO;
+import com.cg.cart.dto.CartResult;
+import com.cg.cart.dto.CartUpdateParam;
 import com.cg.cartDetail.CartDetailRepository;
-import com.cg.model.Cart;
-import com.cg.model.CartDetail;
-import com.cg.model.Product;
-import com.cg.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cg.exception.DataInputException;
+import com.cg.model.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,37 +15,48 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CartServiceImpl implements ICartService {
-
-    @Autowired
-    private CartRepository cartRepository;
-
-    @Autowired
-    private CartDetailRepository cartDetailRepository;
+    private final CartDetailRepository cartDetailRepository;
+    private final CartRepository cartRepository;
+    private final CartMapper cartMapper;
 
     @Override
-    public List<Cart> findAll() {
-        return null;
+    public List<CartResult> findAll() {
+        List<Cart> entities = cartRepository.findAll();
+        return cartMapper.toDTOList(entities);
     }
 
     @Override
-    public Optional<Cart> findById(Long id) {
-        return Optional.empty();
+    public List<CartResult> findAllByUserId(Long userId) {
+        List<Cart> entities = cartRepository.findAllByUserId(userId);
+        return cartMapper.toDTOList(entities);
     }
 
     @Override
-    public Cart addToCart(CartItemReqDTO cartItemReqDTO, Product product, User user) {
+    public Cart findById(Long id) {
+        return cartRepository.findById(id).orElseThrow(() -> new DataInputException("id ko hop le"));
+    }
 
-        Optional<Cart> cartOptional = cartRepository.findByUserId(user.getId());
+    @Override
+    public CartResult getById(Long id) {
+        Cart entity = findById(id);
+        return cartMapper.toDTO(entity);
+    }
 
-        if (cartOptional.isEmpty()) {
+    @Override
+    public Cart addToCart(CartUpdateParam cartUpdateParam, Product product, User user) {
+
+        List<Cart> carts = cartRepository.findAllByUserId(user.getId());
+
+        if (carts.isEmpty()) {
             Cart cartNew = new Cart();
             cartNew.setUser(user);
             cartNew.setTotalAmount(BigDecimal.ZERO);
             cartRepository.save(cartNew);
 
             BigDecimal price = product.getPrice();
-            long quantity = cartItemReqDTO.getQuantity();
+            long quantity = cartUpdateParam.getQuantity();
             BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
 
 
@@ -57,20 +66,20 @@ public class CartServiceImpl implements ICartService {
             cartDetail.setTitle(product.getTitle());
             cartDetail.setPrice(product.getPrice());
             cartDetail.setUnit(product.getUnit());
-            cartDetail.setQuantity(cartItemReqDTO.getQuantity());
+            cartDetail.setQuantity(cartUpdateParam.getQuantity());
             cartDetail.setAmount(amount);
             cartDetailRepository.save(cartDetail);
 
             cartNew.setTotalAmount(amount);
             return cartRepository.save(cartNew);
         } else {
-            if (cartDetailRepository.existsCartDetailByCart(cartOptional.get())) {
-                CartDetail cartDetail = cartDetailRepository.findCartDetailsByProductAndCart(product, cartOptional.get());
+                if (cartDetailRepository.existsCartDetailByCart(carts.get())) {
+                CartDetail cartDetail = cartDetailRepository.findCartDetailsByProductAndCart(product, carts.get());
                 if (cartDetail != null) {
-                    Cart cart = cartOptional.get();
+                    Cart cart = carts.get();
 
                     BigDecimal price = product.getPrice();
-                    long quantity = cartDetail.getQuantity() + cartItemReqDTO.getQuantity();
+                    long quantity = cartDetail.getQuantity() + cartUpdateParam.getQuantity();
                     BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
 
 
@@ -83,17 +92,17 @@ public class CartServiceImpl implements ICartService {
                 } else {
 
                     BigDecimal price = product.getPrice();
-                    long quantity = cartItemReqDTO.getQuantity();
+                    long quantity = cartUpdateParam.getQuantity();
                     BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
 
-                    Cart cart = cartOptional.get();
+                    Cart cart = carts.get();
                     CartDetail cartDetailNew = new CartDetail();
                     cartDetailNew.setCart(cart);
                     cartDetailNew.setProduct(product);
                     cartDetailNew.setTitle(product.getTitle());
                     cartDetailNew.setPrice(product.getPrice());
                     cartDetailNew.setUnit(product.getUnit());
-                    cartDetailNew.setQuantity(cartItemReqDTO.getQuantity());
+                    cartDetailNew.setQuantity(cartUpdateParam.getQuantity());
                     cartDetailNew.setAmount(amount);
                     cartDetailRepository.save(cartDetailNew);
 
@@ -104,17 +113,17 @@ public class CartServiceImpl implements ICartService {
             } else {
 
                 BigDecimal price = product.getPrice();
-                long quantity = cartItemReqDTO.getQuantity();
+                long quantity = cartUpdateParam.getQuantity();
                 BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
 
-                Cart cart = cartOptional.get();
+                Cart cart = carts.get();
                 CartDetail cartDetailNew = new CartDetail();
                 cartDetailNew.setCart(cart);
                 cartDetailNew.setProduct(product);
                 cartDetailNew.setTitle(product.getTitle());
                 cartDetailNew.setPrice(product.getPrice());
                 cartDetailNew.setUnit(product.getUnit());
-                cartDetailNew.setQuantity(cartItemReqDTO.getQuantity());
+                cartDetailNew.setQuantity(cartUpdateParam.getQuantity());
                 cartDetailNew.setAmount(amount);
                 cartDetailRepository.save(cartDetailNew);
 
@@ -123,25 +132,5 @@ public class CartServiceImpl implements ICartService {
                 return cartRepository.save(cart);
             }
         }
-    }
-
-    @Override
-    public Optional<Cart> findByUserId(Long userId) {
-        return cartRepository.findByUserId(userId);
-    }
-
-    @Override
-    public Cart save(Cart cart) {
-        return cartRepository.save(cart);
-    }
-
-    @Override
-    public void delete(Cart cart) {
-        cartRepository.delete(cart);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        cartRepository.deleteById(id);
     }
 }

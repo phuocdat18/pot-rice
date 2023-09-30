@@ -27,10 +27,12 @@ public class AdminController {
 
     @Autowired
     private IUserService userService;
+
     @Autowired
-    private IOrderService billService;
+    private IOrderService orderService;
+
     @Autowired
-    private IOrderItemService billDetailService;
+    private IOrderItemService orderItemService;
 
     @GetMapping
     public String showPageAdmin(Model model) {
@@ -97,7 +99,7 @@ public class AdminController {
 //        return "dashboard_admin/orderJob";
 
 
-        List<OrderResult> billDTOS = billService.findAllByUserId(principal.getId());
+        List<?> billDTOS = orderService.findAllByUserId(principal.getId());
 //        List<BillDetailDTO> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
         String roleCode = principal.getAuthorities().get(0).getAuthority();
         model.addAttribute("username", principal.getUsername());

@@ -70,7 +70,6 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Transactional
-
     public OrderResult order(Long userId, OrderCreationParam creationParam) {
 
         LocationRegion location = locationMapper.toEntity(creationParam.getLocationRegion());
@@ -82,8 +81,5 @@ public class OrderServiceImpl implements IOrderService {
         order = orderRepository.save(order);
 
         return orderMapper.toDTO(order);
-
     }
-
-
 }

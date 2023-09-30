@@ -14,15 +14,11 @@ public class OrderMapper {
         return new Order();
     }
 
-
     public OrderResult toDTO(Order entity) {
         return new OrderResult();
-
     }
 
     public List<OrderResult> toDTOList(List<Order> entities) {
         return entities.stream().map(this::toDTO).collect(Collectors.toList());
     }
-
-
 }

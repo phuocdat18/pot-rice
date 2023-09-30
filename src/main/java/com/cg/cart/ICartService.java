@@ -1,16 +1,22 @@
 package com.cg.cart;
 
-import com.cg.cart.dto.CartItemReqDTO;
+import com.cg.cart.dto.CartResult;
+import com.cg.cart.dto.CartUpdateParam;
 import com.cg.model.Cart;
 import com.cg.model.Product;
 import com.cg.model.User;
-import com.cg.service.IGeneralService;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface ICartService extends IGeneralService<Cart, Long> {
+public interface ICartService {
 
-    Cart addToCart(CartItemReqDTO cartItemReqDTO, Product product, User user);
+    Cart addToCart(CartUpdateParam cartUpdateParam, Product product, User user);
 
-    Optional<Cart> findByUserId(Long userId);
+    Cart findById(Long id);
+
+    CartResult getById(Long id);
+
+    List<CartResult> findAll();
+
+    List<?> findAllByUserId(Long userId);
 }
