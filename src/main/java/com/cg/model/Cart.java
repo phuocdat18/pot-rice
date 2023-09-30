@@ -27,6 +27,6 @@ public class Cart extends BaseEntity {
     private User user;
 
     @Column(name = "user_id", insertable = false, updatable = false)
-    private int userId;
+    private Long userId;
 
 }

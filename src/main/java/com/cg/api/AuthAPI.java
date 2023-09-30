@@ -67,7 +67,7 @@ public class AuthAPI {
             throw new EmailExistsException("Account already exists");
         }
 
-        Optional<Role> optRole = Optional.ofNullable(roleService.findById(userReqDTO.getRole().getId()));
+        Optional<Role> optRole = Optional.ofNullable(roleService.findById(userReqDTO.getRoleResult().getId()));
 
         try {
             String passwordEncode = passwordEncoder.encode(userReqDTO.getPassword());

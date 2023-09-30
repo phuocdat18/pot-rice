@@ -209,7 +209,7 @@ public class CartAPI {
         cartDetail.setQuantity(cartDetailChangeReqDTO.getQuantity());
         cartDetail.setAmount(newAmout);
 
-        cartDetailService.save(cartDetail);
+        cartDetailService.create(cartDetail);
 
         try {
             List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());

@@ -12,8 +12,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Accessors(chain = true)
 public class CartDetailResult {
     private Long id;
     private String title;
