@@ -1,6 +1,9 @@
 package com.cg.cart;
 
+<<<<<<< HEAD
 import com.cg.cart.dto.CartUpdateParam;
+=======
+>>>>>>> e60d90278e5dccc378ac116c4ec742ff60641cee
 import com.cg.cartDetail.ICartDetailService;
 import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
 import com.cg.cartDetail.dto.CartDetailResult;
@@ -18,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,7 +39,13 @@ public class CartAPI {
     private ICartDetailService cartDetailService;
 
     @Autowired
+<<<<<<< HEAD
     private IOrderService orderService;
+=======
+    private IBillService billService;
+    @Autowired
+    private IOrderItemService orderItemService;
+>>>>>>> e60d90278e5dccc378ac116c4ec742ff60641cee
 
     @Autowired
     private IUserService userService;
