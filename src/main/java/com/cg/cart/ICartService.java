@@ -19,4 +19,8 @@ public interface ICartService {
     List<CartResult> findAll();
 
     List<?> findAllByUserId(Long userId);
+
+    List<?> findAllByUserIdAndCartId(Long userId, Long id);
+
+    void deleteById(Long id);
 }

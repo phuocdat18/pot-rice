@@ -3,6 +3,7 @@ package com.cg.model;
 
 import com.cg.avatar.dto.ProductAvatarResDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,8 +13,8 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Accessors(chain = true)
 @NoArgsConstructor
+@Accessors(chain = true)
 @Entity
 @Table(name = "product_avatar")
 public class ProductAvatar extends BaseEntity {

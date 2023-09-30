@@ -1,50 +1,27 @@
 package com.cg.cartDetail;
 
-
 import com.cg.cart.CartMapper;
-import com.cg.cart.dto.CartResult;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.model.Cart;
-<<<<<<< HEAD
-import com.cg.model.Product;
-=======
 import com.cg.model.CartDetail;
->>>>>>> hoan-dev
 import com.cg.cart.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-<<<<<<< HEAD
-@Transactional
-=======
->>>>>>> hoan-dev
 @RequiredArgsConstructor
 public class CartDetailServiceImpl implements ICartDetailService {
     private final CartMapper cartMapper;
     private final CartDetailRepository cartDetailRepository;
     private final CartRepository cartRepository;
 
-<<<<<<< HEAD
-//    @Override
-//    public List<CartResult> findAll() {
-//        List<Cart> entities = cartRepository.findAll();
-//        return cartMapper.toDTOList(entities);
-//    }
-=======
-    private final CartDetailRepository cartDetailRepository;
-    private final CartRepository cartRepository;
-
-
     @Override
     public List<CartDetail> findAll() {
         return cartDetailRepository.findAll();
     }
->>>>>>> hoan-dev
 
     @Override
     public Optional<CartDetail> findById(Long id) {
@@ -74,7 +51,6 @@ public class CartDetailServiceImpl implements ICartDetailService {
         cartDetailRepository.deleteById(id);
     }
 
-
     @Override
     public List<CartDetailResult> findAllCartDetailDTO(Long id) {
         return cartDetailRepository.findAllCartDetailDTO(id);
@@ -84,6 +60,4 @@ public class CartDetailServiceImpl implements ICartDetailService {
     public List<CartDetail> findAllByCartId(Long cartId) {
         return cartDetailRepository.findCartDetailById(cartId);
     }
-
-
 }
