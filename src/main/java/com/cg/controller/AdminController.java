@@ -1,15 +1,10 @@
 package com.cg.controller;
 
-import com.cg.order.IOrderItemService;
-import com.cg.order.IOrderService;
-import com.cg.order.dto.OrderResult;
-import com.cg.exception.DataInputException;
-import com.cg.model.Role;
-import com.cg.model.User;
 import com.cg.model.UserPrincipal;
+import com.cg.order.IOrderService;
 import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,58 +12,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/dashboard")
+@RequiredArgsConstructor
 public class AdminController {
-    @Autowired
-    private AppUtils appUtils;
+    private final IOrderService orderService;
 
-    @Autowired
-    private IUserService userService;
-
-    @Autowired
-    private IOrderService orderService;
-
-    @Autowired
-    private IOrderItemService orderItemService;
 
     @GetMapping
-    public String showPageAdmin(Model model) {
-        String username = appUtils.getPrincipalUsername();
+    public String showPageAdmin(Model model, @AuthenticationPrincipal UserPrincipal principal) {
+        String roleCode = principal.getAuthorities().get(0).getAuthority();
 
-        List<User> userOptional = userService.findUserByUsername(username);
-
-        if (!userOptional.isPresent()) {
-            throw new DataInputException("User not valid");
-        }
-
-        Role role = userOptional.get().getRole();
-        String roleCode = role.getCode().getValue();
-
-//        username = username.substring(0, username.indexOf("@"));
-        model.addAttribute("username", username);
+        model.addAttribute("username", principal.getUsername());
         model.addAttribute("roleCode", roleCode);
         model.addAttribute("active", "dashboard");
         return "dashboard_admin/dashboard";
     }
 
     @GetMapping("/products")
-    public String showListProduct(Model model) {
-        String username = appUtils.getPrincipalUsername();
-
-        List<User> userOptional = userService.findUserByUsername(username);
-
-        if (!userOptional.isPresent()) {
-            throw new DataInputException("User not valid");
-        }
-
-        Role role = userOptional.get().getRole();
-        String roleCode = role.getCode().getValue();
-
-//        username = username.substring(0, username.indexOf("@"));
-        model.addAttribute("username", username);
+    public String showListProduct(Model model, @AuthenticationPrincipal UserPrincipal principal) {
+        String roleCode = principal.getAuthorities().get(0).getAuthority();
+        model.addAttribute("username", principal.getUsername());
         model.addAttribute("roleCode", roleCode);
         model.addAttribute("active", "products");
         return "dashboard_admin/dashboard";
@@ -111,40 +76,18 @@ public class AdminController {
     }
 
     @GetMapping("/customers")
-    public String showListCustomer(Model model) {
-        String username = appUtils.getPrincipalUsername();
-
-        List<User> userOptional = userService.findUserByUsername(username);
-
-        if (!userOptional.isPresent()) {
-            throw new DataInputException("User not valid");
-        }
-
-        Role role = userOptional.get().getRole();
-        String roleCode = role.getCode().getValue();
-
-//        username = username.substring(0, username.indexOf("@"));
-        model.addAttribute("username", username);
+    public String showListCustomer(Model model, @AuthenticationPrincipal UserPrincipal principal) {
+        String roleCode = principal.getAuthorities().get(0).getAuthority();
+        model.addAttribute("username", principal.getUsername());
         model.addAttribute("roleCode", roleCode);
         model.addAttribute("active", "customers");
         return "dashboard_admin/list-user";
     }
 
     @GetMapping("/revenue")
-    public String showRevenue(Model model) {
-        String username = appUtils.getPrincipalUsername();
-
-        List<User> userOptional = userService.findUserByUsername(username);
-
-        if (!userOptional.isPresent()) {
-            throw new DataInputException("User not valid");
-        }
-
-        Role role = userOptional.get().getRole();
-        String roleCode = role.getCode().getValue();
-
-//        username = username.substring(0, username.indexOf("@"));
-        model.addAttribute("username", username);
+    public String showRevenue(Model model, @AuthenticationPrincipal UserPrincipal principal) {
+        String roleCode = principal.getAuthorities().get(0).getAuthority();
+        model.addAttribute("username", principal.getUsername());
         model.addAttribute("roleCode", roleCode);
         model.addAttribute("active", "revenue");
         return "dashboard_admin/revenue";

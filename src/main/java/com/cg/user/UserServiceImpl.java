@@ -8,7 +8,6 @@ import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
