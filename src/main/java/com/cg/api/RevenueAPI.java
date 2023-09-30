@@ -5,7 +5,7 @@ import com.cg.order.IOrderService;
 import com.cg.category.ICategoryService;
 
 
-import com.cg.product.service.IProductService;
+import com.cg.product.IProductService;
 
 import com.cg.utils.ValidateUtils;
 import lombok.RequiredArgsConstructor;

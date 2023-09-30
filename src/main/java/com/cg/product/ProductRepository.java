@@ -37,13 +37,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "pr.category, " +
             "pr.productAvatar " +
             "FROM Product AS pr " +
-            "WHERE lower(pr.title)LIKE CONCAT('%', LOWER(?1), '%') " +
-            "AND pr.category.id IN (?2) " +
-            "AND pr.price BETWEEN ?3 AND ?4 " +
+            "WHERE lower(pr.title)LIKE CONCAT('%', LOWER(:search), '%') " +
+            "AND pr.category.id IN (:categoryIds) " +
+            "AND pr.price BETWEEN :minPrice AND :maxPrice " +
             "AND pr.quantity > -1" +
             "ORDER BY pr.id ASC"
     )
-    Page<ProductResult> findAllProductDTOByKeyWordAndCategoryAndPrice (String search, List<Long> category, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
+    Page<ProductResult> findAllProductDTOByKeyWordAndCategoryAndPrice (String search, List<Long> categoryIds, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
      @Query("SELECT  " +
             "pr.id, " +
@@ -76,5 +76,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "ORDER BY pr.id DESC"
     )
     Page<ProductResult> findAllProductDTOPage(Pageable pageable);
-    Boolean existsProductById(Long id);
 }

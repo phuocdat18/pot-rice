@@ -1,7 +1,6 @@
 package com.cg.model;
 
 
-import com.cg.avatar.dto.ProductAvatarResDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,15 +39,6 @@ public class ProductAvatar extends BaseEntity {
 
     public ProductAvatar(String id) {
         this.id = id;
-    }
-
-    public ProductAvatarResDTO toProductAvatarResDTO() {
-        return new ProductAvatarResDTO()
-                .setId(id)
-                .setFileName(fileName)
-                .setFileFolder(fileFolder)
-                .setFileUrl(fileUrl)
-                ;
     }
 
 }

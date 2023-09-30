@@ -5,7 +5,7 @@ import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
-import com.cg.product.service.IProductService;
+import com.cg.product.IProductService;
 import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
