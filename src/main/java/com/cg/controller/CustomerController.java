@@ -2,12 +2,7 @@ package com.cg.controller;
 
 import com.cg.model.*;
 import com.cg.order.IOrderService;
-import com.cg.order.IOrderItemService;
-import com.cg.order.dto.OrderResult;
-import com.cg.user.IUserService;
-import com.cg.product.service.IProductService;
-import com.cg.utils.AppUtils;
-import com.cg.utils.ValidateUtils;
+import com.cg.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -30,14 +24,6 @@ public class CustomerController {
 
     @GetMapping
     public String showPageHome(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-//        String username = appUtils.getPrincipalUsername();
-//
-//        List<User> userOptional = userService.findUserByUsername(username);
-//
-//        if (!userOptional.isPresent()) {
-//            throw new DataInputException("User not valid");
-//        }
-
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
 
         model.addAttribute("username", userPrincipal.getUsername());
@@ -149,28 +135,6 @@ public class CustomerController {
 
     @GetMapping("/my-order-detail")
     public String showUserOrderDetail(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-//        String username = appUtils.getPrincipalUsername();
-//
-//        Optional<User> userOptional = userService.findByUsername(username);
-//        if (userOptional.isEmpty()) {
-//            throw new DataInputException("User not valid");
-//        }
-//
-//        User user = userOptional.get();
-//        Long userId = user.getId();
-//
-//        List<OrderCreationParam> userBillDTOs = billService.findBillDTOByIdUser(userId);
-//        List<BillCreation> userBillDTOs = billService.findAllByUserId(userId);
-//        model.addAttribute("bill", userBillDTOs);
-//
-//        List<OrderCreationParam> billDTOsById = billService.findBillDTOByIdBill(id);
-//        if (billDTOsById.isEmpty()) {
-//            throw new DataInputException("Order not found");
-//        }
-//        model.addAttribute("billById", billDTOsById.get(0));
-//
-//        List<BillDetailResult> billDetailDTOS = billDetailService.findBillDetailByBillIdStatus(id);
-//        model.addAttribute("billDetailDTOS", billDetailDTOS);
 
         List<?> orderResults = orderService.findAllByUserId(userPrincipal.getId());
 

@@ -1,26 +1,11 @@
 package com.cg.cart;
 
-<<<<<<< HEAD
-import com.cg.cart.dto.CartUpdateParam;
-=======
->>>>>>> main
 import com.cg.cartDetail.ICartDetailService;
 import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
-<<<<<<< HEAD
-import com.cg.order.IOrderItemService;
-import com.cg.order.IOrderService;
-import com.cg.order.dto.OrderCreationParam;
-import com.cg.product.service.IProductService;
-=======
-import com.cg.product.IProductService;
->>>>>>> main
-import com.cg.user.IUserService;
-import com.cg.utils.AppUtils;
-import com.cg.utils.ValidateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,56 +18,17 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/carts")
 public class CartAPI {
 
-    @Autowired
-    private ICartService cartService;
+    private final ICartService cartService;
 
-    @Autowired
-    private ICartDetailService cartDetailService;
-
-    @Autowired
-<<<<<<< HEAD
-    private IOrderService orderService;
-
-=======
-    private IBillService billService;
->>>>>>> main
-    @Autowired
-    private IOrderItemService orderItemService;
-
-    @Autowired
-    private IUserService userService;
-
-    @Autowired
-    private IProductService productService;
-
-    @Autowired
-    private AppUtils appUtils;
-
-    @Autowired
-    private ValidateUtils validateUtils;
 
     @GetMapping
-    public ResponseEntity<List<?>> findAllCartDetail() {
-
-        String username = appUtils.getPrincipalUsername();
-
-        List<User> userOptional = userService.findUserByUsername(username);
-
-        try {
-            List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());
-
-            if (cartDetailResults.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(cartDetailResults, HttpStatus.OK);
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public List<?>findAllCartDetail() {
+        return cartService.findAll();
     }
 
     @PostMapping("/add-to-cart")

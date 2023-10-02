@@ -35,7 +35,7 @@ public class ProductAPI {
                 .setCategoryIds(categoryIds)
                 .setMinPrice(minPrice)
                 .setMaxPrice(maxPrice);
-        return productService.findAll(filter, PageRequest.of(page - 1, pageSize));
+        return (List<?>) productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
     }
 
     @GetMapping("/{id}")
@@ -51,7 +51,6 @@ public class ProductAPI {
 
     @PatchMapping("/{id}")
     public ProductResult update(@PathVariable Long id, @RequestBody ProductUpdateParam param) {
-
         return productService.update(id, param);
     }
 
