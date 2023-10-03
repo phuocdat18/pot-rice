@@ -60,6 +60,7 @@ public class AuthAPI {
     public ResponseEntity<?> register(@Valid @RequestBody UserCreationParam creationParam) {
 
         userService.validateByUsername(creationParam.getUsername());
+        userService.validateByEmail(creationParam.getEmail());
 
         try {
             String passwordEncode = passwordEncoder.encode(creationParam.getPassword());

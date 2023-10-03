@@ -40,6 +40,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResult findByUsername(String username) {
         User entity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("username invalid"));
@@ -47,17 +48,19 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void validateByUsername(String username) {
-        if (userRepository.existsByUsername(username)) {
+        if (userRepository.existsByUsername(username))
             throw new ValidationException("username", "validate.user.username.existed");
-        }
+
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void validateByEmail(String email) {
-        if (userRepository.existsByEmail(email)) {
+        if (userRepository.existsByEmail(email))
             throw new ValidationException("email", "validate.user.email.existed");
-        }
+
     }
 
     @Override
