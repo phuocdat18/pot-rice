@@ -22,10 +22,14 @@ public class UserMapper {
                 .setRoleId(creationParam.getRoleResult().getId());
     }
 
-    public User toEntity(UserUpdateParam dto) {
-//        return new User()
-//                .setFullName(dto.getFullName());
-        return null;
+    public User toEntity(UserResult userResult) {
+        return new User()
+                .setFullName(userResult.getFullName())
+                .setUsername(userResult.getUsername())
+                .setPassword(userResult.getPassword())
+                .setEmail(userResult.getEmail())
+                .setPhone(userResult.getPhone())
+                .setRoleId(userResult.getRoleResult().getId());
     }
 
     public void transferFields(User entity, UserUpdateParam dto) {

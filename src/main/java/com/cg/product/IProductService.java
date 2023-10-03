@@ -21,6 +21,4 @@ public interface IProductService {
     ProductResult update(Long id, ProductUpdateParam updateParam);
 
     ProductResult getById(Long id);
-
-
 }

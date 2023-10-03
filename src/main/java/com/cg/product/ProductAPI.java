@@ -5,6 +5,7 @@ import com.cg.product.dto.ProductFilter;
 import com.cg.product.dto.ProductResult;
 import com.cg.product.dto.ProductUpdateParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ProductAPI {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<?> findAll(@RequestParam(name = "search", required = false) String search,
+    public Page<?> findAllByFilter(@RequestParam(name = "search", required = false) String search,
                            @RequestParam(name = "categoryIds", required = false) String categoryIdList,
                            @RequestParam(name = "minPrice", required = false) BigDecimal minPrice,
                            @RequestParam(name = "maxPrice", required = false) BigDecimal maxPrice,
@@ -35,7 +36,11 @@ public class ProductAPI {
                 .setCategoryIds(categoryIds)
                 .setMinPrice(minPrice)
                 .setMaxPrice(maxPrice);
+<<<<<<< HEAD
         return (List<?>) productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
+=======
+        return productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
+>>>>>>> dat-dev
     }
 
     @GetMapping("/{id}")

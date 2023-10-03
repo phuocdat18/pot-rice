@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cg</groupId>
-    <artifactId>pot-rice-restaurant-spb-case-md4</artifactId>
+    <artifactId>pot-rice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>pot-rice-restaurant-spb-case-md4</name>

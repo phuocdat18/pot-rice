@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "bills")
+@Table(name = "orders")
 @Accessors(chain = true)
 public class Order extends BaseEntity {
 
@@ -50,5 +50,4 @@ public class Order extends BaseEntity {
     public Order() {
 
     }
-
 }
