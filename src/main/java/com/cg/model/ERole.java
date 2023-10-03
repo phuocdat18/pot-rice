@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Getter
 public enum ERole {
-    ROLE_ADMIN("ADMIN"),
-    ROLE_USER("USER"),
-    ROLE_MANAGER("MANAGER"),
-    ROLE_CUSTOMER("CUSTOMER");
+    ADMIN("ADMIN"),
+    USER("USER"),
+    MANAGER("MANAGER"),
+    CUSTOMER("CUSTOMER");
 
     private final String value;
 
