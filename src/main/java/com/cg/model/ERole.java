@@ -1,5 +1,9 @@
 package com.cg.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Getter;
+
+@Getter
 public enum ERole {
     ROLE_ADMIN("ADMIN"),
     ROLE_USER("USER"),
@@ -12,7 +16,8 @@ public enum ERole {
         this.value = value;
     }
 
-    public String getValue() {
-        return this.value;
+    @JsonCreator
+    public static ERole parse(String value) {
+
     }
 }

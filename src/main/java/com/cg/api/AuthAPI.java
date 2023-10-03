@@ -66,7 +66,7 @@ public class AuthAPI {
         userService.validateByEmail(creationParam.getEmail());
 
 
-        Optional<Role> optRole = Optional.ofNullable(roleService.findById(creationParam.getRoleResult().getId()));
+//        Optional<Role> optRole = Optional.ofNullable(roleService.findById(creationParam.getRoleResult().getId()));
 
         String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
         creationParam.setPassword(passwordEncode);
@@ -79,7 +79,7 @@ public class AuthAPI {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserLoginDTO user, BindingResult bindingResult) {
 
-        User currentUser = userService.findByUsername(user.getUsername());
+        UserResult currentUser = userService.findByUsername(user.getUsername());
         if (currentUser.isDeleted())
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 

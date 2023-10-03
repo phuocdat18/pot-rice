@@ -1,4 +1,4 @@
-package com.cg.cartItem.dto;
+package com.cg.cartDetail.dto;
 
 import lombok.Getter;
 import lombok.Setter;

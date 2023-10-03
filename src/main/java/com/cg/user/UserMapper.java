@@ -45,7 +45,8 @@ public class UserMapper {
                 .setUsername(entity.getUsername())
                 .setPassword(entity.getPassword())
                 .setEmail(entity.getEmail())
-                .setPhone(entity.getPhone());
+                .setPhone(entity.getPhone())
+                .setRoleId(entity.getRoleId());
     }
 
     public List<UserResult> toDTOList(List<User> entities) {

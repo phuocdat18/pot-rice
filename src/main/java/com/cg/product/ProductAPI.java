@@ -36,11 +36,11 @@ public class ProductAPI {
                 .setCategoryIds(categoryIds)
                 .setMinPrice(minPrice)
                 .setMaxPrice(maxPrice);
-<<<<<<< HEAD
-        return (List<?>) productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
-=======
+
+//        return (List<?>) productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
+
         return productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
->>>>>>> dat-dev
+
     }
 
     @GetMapping("/{id}")

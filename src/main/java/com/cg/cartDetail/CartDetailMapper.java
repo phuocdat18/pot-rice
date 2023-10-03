@@ -1,6 +1,6 @@
 package com.cg.cartDetail;
 
-import com.cg.cartDetail.dto.CartDetailCreationParam;
+import com.cg.cartDetail.dto.CartDetailParam;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.model.CartDetail;
 import org.springframework.stereotype.Component;
@@ -10,23 +10,18 @@ import java.util.stream.Collectors;
 
 @Component
 public class CartDetailMapper {
-    public CartDetail toEntity(CartDetailCreationParam param) {
+    public CartDetail toEntity(CartDetailParam param) {
         return new CartDetail()
-                .setTitle(param.getTitle())
-                .setUnit(param.getUnit())
-                .setPrice(param.getPrice())
+                .setProductId(param.getProductId())
                 .setQuantity(param.getQuantity())
-                .setAmount(param.getAmount())
                 ;
     }
 
     public CartDetailResult toDTO(CartDetail entity) {
         return new CartDetailResult()
                 .setTitle(entity.getTitle())
-                .setUnit(entity.getUnit())
                 .setPrice(entity.getPrice())
                 .setQuantity(entity.getQuantity())
-                .setAmount(entity.getAmount())
                 ;
     }
 

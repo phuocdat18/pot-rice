@@ -1,5 +1,8 @@
 package com.cg.model;
 
+import lombok.Getter;
+
+@Getter
 public enum OrderStatus {
 
     ORDER("ORDER"), //0
@@ -13,10 +16,6 @@ public enum OrderStatus {
 
     OrderStatus(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return this.value;
     }
 
     public static OrderStatus parse(String value) {
