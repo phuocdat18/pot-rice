@@ -8,10 +8,12 @@ import com.cg.model.User;
 import com.cg.role.IRoleService;
 import com.cg.service.jwt.JwtService;
 import com.cg.user.IUserService;
+import com.cg.user.UserMapper;
 import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserLoginDTO;
 import com.cg.user.dto.UserResult;
 import com.cg.utils.AppUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -29,13 +31,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vn.rananu.shared.exceptions.OperationException;
 
 import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class AuthAPI {
+    private final UserMapper userMapper;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -56,24 +61,20 @@ public class AuthAPI {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody UserCreationParam creationParam, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return appUtils.mapErrorToResponse(bindingResult);
-        }
+    public ResponseEntity<?> register(@Valid @RequestBody UserCreationParam creationParam) {
 
         userService.validateByUsername(creationParam.getUsername());
-        userService.validateByEmail(creationParam.getEmail());
 
+        try {
+            String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
+            creationParam.setPassword(passwordEncode);
+            UserResult user = userService.create(creationParam);
 
-//        Optional<Role> optRole = Optional.ofNullable(roleService.findById(creationParam.getRoleResult().getId()));
+            return new ResponseEntity<>(userMapper.toEntity(user), HttpStatus.CREATED);
 
-        String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
-        creationParam.setPassword(passwordEncode);
-        UserResult dto = userService.create(creationParam);
-        return new ResponseEntity<>(dto, HttpStatus.CREATED);
-
-
+        } catch (DataIntegrityViolationException e) {
+            throw new OperationException("Account information is not valid, please check the information again");
+        }
     }
 
     @PostMapping("/login")

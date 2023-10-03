@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi"/>
   <title>Đăng ký || Nhà Hàng Cơm Niêu HTD</title>
   <link rel="icon" href="/assets/images/logo_icon.png">
   <th:block th:replace="layout/header"/>
@@ -18,7 +18,7 @@
     border: solid 1px red;
   }
 
-  .error-message {
+  .error-message, .fullNameError, .usernameError, .passwordError, .emailError, .phoneError {
     color: red;
     width: 500px;
     float: left;
@@ -37,17 +37,21 @@
       <div class="col-xl-6 col-sm-6 col-md-8">
         <ul class="tf__topbar_info d-flex flex-wrap d-none d-sm-flex">
           <li>
-            <a href="https://mail.google.com/mail/u/0/#inbox?compose=DmwnWsdBqCPSBskMPRHHvkHmJPTTVDJNZxbQLCKxmPBNxBXqkvdhLTzVMCHbfmzgMLbvtlKsktBb" target="_blank">nguyenphuocdat18@gmail.com</a>
+            <a href="https://mail.google.com/mail/u/0/#inbox?compose=DmwnWsdBqCPSBskMPRHHvkHmJPTTVDJNZxbQLCKxmPBNxBXqkvdhLTzVMCHbfmzgMLbvtlKsktBb"
+               target="_blank">nguyenphuocdat18@gmail.com</a>
           </li>
-          <li class="d-none d-md-block"><a href="https://www.facebook.com/groupcall/ROOM:/?call_id=1819783208&has_video=false&initialize_video=false&is_e2ee_mandated=false&nonce=l91hm9og6xc9&referrer_context=zenon_precall&thread_type=1&users_to_ring[0]=100012718507997&use_joining_context=true&peer_id=100012718507997"><i class="fas fa-phone-alt"></i>
+          <li class="d-none d-md-block"><a
+                  href="https://www.facebook.com/groupcall/ROOM:/?call_id=1819783208&has_video=false&initialize_video=false&is_e2ee_mandated=false&nonce=l91hm9og6xc9&referrer_context=zenon_precall&thread_type=1&users_to_ring[0]=100012718507997&use_joining_context=true&peer_id=100012718507997"><i
+                  class="fas fa-phone-alt"></i>
             +0856419555</a></li>
         </ul>
       </div>
       <div class="col-xl-6 col-sm-6 col-md-4">
         <ul class="topbar_icon d-flex flex-wrap">
-          <li><a href="https://www.facebook.com/tranthibaothi98" target="_blank"><i class="fab fa-facebook-f"></i></a> </li>
+          <li><a href="https://www.facebook.com/tranthibaothi98" target="_blank"><i
+                  class="fab fa-facebook-f"></i></a></li>
           <li><a href="https://mail.google.com/" target="_blank"><i class="fab fa-google-plus-g"></i></a></li>
-          <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-linkedin-in"></i></a> </li>
+          <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
         </ul>
       </div>
     </div>
@@ -89,26 +93,31 @@
               <div class="col-xl-12">
                 <div class="tf__login_imput">
                   <input type="text" id="fullNameReg" placeholder="Họ tên"/>
+                  <div class="fullNameError" style="display: block"></div>
                 </div>
               </div>
               <div class="col-xl-12">
                 <div class="tf__login_imput">
                   <input type="text" id="usernameReg" placeholder="Tên đăng nhập"/>
+                  <div class="usernameError" style="display: block"></div>
                 </div>
               </div>
               <div class="col-xl-12">
                 <div class="tf__login_imput">
                   <input type="password" id="passwordReg" placeholder="Mật khẩu"/>
+                  <div class="passwordError" style="display: block"></div>
                 </div>
               </div>
               <div class="col-xl-12">
                 <div class="tf__login_imput">
                   <input type="email" id="emailReg" placeholder="Email"/>
+                  <div class="emailError" style="display: block"></div>
                 </div>
               </div>
               <div class="col-xl-12">
                 <div class="tf__login_imput">
-                  <input type="tel" id="phoneReg" placeholder="Số điện thoại" />
+                  <input type="tel" id="phoneReg" placeholder="Số điện thoại"/>
+                  <div class="phoneError" style="display: block"></div>
                 </div>
               </div>
               <div class="col-xl-12">
@@ -179,18 +188,21 @@
   page.elements.btnRegister = $("#btnRegister");
 
   page.elements.errorRegister = $('.error-message')
-
-
+  page.elements.fullNameError = $('.fullNameError')
+  page.elements.usernameError = $('.usernameError')
+  page.elements.passwordError = $('.passwordError')
+  page.elements.emailError = $('.emailError')
+  page.elements.phoneError = $('.phoneError')
 
   page.commands.register = () => {
     let user = {
-      fullName : page.elements.fullNameReg.val(),
-      username : page.elements.usernameReg.val(),
-      password : page.elements.passwordReg.val(),
-      email : page.elements.emailReg.val(),
-      phone : page.elements.phoneReg.val(),
-      role : {
-        id : 4,
+      fullName: page.elements.fullNameReg.val(),
+      username: page.elements.usernameReg.val(),
+      password: page.elements.passwordReg.val(),
+      email: page.elements.emailReg.val(),
+      phone: page.elements.phoneReg.val(),
+      role: {
+        id: 4,
         code: 'CUSTOMER'
       }
     }
@@ -210,29 +222,25 @@
         page.elements.usnLogin.val(page.elements.usernameReg.val());
         page.elements.pwdLogin.val(page.elements.passwordReg.val());
         container.classList.remove("sign-up-mode");
-        // page.commands.switchLoginForm();
+
       }, 1000);
+
       page.elements.errorRegister.empty();
+      page.elements.fullNameError.empty();
+      page.elements.usernameError.empty();
+      page.elements.passwordError.empty();
+      page.elements.emailError.empty();
+      page.elements.phoneError.empty();
       window.location.href = "/login";
     }).fail(function (jqXHR) {
-      // page.elements.frmRegister[0].reset();
-
       if (jqXHR.responseJSON) {
-        if (jqXHR.responseJSON.message) {
-          AppBase.Notify.showErrorAlert(jqXHR.responseJSON.message);
-        }
-        else {
-          let str = '<ul>';
-          $.each(jqXHR.responseJSON, (k, v) => {
-            str += `<li>${v}</li>`;
-          })
-          str += '</ul>'
-          page.elements.errorRegister.append(str);
-          page.elements.errorRegister.removeClass('hide').addClass('show');
-        }
-      }
-      else {
-        AppBase.Notify.showErrorAlert("Something went wrong, please try again");
+        if (jqXHR.responseJSON.message === undefined)
+          return;
+        AppBase.Notify.showErrorAlert(jqXHR.responseJSON.message);
+        if (jqXHR.responseJSON.errors === undefined)
+          return;
+        page.elements.fullNameError.text(jqXHR.responseJSON.errors["fullName"]);
+
       }
     });
   }
@@ -261,7 +269,7 @@
       },
       phoneReg: {
         required: true,
-        number:true,
+        number: true,
         minlength: 10,
         maxlength: 12,
       },
