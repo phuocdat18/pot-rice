@@ -3,11 +3,11 @@ package com.cg;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class PotRiceRestaurantSpbCaseMd4Application {
+@SpringBootApplication(scanBasePackages = {"vn.rananu.shared", "com.cg"})
+public class PotRiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PotRiceRestaurantSpbCaseMd4Application.class, args);
+        SpringApplication.run(PotRiceApplication.class, args);
     }
 
 }
