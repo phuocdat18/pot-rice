@@ -1,6 +1,5 @@
 package com.cg.user;
 
-
 import com.cg.role.IRoleService;
 import com.cg.role.dto.RoleResult;
 import com.cg.user.dto.UserResult;
@@ -92,64 +91,6 @@ public class UserAPI {
 //        }
 //    }
 
-    @DeleteMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable Long id) {
-        userService.deleteById(id);
-    }
 
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity<?> delete(@PathVariable String id) throws IOException {
-//        if (!validateUtils.isNumberValid(id)) {
-//            throw new DataInputException("ID user không hợp lệ");
-//        }
-//        Long userId = Long.parseLong(id);
-//
-//        Optional<User> user = userService.findById(userId);
-//
-//        if (user.isPresent()) {
-//            userService.delete(user.get());
-//
-//            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-//        } else {
-//            throw new DataInputException("Invalid product information");
-//        }
-//    }
 
-//    @PatchMapping("/disable/{id}")
-//    public ResponseEntity<?> markProductAsDeleted(@PathVariable String id) {
-//        if (!validateUtils.isNumberValid(id)) {
-//            throw new DataInputException("ID không hợp lệ");
-//        }
-//        Long userId = Long.parseLong(id);
-//
-//        Optional<User> userOptional = userService.findById(userId);
-//
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//            user.setDeleted(true); // Thay đổi thuộc tính 'deleted' thành true
-//            userService.save(user);
-//            return new ResponseEntity<>("Product has been marked as deleted.", HttpStatus.OK);
-//        } else {
-//            throw new DataInputException("Invalid product information");
-//        }
-//    }
-//    @PatchMapping("/restore/{id}")
-//    public ResponseEntity<?> restoreUser(@PathVariable String id) {
-//        if (!validateUtils.isNumberValid(id)) {
-//            throw new DataInputException("ID không hợp lệ");
-//        }
-//        Long userId = Long.parseLong(id);
-//
-//        Optional<User> userOptional = userService.findById(userId);
-//
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//            user.setDeleted(false);
-//            userService.save(user);
-//            return new ResponseEntity<>("Product has been marked as deleted.", HttpStatus.OK);
-//        } else {
-//            throw new DataInputException("Invalid product information");
-//        }
-//    }
 }

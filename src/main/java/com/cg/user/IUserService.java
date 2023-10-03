@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IUserService extends UserDetailsService {
 
@@ -20,21 +19,15 @@ public interface IUserService extends UserDetailsService {
 
     UserResult getById(Long id);
 
-    User getByUsername(String username);
-
-    List<User> findAllUser();
-
-    List<User> findByUsername(String username);
-
-    List<User> findUserByUsername(String username);
+    UserResult findByUsername(String username);
 
 
-    Boolean existsByUsername(String email);
+    void validateByUsername(String email);
 
-    @Transactional
+    void validateByEmail(String email);
+
     UserResult update(Long id, UserUpdateParam param);
 
-    @Transactional
     UserResult create(UserCreationParam param);
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;

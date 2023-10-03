@@ -1,5 +1,6 @@
 package com.cg.user;
 
+import com.cg.exception.DataInputException;
 import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.User;
 import com.cg.model.UserPrincipal;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -39,28 +41,32 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User getByUsername(String username) {
-        return userRepository.getByUsername(username);
+    public UserResult findByUsername(String username) {
+        User entity = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("username invalid"));
+        return userMapper.toDTO(entity);
     }
 
     @Override
-    public List<User> findAllUser() {
-        return userRepository.findAllUser();
+    public void validateByUsername(String username) {
+        if (userRepository.existsByUsername(username)) {
+            throw new DataInputException(new HashMap<>() {
+                {
+                    put("username", "username invalid");
+                }
+            });
+        }
     }
 
     @Override
-    public List<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
-    public List<User> findUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
-    }
-
-    @Override
-    public Boolean existsByUsername(String username) {
-        return userRepository.existsByUsername(username);
+    public void validateByEmail(String email) {
+        if (userRepository.existsByEmail(email)) {
+            throw new DataInputException(new HashMap<>() {
+                {
+                    put("username", "username invalid");
+                }
+            });
+        }
     }
 
     @Override
@@ -81,8 +87,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        List<User> userOptional = userRepository.findByUsername(username);
-        return UserPrincipal.build((User) userOptional);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("username invalid"));
+        return UserPrincipal.build(user);
     }
 
     @Override

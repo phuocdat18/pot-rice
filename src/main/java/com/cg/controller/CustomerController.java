@@ -24,6 +24,10 @@ public class CustomerController {
 
     @GetMapping
     public String showPageHome(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> thi-dev
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
 
         model.addAttribute("username", userPrincipal.getUsername());
@@ -56,31 +60,6 @@ public class CustomerController {
 
     @GetMapping("/product-detail/{id}")
     private String showProductDetail(@PathVariable Long id, Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-//        String username = appUtils.getPrincipalUsername();
-//        Optional<User> userOptional = userService.findByUsername(username);
-//        if (userOptional.isEmpty()) {
-//            throw new DataInputException("User not valid");
-//        }
-//        Role role = userOptional.get().getRole();
-//        String roleCode = String.valueOf(role.getCode());
-//
-//
-//        if (!validateUtils.isNumberValid(id)) {
-//            throw new DataInputException("Mã sản phẩm không hợp lệ");
-//        }
-//        Long productId = Long.parseLong(id);
-//
-//        Optional<Product> product = Optional.ofNullable(productService.findById(productId));
-//
-//        if (product.isEmpty()) {
-//            throw new DataInputException("Không tìm thấy sản phẩm");
-//        }
-//
-//        model.addAttribute("username", username);
-//
-//        model.addAttribute("user", userOptional.get());
-//        model.addAttribute("roleCode", roleCode);
-//        model.addAttribute("product", );
 
         Product product = productService.findById(id);
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();

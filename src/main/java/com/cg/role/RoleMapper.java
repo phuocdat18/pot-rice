@@ -42,10 +42,3 @@ public class RoleMapper {
 
 
 }
-/**
-public class ProductMapper{
-    public Product toEntity(ProductParam creationParam);
-    public RoleResult toDTO(Role entity);
-}
-
- **/

@@ -1,11 +1,7 @@
 package com.cg.user.dto;
 
-import com.cg.model.User;
-import com.cg.utils.ValidateUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
