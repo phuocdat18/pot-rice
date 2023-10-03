@@ -3,13 +3,13 @@ package com.cg.order;
 import com.cg.location.LocationMapper;
 import com.cg.location.LocationRegionRepository;
 import com.cg.model.LocationRegion;
-import com.cg.order.dto.OrderCreationParam;
-import com.cg.order.dto.OrderResult;
-import com.cg.exception.DataInputException;
 import com.cg.model.Order;
 import com.cg.model.OrderStatus;
+import com.cg.order.dto.OrderCreationParam;
+import com.cg.order.dto.OrderResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import vn.rananu.shared.exceptions.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Order findById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new DataInputException("id ko hop le"));
+        return orderRepository.findById(id).orElseThrow(() -> new NotFoundException("id ko hop le"));
     }
 
     @Override

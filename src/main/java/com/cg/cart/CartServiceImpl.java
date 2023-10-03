@@ -1,18 +1,18 @@
 package com.cg.cart;
 
-import com.cg.cart.dto.CartResult;
 import com.cg.cart.dto.CartCreationParam;
+import com.cg.cart.dto.CartResult;
 import com.cg.cartDetail.CartDetailRepository;
 import com.cg.cartDetail.dto.CartDetailUpdateParam;
-import com.cg.exception.DataInputException;
-import com.cg.model.*;
-
+import com.cg.model.Cart;
+import com.cg.model.CartDetail;
 import com.cg.product.ProductMapper;
 import com.cg.product.dto.ProductResult;
 import com.cg.user.UserMapper;
 import com.cg.user.dto.UserResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import vn.rananu.shared.exceptions.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -36,7 +36,7 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public Cart findById(Long id) {
-        return cartRepository.findById(id).orElseThrow(() -> new DataInputException("id ko hop le"));
+        return cartRepository.findById(id).orElseThrow(() -> new NotFoundException("id ko hop le"));
     }
 
     @Override

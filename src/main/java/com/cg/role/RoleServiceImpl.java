@@ -1,6 +1,5 @@
 package com.cg.role;
 
-import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.ERole;
 import com.cg.model.Role;
 import com.cg.role.dto.RoleCreationParam;
@@ -9,6 +8,7 @@ import com.cg.role.dto.RoleUpdateParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.rananu.shared.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public Role findById(Long id) {
-        return roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("role not found"));
+        return roleRepository.findById(id).orElseThrow(() -> new NotFoundException("role not found"));
     }
 
     @Override

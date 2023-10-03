@@ -1,7 +1,5 @@
 package com.cg.user;
 
-import com.cg.exception.DataInputException;
-import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.User;
 import com.cg.model.UserPrincipal;
 import com.cg.user.dto.UserCreationParam;
@@ -11,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.rananu.shared.exceptions.NotFoundException;
 import vn.rananu.shared.exceptions.ValidationException;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -31,7 +29,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("user not found"));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found"));
     }
 
     @Override
@@ -44,20 +42,21 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserResult findByUsername(String username) {
         User entity = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("username invalid"));
+                .orElseThrow(() -> new NotFoundException("username invalid"));
         return userMapper.toDTO(entity);
     }
 
     @Override
     public void validateByUsername(String username) {
         if (userRepository.existsByUsername(username)) {
-            throw new ValidationException("username","validate.user.username.existed");
+            throw new ValidationException("username", "validate.user.username.existed");
         }
     }
+
     @Override
     public void validateByEmail(String email) {
         if (userRepository.existsByEmail(email)) {
-            throw new ValidationException("email","validate.user.email.existed");
+            throw new ValidationException("email", "validate.user.email.existed");
         }
     }
 
@@ -80,7 +79,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("username invalid"));
+                .orElseThrow(() -> new NotFoundException("username invalid"));
         return UserPrincipal.build(user);
     }
 

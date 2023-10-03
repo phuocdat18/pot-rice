@@ -1,6 +1,5 @@
 package com.cg.product;
 
-import com.cg.exception.ResourceNotFoundException;
 import com.cg.model.Product;
 import com.cg.product.dto.ProductCreationParam;
 import com.cg.product.dto.ProductFilter;
@@ -11,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.rananu.shared.exceptions.NotFoundException;
 
 
 @Service
@@ -23,7 +23,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Product findById(Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy sản phẩm"));
+        return productRepository.findById(id).orElseThrow(() -> new NotFoundException("Không tìm thấy sản phẩm"));
     }
 
     @Override

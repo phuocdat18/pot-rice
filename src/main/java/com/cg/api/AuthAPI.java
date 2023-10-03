@@ -1,10 +1,6 @@
 package com.cg.api;
 
-import com.cg.exception.DataInputException;
-import com.cg.exception.EmailExistsException;
 import com.cg.model.JwtResponse;
-import com.cg.model.Role;
-import com.cg.model.User;
 import com.cg.role.IRoleService;
 import com.cg.service.jwt.JwtService;
 import com.cg.user.IUserService;
