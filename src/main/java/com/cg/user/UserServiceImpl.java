@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.rananu.shared.exceptions.ValidationException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,22 +51,13 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void validateByUsername(String username) {
         if (userRepository.existsByUsername(username)) {
-            throw new DataInputException(new HashMap<>() {
-                {
-                    put("username", "username invalid");
-                }
-            });
+            throw new ValidationException("username","validate.user.username.existed");
         }
     }
-
     @Override
     public void validateByEmail(String email) {
         if (userRepository.existsByEmail(email)) {
-            throw new DataInputException(new HashMap<>() {
-                {
-                    put("username", "username invalid");
-                }
-            });
+            throw new ValidationException("email","validate.user.email.existed");
         }
     }
 
