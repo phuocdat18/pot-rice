@@ -13,5 +13,4 @@ public class OrderItemResult {
     private String unit;
     private BigDecimal price;
     private Long quantity;
-//    private BigDecimal amount;
 }

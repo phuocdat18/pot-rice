@@ -1,7 +1,7 @@
 package com.cg.cart;
 
-import com.cg.cart.dto.CartResult;
-import com.cg.cart.dto.CartUpdateParam;
+import com.cg.cart1.dto.CartResult;
+import com.cg.cart1.dto.CartUpdateParam;
 import com.cg.model.Cart;
 import com.cg.model.Product;
 import com.cg.model.User;
@@ -20,7 +20,7 @@ public interface ICartService {
 
     List<?> findAllByUserId(Long userId);
 
-    List<?> findAllByUserIdAndCartId(Long userId, Long id);
+    List<?> findAllByUserIdAndCartId(Long userId, Long cartId);
 
     void deleteById(Long id);
 }

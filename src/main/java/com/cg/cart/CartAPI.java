@@ -1,28 +1,21 @@
 package com.cg.cart;
 
-<<<<<<< HEAD
-import com.cg.cart.dto.CartUpdateParam;
-=======
->>>>>>> main
-import com.cg.cartDetail.ICartDetailService;
-import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
-import com.cg.cartDetail.dto.CartDetailResult;
+import com.cg.cartItem.ICartDetailService;
+import com.cg.cartItem.dto.CartDetailResult;
+import com.cg.cartItem.dto.CartDetailUpdateParam;
 import com.cg.exception.DataInputException;
 import com.cg.model.*;
-<<<<<<< HEAD
 import com.cg.order.IOrderItemService;
 import com.cg.order.IOrderService;
 import com.cg.order.dto.OrderCreationParam;
-import com.cg.product.service.IProductService;
-=======
 import com.cg.product.IProductService;
->>>>>>> main
 import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -33,78 +26,75 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/carts")
 public class CartAPI {
 
-    @Autowired
-    private ICartService cartService;
+    private final ICartService cartService;
+    private final ICartDetailService cartDetailService;
+    private final IOrderService orderService;
+    private final IOrderItemService orderItemService;
+    private final IUserService userService;
+    private final IProductService productService;
+    private final AppUtils appUtils;
+    private final ValidateUtils validateUtils;
 
-    @Autowired
-    private ICartDetailService cartDetailService;
 
-    @Autowired
-<<<<<<< HEAD
-    private IOrderService orderService;
-
-=======
-    private IBillService billService;
->>>>>>> main
-    @Autowired
-    private IOrderItemService orderItemService;
-
-    @Autowired
-    private IUserService userService;
-
-    @Autowired
-    private IProductService productService;
-
-    @Autowired
-    private AppUtils appUtils;
-
-    @Autowired
-    private ValidateUtils validateUtils;
-
-    @GetMapping
-    public ResponseEntity<List<?>> findAllCartDetail() {
-
-        String username = appUtils.getPrincipalUsername();
-
-        List<User> userOptional = userService.findUserByUsername(username);
-
-        try {
-            List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());
-
-            if (cartDetailResults.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(cartDetailResults, HttpStatus.OK);
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/{userId}/cart/{cartId}")
+    @PreAuthorize("#userId == principal.id")
+    @ResponseStatus(HttpStatus.OK)
+    public List<?> findAllCartDetail(@PathVariable Long userId, Long cartId) {
+//            List<CartDetailResult> cartDetailResults = cartDetailService.findAllByCartId(cartId);
+//            List<CartResult> cartDetailResults = cartService.findAllByUserIdAndCartId(userId, cartId);
+//            if (cartDetailResults.isEmpty()) {
+//            }
+        return cartService.findAllByUserIdAndCartId(userId, cartId);
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<?>> findAllCartDetail() {
+//
+//        String username = appUtils.getPrincipalUsername();
+//
+//        List<User> userOptional = userService.findUserByUsername(username);
+//
+//        try {
+//            List<CartDetailResult> cartDetailResults = cartDetailService.findAllByCartId(cartId);
+//
+//            if (cartDetailResults.isEmpty()) {
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//
+//            return new ResponseEntity<>(cartDetailResults, HttpStatus.OK);
+//
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    @PostMapping("/{userId}/add-to-cart")
+    @PreAuthorize(("#userId == principal"))
+
     @PostMapping("/add-to-cart")
-    public ResponseEntity<List<?>> addToCart(@RequestBody CartItemReqDTO cartItemReqDTO) {
+    public ResponseEntity<List<?>> addToCart(@RequestBody CartDetailUpdateParam cartDetailUpdateParam) {
 
         String username = appUtils.getPrincipalUsername();
 
         List<User> userOptional = userService.findUserByUsername(username);
 
-        Long productId = cartItemReqDTO.getProductId();
+        Long productId = cartDetailUpdateParam.getProductId();
         Optional<Product> productOptional = Optional.ofNullable(productService.findById(productId));
 
         if (productOptional.isEmpty()) {
             throw new DataInputException("Product invalid");
         }
-        if (productOptional.get().getQuantity() < cartItemReqDTO.getQuantity()) {
+        if (productOptional.get().getQuantity() < cartDetailUpdateParam.getQuantity()) {
             throw new DataInputException("Quantity invalid");
         }
 
         Product product = productOptional.get();
 
-        Cart cart = cartService.addToCart(cartItemReqDTO, product, userOptional.get());
+        Cart cart = cartService.addToCart(cartDetailUpdateParam, product, userOptional.get());
 
         try {
             List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());
@@ -121,7 +111,7 @@ public class CartAPI {
     }
 
     @PostMapping("/payment")
-    public ResponseEntity<?> payment(@Valid @RequestBody BillCreationParam billCreationParam, @AuthenticationPrincipal UserPrincipal principal) {
+    public ResponseEntity<?> payment(@Valid @RequestBody OrderCreationParam orderCreationParam, @AuthenticationPrincipal UserPrincipal principal) {
 //        String username = appUtils.getPrincipalUsername();
 
 //        Optional<User> userOptional = userService.findByUsername(principal.getUsername());
@@ -160,9 +150,9 @@ public class CartAPI {
     }
 
 
-    @PatchMapping("/bill/{id}")
+    @PatchMapping("/order/{id}")
     public ResponseEntity<?> updateBillStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
-     Bill billOptional = billService.findById(id);
+     Order billOptional = billService.findById(id);
 
 //        if (billOptional.isEmpty()) {
 //            throw new DataInputException("Bill not found with id: " + id);
@@ -240,5 +230,4 @@ public class CartAPI {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
 }

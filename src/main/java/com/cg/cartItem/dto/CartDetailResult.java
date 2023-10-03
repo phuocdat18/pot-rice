@@ -1,23 +1,21 @@
-package com.cg.cartDetail.dto;
+package com.cg.cartItem.dto;
 
-import com.cg.model.ERole;
-import lombok.AllArgsConstructor;
+import com.cg.cart1.dto.CartResult;
+import com.cg.model.Cart;
+import com.cg.product.dto.ProductResult;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
-
 @Getter
 @Setter
-@Accessors(chain = true)
 public class CartDetailResult {
     private Long id;
     private String title;
-    private String unit;
     private BigDecimal price;
+    private ProductResult productResult;
     private Long quantity;
     private Long cartId;
+    private CartResult cartResult;
 }
