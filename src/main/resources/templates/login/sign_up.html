@@ -195,8 +195,9 @@
     page.elements.phoneError = $('.phoneError')
 
     page.commands.register = () => {
+        let fullName = page.elements.fullNameReg.val();
         let user = {
-            fullName: page.elements.fullNameReg.val(),
+            fullName: fullName.length > 0 ? fullName : undefined,
             username: page.elements.usernameReg.val(),
             password: page.elements.passwordReg.val(),
             email: page.elements.emailReg.val(),
@@ -240,6 +241,11 @@
                 if (responseJSON.errors === undefined)
                     return;
                 page.elements.fullNameError.text(responseJSON.errors["fullName"]);
+                page.elements.usernameError.text(responseJSON.errors["username"]);
+                page.elements.emailError.text(responseJSON.errors["email"]);
+                page.elements.phoneError.text(responseJSON.errors["phone"]);
+                page.elements.passwordError.text(responseJSON.errors["password"]);
+
             }
         });
     }
