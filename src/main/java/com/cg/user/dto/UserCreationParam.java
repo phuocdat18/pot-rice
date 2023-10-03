@@ -1,6 +1,5 @@
 package com.cg.user.dto;
 
-import com.cg.model.User;
 import com.cg.role.dto.RoleResult;
 import lombok.Getter;
 import lombok.Setter;

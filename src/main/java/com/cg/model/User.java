@@ -1,6 +1,5 @@
 package com.cg.model;
 
-import com.cg.user.dto.UserLoginDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -28,7 +27,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
@@ -41,7 +40,7 @@ public class User extends BaseEntity {
     @Column(name = "role_id", insertable = false, updatable = false)
     private Long roleId;
 
-    public User(Long id, String fullName, String username, String password, String email,boolean deleted, String phone, Role role, Long roleId) {
+    public User(Long id, String fullName, String username, String password, String email, boolean deleted, String phone, Role role, Long roleId) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;

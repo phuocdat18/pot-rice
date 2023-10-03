@@ -1,22 +1,11 @@
 package com.cg.cart;
 
-<<<<<<< HEAD
-import com.cg.cart.dto.CartUpdateParam;
-=======
->>>>>>> main
-import com.cg.cartDetail.ICartDetailService;
-import com.cg.cartDetail.dto.CartDetailChangeReqDTO;
-import com.cg.cartDetail.dto.CartDetailResult;
-import com.cg.exception.DataInputException;
-import com.cg.model.*;
-<<<<<<< HEAD
+
 import com.cg.order.IOrderItemService;
 import com.cg.order.IOrderService;
 import com.cg.order.dto.OrderCreationParam;
 import com.cg.product.service.IProductService;
-=======
-import com.cg.product.IProductService;
->>>>>>> main
+
 import com.cg.user.IUserService;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
