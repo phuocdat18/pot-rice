@@ -18,6 +18,11 @@ public enum ERole {
 
     @JsonCreator
     public static ERole parse(String value) {
-
+        for (ERole role : ERole.values()) {
+            if (role.getValue().equalsIgnoreCase(value)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("Invalid ERole value: " + value);
     }
 }
