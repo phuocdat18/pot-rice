@@ -24,10 +24,7 @@ public class CustomerController {
 
     @GetMapping
     public String showPageHome(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-<<<<<<< HEAD
-=======
 
->>>>>>> thi-dev
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
 
         model.addAttribute("username", userPrincipal.getUsername());

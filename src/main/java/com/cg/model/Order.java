@@ -23,20 +23,20 @@ public class Order extends BaseEntity {
 
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user_bills"))
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user_orders"))
     private User user;
 
     @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 
     @OneToOne
-    @JoinColumn(name = "location_region_id", foreignKey = @ForeignKey(name = "fk_user_location_region"))
+    @JoinColumn(name = "location_region_id", foreignKey = @ForeignKey(name = "fk_order_location_region"))
     private LocationRegion locationRegion;
 
     @Column(name = "location_region_id", insertable = false, updatable = false)
     private Long locationRegionId;
 
-    @Column(name = "bill_status")
+    @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
@@ -50,5 +50,4 @@ public class Order extends BaseEntity {
     public Order() {
 
     }
-
 }

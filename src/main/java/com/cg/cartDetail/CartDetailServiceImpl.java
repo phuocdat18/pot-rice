@@ -1,12 +1,12 @@
 package com.cg.cartDetail;
 
-import com.cg.cart.CartMapper;
+import com.cg.cart.CartRepository;
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.model.Cart;
 import com.cg.model.CartDetail;
-import com.cg.cart.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CartDetailServiceImpl implements ICartDetailService {
-    private final CartMapper cartMapper;
+
     private final CartDetailRepository cartDetailRepository;
     private final CartRepository cartRepository;
 
@@ -52,12 +52,7 @@ public class CartDetailServiceImpl implements ICartDetailService {
     }
 
     @Override
-    public List<CartDetailResult> findAllCartDetailDTO(Long id) {
-        return cartDetailRepository.findAllCartDetailDTO(id);
-    }
-
-    @Override
-    public List<CartDetail> findAllByCartId(Long cartId) {
-        return cartDetailRepository.findCartDetailById(cartId);
+    public List<CartDetailResult> findAllByCartId(Long cartId) {
+        return cartDetailRepository.findAllByCartId(cartId);
     }
 }

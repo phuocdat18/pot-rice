@@ -1,15 +1,15 @@
 package com.cg.cart.dto;
 
+import com.cg.cartDetail.dto.CartDetailUpdateParam;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
 @Accessors(chain = true)
 public class CartUpdateParam {
-    private Long productId;
-    private Long quantity;
+    private List<CartDetailUpdateParam> items;
 }

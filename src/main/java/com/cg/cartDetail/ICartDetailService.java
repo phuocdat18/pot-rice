@@ -2,12 +2,10 @@ package com.cg.cartDetail;
 
 import com.cg.cartDetail.dto.CartDetailResult;
 import com.cg.model.CartDetail;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
 public interface ICartDetailService {
     List<CartDetail> findAll();
 
@@ -19,8 +17,5 @@ public interface ICartDetailService {
 
     void deleteById(Long id);
 
-
-    List<CartDetailResult> findAllCartDetailDTO(Long id);
-
-    List<CartDetail> findAllByCartId(Long cartId);
+    List<CartDetailResult> findAllByCartId(Long cartId);
 }

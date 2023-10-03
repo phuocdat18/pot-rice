@@ -5,7 +5,6 @@ import com.cg.model.Cart;
 import com.cg.model.CartDetail;
 import com.cg.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,21 +14,21 @@ import java.util.List;
 public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
     boolean existsCartDetailByCart(Cart cart);
 
-    CartDetail findCartDetailsByProductAndCart(Product product, Cart cart);
+    CartDetail findCartDetailsByProductAndCart(Product productResult, Cart cart);
 
-    List<CartDetail> findCartDetailById(Long cardId);
+    List<CartDetailResult> findAllByCartId(Long cardId);
 
-    @Query("SELECT " +
-            "cd.id, " +
-            "cd.product, " +
-            "cd.title, " +
-            "cd.unit, " +
-            "cd.price, " +
-            "cd.quantity, " +
-            "cd.amount " +
-            "FROM CartDetail AS cd " +
-            "JOIN Cart c ON cd.cart.id = c.id " +
-            "WHERE c.user.id = :id"
-    )
-    List<CartDetailResult> findAllCartDetailDTO(Long id);
+//    @Query("SELECT " +
+//            "cd.id, " +
+//            "cd.product, " +
+//            "cd.title, " +
+//            "cd.unit, " +
+//            "cd.price, " +
+//            "cd.quantity, " +
+//            "cd.amount " +
+//            "FROM CartDetail AS cd " +
+//            "JOIN Cart c ON cd.cart.id = c.id " +
+//            "WHERE c.user.id = :id"
+//    )
+//    List<CartDetailResult> findAllCartDetailDTO(Long id);
 }

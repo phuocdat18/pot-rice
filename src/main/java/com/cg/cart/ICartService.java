@@ -1,26 +1,23 @@
 package com.cg.cart;
 
 import com.cg.cart.dto.CartResult;
-import com.cg.cart.dto.CartUpdateParam;
+import com.cg.cartDetail.dto.CartDetailUpdateParam;
 import com.cg.model.Cart;
-import com.cg.model.Product;
-import com.cg.model.User;
+import com.cg.product.dto.ProductResult;
+import com.cg.user.dto.UserResult;
 
 import java.util.List;
 
-public interface ICartService {
+    public interface ICartService {
+        Cart findById(Long id);
 
-    Cart addToCart(CartUpdateParam cartUpdateParam, Product product, User user);
+        CartResult getById(Long id);
 
-    Cart findById(Long id);
+        List<CartResult> findAll();
 
-    CartResult getById(Long id);
+        List<?> findAllByUserId(Long userId);
 
-    List<CartResult> findAll();
+        Cart addToCart(CartDetailUpdateParam cartDetailUpdateParam, ProductResult productResult, UserResult userResult);
 
-    List<?> findAllByUserId(Long userId);
-
-    List<?> findAllByUserIdAndCartId(Long userId, Long id);
-
-    void deleteById(Long id);
-}
+        List<?> findAllByUserIdAndCartId(Long userId, Long cartId);
+    }

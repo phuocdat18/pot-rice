@@ -1,6 +1,6 @@
 package com.cg.cart.dto;
 
-import com.cg.order.dto.OrderItemParam;
+import com.cg.cartDetail.dto.CartDetailParam;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -11,5 +11,5 @@ import java.util.List;
 @Setter
 @Accessors(chain = true)
 public class CartCreationParam {
-    private List<OrderItemParam> items;
+    private List<CartDetailParam> items;
 }

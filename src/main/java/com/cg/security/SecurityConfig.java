@@ -46,14 +46,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomAccessDeniedHandler();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
+    @Configuration
+    public static class PasswordEncoderConfiguration {
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return new BCryptPasswordEncoder(10);
+        }
     }
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
 
@@ -103,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .deleteCookies("JWT")
                 .invalidateHttpSession(true)
-                ;
+        ;
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).exceptionHandling().accessDeniedPage("/403");
 

@@ -38,6 +38,4 @@ public class UserCreationParam {
     @Valid
     private RoleResult roleResult;
 
-
-
 }

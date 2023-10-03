@@ -19,7 +19,7 @@ public class OrderItem extends BaseEntity {
 
     @Setter(AccessLevel.NONE)
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false, foreignKey = @ForeignKey(name = "fk_product_bill_detail"))
+    @JoinColumn(name = "product_id", nullable = false, foreignKey = @ForeignKey(name = "fk_order_item_product"))
     private Product product;
 
     @Column(name = "product_id", insertable = false, updatable = false)
@@ -38,11 +38,15 @@ public class OrderItem extends BaseEntity {
     private BigDecimal amount;
 
 
+//    @ManyToOne
+//    @JoinColumn(name = "order_id", nullable = false, foreignKey = @ForeignKey(name = "fk_product_order"))
+//    private Order order;
+
     @ManyToOne
-    @JoinColumn(name = "bill_id", nullable = false, foreignKey = @ForeignKey(name = "fk_product_bill"))
+    @JoinColumn(name = "bill_id", nullable = false, foreignKey = @ForeignKey(name = "fk_product_order"))
     private Order order;
 
-    @Column(name = "bill_id", insertable = false, updatable = false)
+    @Column(name = "order_id", insertable = false, updatable = false)
     private int orderId;
 
 }

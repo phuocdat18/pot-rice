@@ -1,6 +1,7 @@
 package com.cg.user.dto;
 
 import com.cg.role.dto.RoleResult;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -18,6 +19,7 @@ public class UserResult {
 
     @NotBlank(message = "The Full Name is required")
     @Size(min = 5, max = 50, message = "The length of Full Name must be between 5 and 50 characters")
+    @JsonProperty("full_name")
     private String fullName;
 
     @NotBlank(message = "The username is required")
@@ -37,5 +39,8 @@ public class UserResult {
     @Pattern(regexp = "^(\\\\+?84|0)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-9])[0-9]{7}$", message = "Invalid phone number")
     private String phone;
 
+    private boolean deleted;
+
     private RoleResult roleResult;
+    private Long roleId;
 }
