@@ -24,18 +24,6 @@ public class ProductMapper {
 
     }
 
-    public Product toEntity(ProductResult productResult){
-        return new Product()
-                .setTitle(productResult.getTitle())
-                .setPrice(productResult.getPrice())
-                .setUnit(productResult.getUnit())
-                .setDescription(productResult.getDescription())
-                .setQuantity(productResult.getQuantity())
-                .setCategoryId(productResult.getCategory().getId())
-                .setProductAvatarId(productResult.getProductAvatar().getId());
-
-    }
-
     public void transferFields(Product entity, ProductUpdateParam updateParam){
         entity.setTitle(updateParam.getTitle());
         entity.setPrice(updateParam.getPrice());
@@ -55,7 +43,7 @@ public class ProductMapper {
                 .setDescription(entity.getDescription())
                 .setQuantity(entity.getQuantity())
                 .setCategory(entity.getCategory())
-                .setProductAvatar(entity.getProductAvatar())
+                .setAvatar(entity.getProductAvatar())
                 ;
 
     }

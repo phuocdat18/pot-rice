@@ -1,12 +1,16 @@
 package com.cg.user;
 
+import com.cg.model.RoleCode;
 import com.cg.model.User;
 import com.cg.model.UserPrincipal;
+import com.cg.role.RoleRepository;
 import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.rananu.shared.exceptions.NotFoundException;
@@ -19,6 +23,7 @@ import java.util.List;
 public class UserServiceImpl implements IUserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -73,8 +78,14 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public UserResult create(UserCreationParam param) {
-        User entity = userMapper.toEntity(param);
+    public UserResult signup(UserCreationParam creationParam) {
+        validateByUsername(creationParam.getUsername());
+        validateByEmail(creationParam.getEmail());
+
+        User entity = userMapper.toEntity(creationParam);
+        entity.setRoleId(RoleCode.CUSTOMER);
+        String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
+        entity.setPassword(passwordEncode);
         entity = userRepository.save(entity);
         return userMapper.toDTO(entity);
     }

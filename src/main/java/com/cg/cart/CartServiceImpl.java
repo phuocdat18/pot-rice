@@ -1,15 +1,12 @@
 package com.cg.cart;
 
-import com.cg.cart.dto.CartCreationParam;
+import com.cg.cart.cartDetail.CartItemRepository;
+import com.cg.cart.cartDetail.dto.CartItemParam;
 import com.cg.cart.dto.CartResult;
-import com.cg.cartDetail.CartDetailRepository;
-import com.cg.cartDetail.dto.CartDetailUpdateParam;
 import com.cg.model.Cart;
-import com.cg.model.CartDetail;
-import com.cg.product.ProductMapper;
-import com.cg.product.dto.ProductResult;
-import com.cg.user.UserMapper;
-import com.cg.user.dto.UserResult;
+import com.cg.model.CartItem;
+import com.cg.model.Product;
+import com.cg.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import vn.rananu.shared.exceptions.NotFoundException;
@@ -19,14 +16,12 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class CartServiceImpl implements ICartService {
-    private final CartDetailRepository cartDetailRepository;
+    private final IProductService productService;
+    private final CartItemRepository cartItemRepository;
     private final CartRepository cartRepository;
     private final CartMapper cartMapper;
-    private final UserMapper userMapper;
-    private final ProductMapper productMapper;
 
     @Override
     public List<CartResult> findAll() {
@@ -51,104 +46,48 @@ public class CartServiceImpl implements ICartService {
         return cartMapper.toDTOList(entities);
     }
 
+    @Override
     @Transactional
-    public CartResult order(Long userId, CartCreationParam creationParam) {
-        Cart cart = cartMapper.toEntity(creationParam);
-        cart = cartRepository.save(cart);
-        return cartMapper.toDTO(cart);
-    }
+    public void addCartItem(Long cartId, CartItemParam param, Long userId) {
+        Cart cart = findById(cartId);
+        List<CartItem> cartItems = cartItemRepository.findAllByCartId(cartId);
 
-    @Override
-    public Cart addToCart(CartDetailUpdateParam cartDetailUpdateParam, ProductResult product, UserResult user) {
+        Long productId = param.getProductId();
+        Long quantity = param.getQuantity();
 
-        List<Cart> carts = cartRepository.findAllByUserId(user.getId());
-
-        if (carts.isEmpty()) {
-            Cart cartNew = new Cart();
-            cartNew.setUser(userMapper.toEntity(user));
-            cartNew.setTotalAmount(BigDecimal.ZERO);
-            cartRepository.save(cartNew);
-
-            BigDecimal price = product.getPrice();
-            long quantity = cartDetailUpdateParam.getQuantity();
-            BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
-
-
-            CartDetail cartDetail = new CartDetail();
-            cartDetail.setCart(cartNew);
-            cartDetail.setProduct(productMapper.toEntity(product));
-            cartDetail.setTitle(product.getTitle());
-            cartDetail.setPrice(price);
-            cartDetail.setUnit(product.getUnit());
-            cartDetail.setQuantity(quantity);
-            cartDetail.setAmount(amount);
-            cartDetailRepository.save(cartDetail);
-
-            cartNew.setTotalAmount(amount);
-            return cartRepository.save(cartNew);
-        } else {
-            if (cartDetailRepository.existsCartDetailByCart(carts.get(Math.toIntExact(user.getId())))) {
-                CartDetail cartDetail = cartDetailRepository.findCartDetailsByProductAndCart(productMapper.toEntity(product), carts.get(Math.toIntExact(user.getId())));
-                if (cartDetail != null) {
-                    Cart cart = carts.get(Math.toIntExact(user.getId()));
-
-                    BigDecimal price = product.getPrice();
-                    long quantity = cartDetail.getQuantity() + cartDetailUpdateParam.getQuantity();
-                    BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
-
-                    cartDetail.setQuantity(quantity);
-                    cartDetail.setAmount(amount);
-
-                    BigDecimal totalAmount = cart.getTotalAmount().add(amount);
-                    cart.setTotalAmount(totalAmount);
-                    return cartRepository.save(cart);
-                } else {
-
-                    BigDecimal price = product.getPrice();
-                    long quantity = cartDetailUpdateParam.getQuantity();
-                    BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
-
-                    Cart cart = carts.get(Math.toIntExact(user.getId()));
-                    CartDetail cartDetailNew = new CartDetail();
-                    cartDetailNew.setCart(cart);
-                    cartDetailNew.setProduct(productMapper.toEntity(product));
-                    cartDetailNew.setTitle(product.getTitle());
-                    cartDetailNew.setPrice(product.getPrice());
-                    cartDetailNew.setUnit(product.getUnit());
-                    cartDetailNew.setQuantity(cartDetailUpdateParam.getQuantity());
-                    cartDetailNew.setAmount(amount);
-                    cartDetailRepository.save(cartDetailNew);
-
-                    BigDecimal totalAmount = cart.getTotalAmount().add(amount);
-                    cart.setTotalAmount(totalAmount);
-                    return cartRepository.save(cart);
-                }
-            } else {
-
-                BigDecimal price = product.getPrice();
-                long quantity = cartDetailUpdateParam.getQuantity();
-                BigDecimal amount = price.multiply(BigDecimal.valueOf(quantity));
-
-                Cart cart = carts.get(Math.toIntExact(user.getId()));
-                CartDetail cartDetailNew = new CartDetail();
-                cartDetailNew.setCart(cart);
-                cartDetailNew.setProduct(productMapper.toEntity(product));
-                cartDetailNew.setTitle(product.getTitle());
-                cartDetailNew.setPrice(product.getPrice());
-                cartDetailNew.setUnit(product.getUnit());
-                cartDetailNew.setQuantity(cartDetailUpdateParam.getQuantity());
-                cartDetailNew.setAmount(amount);
-                cartDetailRepository.save(cartDetailNew);
-
-                BigDecimal totalAmount = cart.getTotalAmount().add(amount);
-                cart.setTotalAmount(totalAmount);
-                return cartRepository.save(cart);
-            }
+        Product product = productService.findById(productId);
+        if (cartItems.size() == 0) {
+            CartItem cartItem = new CartItem();
+            cartItem.setCartId(cartId)
+                    .setProductId(productId)
+                    .setQuantity(quantity)
+                    .setPrice(product.getPrice());
+            cartItemRepository.save(cartItem);
         }
+        for (CartItem item : cartItems) {
+            if (item.getProductId().equals(productId)) {
+                item.setQuantity(quantity);
+            } else {
+                CartItem cartItem = new CartItem();
+                cartItem.setCartId(cartId)
+                        .setProductId(productId)
+                        .setQuantity(quantity)
+                        .setPrice(product.getPrice());
+
+            }
+            cartItemRepository.save(item);
+        }
+
     }
 
     @Override
-    public List<?> findAllByUserIdAndCartId(Long userId, Long cartId) {
-        return cartRepository.findAllByUserIdAndId(userId, cartId);
+    @Transactional
+    public CartResult newCart(Long userId) {
+        Cart entity = cartRepository.save(
+                new Cart()
+                        .setTotalAmount(BigDecimal.ZERO)
+                        .setUserId(userId));
+        return new CartResult()
+                .setId(entity.getId());
     }
 }

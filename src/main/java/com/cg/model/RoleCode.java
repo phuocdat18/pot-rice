@@ -4,21 +4,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
-public enum ERole {
+public enum RoleCode {
     ADMIN("ADMIN"),
-    USER("USER"),
-    MANAGER("MANAGER"),
     CUSTOMER("CUSTOMER");
 
     private final String value;
 
-    ERole(String value) {
+    RoleCode(String value) {
         this.value = value;
     }
 
     @JsonCreator
-    public static ERole parse(String value) {
-        for (ERole role : ERole.values()) {
+    public static RoleCode parse(String value) {
+        for (RoleCode role : RoleCode.values()) {
             if (role.getValue().equalsIgnoreCase(value)) {
                 return role;
             }

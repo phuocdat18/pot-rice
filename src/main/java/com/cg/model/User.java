@@ -1,6 +1,7 @@
 package com.cg.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Accessors(chain = true)
 @Table(name = "users")
@@ -37,48 +39,15 @@ public class User extends BaseEntity {
     @JoinColumn(name = "role_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user_role"))
     private Role role;
 
-    @Column(name = "role_id", insertable = false, updatable = false)
-    private Long roleId;
+    @Column(name = "role_id", length = 20, insertable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    private RoleCode roleId;
 
-    public User(Long id, String fullName, String username, String password, String email, boolean deleted, String phone, Role role, Long roleId) {
+    public User(Long id) {
         this.id = id;
-        this.fullName = fullName;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.role = role;
-        this.roleId = roleId;
     }
 
-    public User() {
-
+    public void setRoleId(RoleCode roleId) {
+        this.role = new Role(this.roleId = roleId);
     }
-
-//    public UserLoginDTO toUserLoginDTO() {
-//         return new UserLoginDTO()
-//                .setUsername(username)
-//                .setPassword(password);
-//    }
-//
-//    public UserDTO toUserDTO() {
-//        return new  UserDTO()
-//                .setId(id)
-//                .setFullName(fullName)
-//                .setUsername(username)
-//                .setPassword(password)
-//                .setEmail(email)
-//                .setPhone(phone)
-////                .setRole(role.toRoleDTO())
-//                ;
-//    }
-//
-//    public UserUpdateResDTO toUserUpdateResDTO() {
-//        return new UserUpdateResDTO()
-//                .setId(id)
-//                .setFullName(fullName)
-//                .setEmail(email)
-//                .setPhone(phone)
-//                ;
-//    }
 }

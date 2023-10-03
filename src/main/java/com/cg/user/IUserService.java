@@ -7,7 +7,6 @@ import com.cg.user.dto.UserUpdateParam;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public interface IUserService extends UserDetailsService {
 
     UserResult update(Long id, UserUpdateParam param);
 
-    UserResult create(UserCreationParam param);
+    UserResult signup(UserCreationParam param);
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 

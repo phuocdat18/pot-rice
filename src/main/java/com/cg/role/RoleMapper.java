@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class RoleMapper {
     public Role toEntity(RoleCreationParam creationParam) {
         return new Role()
-                .setCode(creationParam.getCode())
+                .setId(creationParam.getId())
                 .setName(creationParam.getName());
     }
 
@@ -32,7 +32,6 @@ public class RoleMapper {
     public RoleResult toDTO(Role entity) {
         return new RoleResult()
                 .setId(entity.getId())
-                .setCode(entity.getCode())
                 .setName(entity.getName());
     }
 

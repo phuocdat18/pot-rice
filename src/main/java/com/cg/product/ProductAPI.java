@@ -24,14 +24,17 @@ public class ProductAPI {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<?> findAllByFilter(@RequestParam(name = "search", required = false) String search,
-                           @RequestParam(name = "categoryIds", required = false) String categoryIdList,
-                           @RequestParam(name = "minPrice", required = false) BigDecimal minPrice,
-                           @RequestParam(name = "maxPrice", required = false) BigDecimal maxPrice,
-                           @RequestParam("page") int page,
-                           @RequestParam("pageSize") int pageSize) {
-        List<Long> categoryIds = Arrays.stream(categoryIdList.split(","))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
+                                   @RequestParam(name = "categoryIds", required = false) String categoryIdList,
+                                   @RequestParam(name = "minPrice", required = false) BigDecimal minPrice,
+                                   @RequestParam(name = "maxPrice", required = false) BigDecimal maxPrice,
+                                   @RequestParam("page") int page,
+                                   @RequestParam("pageSize") int pageSize) {
+        List<Long> categoryIds = null;
+        if (categoryIdList != null)
+            categoryIds = Arrays.stream(categoryIdList.split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+
         ProductFilter filter = new ProductFilter().setKeyword(search)
                 .setCategoryIds(categoryIds)
                 .setMinPrice(minPrice)

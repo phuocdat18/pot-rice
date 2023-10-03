@@ -18,18 +18,7 @@ public class UserMapper {
                 .setUsername(creationParam.getUsername())
                 .setPassword(creationParam.getPassword())
                 .setEmail(creationParam.getEmail())
-                .setPhone(creationParam.getPhone())
-                .setRoleId(creationParam.getRoleResult().getId());
-    }
-
-    public User toEntity(UserResult userResult) {
-        return new User()
-                .setFullName(userResult.getFullName())
-                .setUsername(userResult.getUsername())
-                .setPassword(userResult.getPassword())
-                .setEmail(userResult.getEmail())
-                .setPhone(userResult.getPhone())
-                .setRoleId(userResult.getRoleResult().getId());
+                .setPhone(creationParam.getPhone());
     }
 
     public void transferFields(User entity, UserUpdateParam dto) {
@@ -45,8 +34,7 @@ public class UserMapper {
                 .setUsername(entity.getUsername())
                 .setPassword(entity.getPassword())
                 .setEmail(entity.getEmail())
-                .setPhone(entity.getPhone())
-                .setRoleId(entity.getRoleId());
+                .setPhone(entity.getPhone());
     }
 
     public List<UserResult> toDTOList(List<User> entities) {

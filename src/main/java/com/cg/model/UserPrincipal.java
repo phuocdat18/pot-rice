@@ -30,7 +30,7 @@ public class UserPrincipal implements UserDetails {
 
     public static UserPrincipal build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getCode().getValue());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getId().getValue());
 
         authorities.add(authority);
 

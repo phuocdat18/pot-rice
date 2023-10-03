@@ -1,8 +1,6 @@
 package com.cg.cart;
 
-import com.cg.cart.dto.CartCreationParam;
 import com.cg.cart.dto.CartResult;
-import com.cg.cart.dto.CartUpdateParam;
 import com.cg.model.Cart;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +9,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class CartMapper {
-    public Cart toEntity(CartCreationParam creationParam) {
-        return new Cart();
-    }
-
-    public void transferFields(Cart entity, CartUpdateParam cartUpdateParam){
-    }
 
     public CartResult toDTO(Cart entity) {
         return new CartResult();

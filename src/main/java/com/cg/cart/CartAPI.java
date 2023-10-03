@@ -1,53 +1,43 @@
 package com.cg.cart;
 
-import com.cg.cartDetail.ICartDetailService;
-import com.cg.cartDetail.dto.CartDetailUpdateParam;
-import com.cg.model.*;
+import com.cg.cart.cartDetail.ICartDetailService;
+import com.cg.cart.cartDetail.dto.CartItemParam;
+import com.cg.model.Cart;
+import com.cg.model.UserPrincipal;
 import com.cg.order.IOrderItemService;
 import com.cg.order.IOrderService;
 import com.cg.product.IProductService;
-import com.cg.product.dto.ProductResult;
 import com.cg.user.IUserService;
-import com.cg.user.dto.UserResult;
 import com.cg.utils.AppUtils;
 import com.cg.utils.ValidateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/carts")
 public class CartAPI {
-
     private final ICartService cartService;
-    private final ICartDetailService cartDetailService;
-    private final IOrderService orderService;
-    private final IOrderItemService orderItemService;
-    private final IUserService userService;
-    private final IProductService productService;
-    private final AppUtils appUtils;
-    private final ValidateUtils validateUtils;
 
-    @GetMapping("/{userId}/cart/{cartId}")
-    @PreAuthorize("#userId == principal.id")
-    @ResponseStatus(HttpStatus.OK)
-    public List<?> findAllCartDetail(@PathVariable Long userId, Long cartId) {
-        return cartService.findAllByUserIdAndCartId(userId, cartId);
-    }
 
-    @PostMapping("/{userId}/add-to-cart")
-    @PreAuthorize("#userId == principal.id")
+//    @GetMapping("/{userId}/cart/{cartId}")
+//    @PreAuthorize("#userId == principal.id")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<?> findAllCartDetail(@PathVariable Long userId, Long cartId) {
+//        return cartService.findAllByUserIdAndCartId(userId, cartId);
+//    }
+
+    @PostMapping("/{cartId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cart addToCart(@RequestBody CartDetailUpdateParam cartDetailUpdateParam, @RequestParam Long productId, @PathVariable Long userId) {
+    public Cart addToCart(@Valid @RequestBody CartItemParam cartItemParam, @PathVariable Long cartId, @AuthenticationPrincipal UserPrincipal principal) {
+        cartService.addCartItem(cartId, cartItemParam, principal.getId());
 
-        ProductResult productResult = productService.getById(productId);
-        UserResult userResult = userService.getById(userId);
-
-        return cartService.addToCart(cartDetailUpdateParam, productResult, userResult);
+        return null;
     }
 
 //    @PostMapping("/payment")

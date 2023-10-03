@@ -28,4 +28,8 @@ public class Cart extends BaseEntity {
     @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 
+    public Cart setUserId(Long userId) {
+        this.user = new User(this.userId = userId);
+        return this;
+    }
 }

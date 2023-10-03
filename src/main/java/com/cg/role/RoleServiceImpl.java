@@ -1,6 +1,5 @@
 package com.cg.role;
 
-import com.cg.model.ERole;
 import com.cg.model.Role;
 import com.cg.role.dto.RoleCreationParam;
 import com.cg.role.dto.RoleResult;
@@ -65,8 +64,4 @@ public class RoleServiceImpl implements IRoleService {
         roleRepository.deleteById(id);
     }
 
-    @Override
-    public Role findByName(ERole name) {
-        return roleRepository.findByName(name);
-    }
 }

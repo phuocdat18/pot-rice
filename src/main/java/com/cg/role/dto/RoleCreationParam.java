@@ -1,9 +1,7 @@
 package com.cg.role.dto;
 
-import com.cg.model.ERole;
-import lombok.AllArgsConstructor;
+import com.cg.model.RoleCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -14,7 +12,8 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 public class RoleCreationParam {
     @NotNull(message = "name not null")
-    private String name;
+    private RoleCode id;
     @NotNull(message = "name not null")
-    private ERole code;
+    private String name;
+
 }

@@ -1,8 +1,8 @@
 package com.cg.order;
 
 import com.cg.model.OrderItem;
-import com.cg.model.CartDetail;
-import com.cg.cartDetail.CartDetailRepository;
+import com.cg.model.CartItem;
+import com.cg.cart.cartDetail.CartItemRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class OrderItemServiceImpl implements IOrderItemService {
 
     private final OrderItemRepository orderItemRepository;
-    private final CartDetailRepository cartDetailRepository;
+    private final CartItemRepository cartItemRepository;
 
     @Override
     public List<OrderItem> findAll() {
@@ -45,9 +45,9 @@ public class OrderItemServiceImpl implements IOrderItemService {
     }
 
     @Override
-    public OrderItem addBillDetail(OrderItem orderItem, CartDetail cartDetail) {
+    public OrderItem addBillDetail(OrderItem orderItem, CartItem cartItem) {
         OrderItem orderItem1 = orderItemRepository.save(orderItem);
-        cartDetailRepository.delete(cartDetail);
+        cartItemRepository.delete(cartItem);
         return orderItem1;
     }
 }

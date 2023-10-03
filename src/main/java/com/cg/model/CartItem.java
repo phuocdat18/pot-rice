@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "cart_details")
 @Accessors(chain = true)
-public class CartDetail extends BaseEntity {
+public class CartItem extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +33,6 @@ public class CartDetail extends BaseEntity {
     private BigDecimal price;
 
     private Long quantity;
-
-    @Column(precision = 10, scale = 0, nullable = false)
-    private BigDecimal amount;
-
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false, foreignKey = @ForeignKey(name = "fk_cart_bill_detail"))
     private Cart cart;

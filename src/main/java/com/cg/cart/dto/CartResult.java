@@ -1,7 +1,6 @@
 package com.cg.cart.dto;
 
-import com.cg.cartDetail.dto.CartDetailParam;
-import com.cg.user.dto.UserResult;
+import com.cg.cart.cartDetail.dto.CartItemResult;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +15,6 @@ import java.util.List;
 @Accessors(chain = true)
 public class CartResult {
     private Long id;
-    private UserResult userResult;
-    private List<CartDetailParam> items;
+    private Long userId;
+    private List<CartItemResult> items;
 }

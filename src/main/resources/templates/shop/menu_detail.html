@@ -985,7 +985,7 @@
                     }
                 })
             } else {
-                let cartDetail = {
+                let cartItem = {
                     quantity: quantity
                 }
                 $.ajax({
@@ -995,7 +995,7 @@
                         'Content-Type': 'application/json'
                     },
                     url: page.urls.getChangeQuantity + '/' + cartDetailId,
-                    data: JSON.stringify(cartDetail)
+                    data: JSON.stringify(cartItem)
                 })
                     .done((data) => {
                         page.dialogs.elements.tbCart.empty();

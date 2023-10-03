@@ -24,5 +24,5 @@ public class ProductResult {
     private String description;
     private String unit;
     private Category category;
-    private ProductAvatar productAvatar;
+    private ProductAvatar avatar;
 }

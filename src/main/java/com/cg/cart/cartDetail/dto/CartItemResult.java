@@ -1,4 +1,4 @@
-package com.cg.cartDetail.dto;
+package com.cg.cart.cartDetail.dto;
 
 import com.cg.cart.dto.CartResult;
 import com.cg.product.dto.ProductResult;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class CartDetailResult {
+public class CartItemResult {
     private Long id;
     private String title;
     private BigDecimal price;
