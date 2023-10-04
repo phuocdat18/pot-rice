@@ -507,6 +507,7 @@
         let priceRanges = [];
         let minPrice, maxPrice;
         let count = 0;
+
         if ($("#p1").is(":checked")) {
             count += 1;
             priceRanges.push(+$("#p1").data('minprice'));
@@ -543,6 +544,10 @@
             maxPrice = Number(priceRanges[priceRanges.length - 1]);
         }
 
+        if (keyword.length === 0) keyword = undefined;
+        if (categoryIds.length === 0) categoryIds = undefined;
+        if (minPrice.length === 0) minPrice = undefined;
+        if (maxPrice.length === 0) maxPrice = undefined;
 
         $.ajax({
             headers: {
@@ -553,7 +558,7 @@
             url: page.urls.getSearch,
             data: {
                 search: keyword,
-                ids: categoryIds,
+                categoryIds: categoryIds,
                 minPrice: minPrice,
                 maxPrice: maxPrice,
                 page: pageProduct,

@@ -23,100 +23,14 @@ public interface ProductFilterRepository extends JpaRepository<Product, Integer>
                 Predicate predicateTitle = criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), '%' + filter.getKeyword() + '%');
                 predicates.add(predicateTitle);
             }
-//            if (!filter.getCategoryIds().isEmpty()) {
-//                Predicate predicateCategory = criteriaBuilder.or(root.get("category").get("id").in(filter.getCategoryIds()));
-//                predicates.add(predicateCategory);
-//            }
+            if (!filter.getCategoryIds().isEmpty()) {
+                Predicate predicateCategory = criteriaBuilder.or(root.get("category").get("id").in(filter.getCategoryIds()));
+                predicates.add(predicateCategory);
+            }
             if (filter.getMinPrice() != null && filter.getMaxPrice() != null) {
                 Predicate predicatePrice = criteriaBuilder.between(root.get("price"), filter.getMinPrice(), filter.getMaxPrice());
                 predicates.add(predicatePrice);
             }
-
-
-//            if (!filter.getGroupIds().isEmpty()) {
-//                Predicate predicate = criteriaBuilder.or(root.get("group").get("id").in(filter.getGroupIds()));
-//                predicates.add(predicate);
-//            }
-//
-//            if (filter.getGender() != null) {
-//                Predicate predicate = criteriaBuilder.equal(root.get("gender"), CustomerGender.parseCustomerGender(filter.getGender()));
-//                predicates.add(predicate);
-//            }
-//
-//            Path<Instant> birthdayPath = root.get("birthday");
-//
-//            Integer dayOfBirthDay = filter.getDayOfBirthday();
-//
-//            Expression<Integer> dayOfBirthDayFunction = criteriaBuilder.function("day", Integer.class, birthdayPath);
-//
-//            if (dayOfBirthDay != null) {
-//                Predicate predicate = criteriaBuilder.equal(dayOfBirthDayFunction, dayOfBirthDay);
-//                predicates.add(predicate);
-//            }
-//
-//            Integer monthOfBirthday = filter.getMonthOfBirthday();
-//
-//            Expression<Integer> monthOfBirthdayFunction = criteriaBuilder.function("month", Integer.class, birthdayPath);
-//
-//            if (monthOfBirthday != null) {
-//                Predicate predicate = criteriaBuilder.equal(monthOfBirthdayFunction, monthOfBirthday);
-//                predicates.add(predicate);
-//            }
-//
-//            if (!filter.getEmployeeIds().isEmpty()) {
-//                Predicate predicate = criteriaBuilder.or(root.get("employee").get("id").in(filter.getEmployeeIds()));
-//                predicates.add(predicate);
-//            }
-//
-//            if (!filter.getStatusList().isEmpty()) {
-//                Predicate predicate = criteriaBuilder.or(root.get("status").in(filter.getStatusList()));
-//                predicates.add(predicate);
-//            }
-//
-//            Date createdFrom = filter.getCreatedFrom();
-//
-//            Date createdTo = filter.getCreatedTo();
-//
-//            Predicate createdAtPredicate = criteriaBuilder.conjunction();
-//
-//            Path<Instant> createdAtPath = root.get("createdAt");
-//
-//            if (createdFrom != null && createdTo != null) {
-//                createdAtPredicate = criteriaBuilder.between(createdAtPath, createdFrom.toInstant(), createdTo.toInstant());
-//                predicates.add(createdAtPredicate);
-//            } else {
-//                if (createdFrom != null) {
-//                    createdAtPredicate = criteriaBuilder.greaterThan(createdAtPath, createdFrom.toInstant());
-//                    predicates.add(createdAtPredicate);
-//                }
-//
-//                if (createdTo != null) {
-//                    createdAtPredicate = criteriaBuilder.lessThan(createdAtPath, createdTo.toInstant());
-//                    predicates.add(createdAtPredicate);
-//                }
-//            }
-//
-//            Date birthDayFrom = filter.getBirthDayFrom();
-//            Date birthDayTo = filter.getBirthDayTo();
-//
-//            if (birthDayFrom != null && birthDayTo != null) {
-//                Predicate predicate = criteriaBuilder.between(root.get("birthday"), birthDayFrom.toInstant(), birthDayTo.toInstant());
-//                predicates.add(predicate);
-//            } else {
-//                if (birthDayFrom != null) {
-//                    Predicate predicate = criteriaBuilder.greaterThan(root.get("birthday"), birthDayFrom.toInstant());
-//                    predicates.add(predicate);
-//                }
-//                if (birthDayTo != null) {
-//                    Predicate predicate = criteriaBuilder.lessThan(root.get("birthday"), birthDayTo.toInstant());
-//                    predicates.add(predicate);
-//                }
-//            }
-//            Date birthDay = filter.getBirthDay();
-//            if (birthDay != null) {
-//                Predicate predicate = criteriaBuilder.equal(root.get("birthday"), birthDay.toInstant());
-//                predicates.add(predicate);
-//            }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         }, pageable);

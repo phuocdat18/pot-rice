@@ -26,7 +26,7 @@ class AppBase {
     static API_DELETE_USER = this.API_USER + '/disable'
     static API_RESTORE_USER = this.API_USER + '/restore'
     static API_CATEGORY = this.API_SERVER + '/categories'
-    static API_SEARCH_PRODUCT = this.API_PRODUCT + '/search'
+    static API_SEARCH_PRODUCT = this.API_PRODUCT
     static API_USER_UPDATE = this.API_USER + '/update'
 
 

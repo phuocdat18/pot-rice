@@ -5,6 +5,8 @@ import com.cg.cart.dto.CartResult;
 import com.cg.model.*;
 import com.cg.order.IOrderService;
 import com.cg.product.IProductService;
+import com.cg.user.IUserService;
+import com.cg.user.dto.UserResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/shop")
 public class CustomerController {
+    private final IUserService userService;
 
     private final IProductService productService;
     private final IOrderService orderService;
@@ -92,33 +96,36 @@ public class CustomerController {
 
     @GetMapping("/myaccount")
     public String showListProduct(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-
+        UserResult user = userService.getById(userPrincipal.getId());
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
 
         model.addAttribute("username", userPrincipal.getUsername());
+        model.addAttribute("user", user);
         model.addAttribute("roleCode", roleCode);
         return "user_info/user_myaccount";
     }
 
     @GetMapping("/my-order")
     public String showUserOrder(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-
+        UserResult user = userService.getById(userPrincipal.getId());
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
 
         model.addAttribute("username", userPrincipal.getUsername());
         model.addAttribute("roleCode", roleCode);
+        model.addAttribute("user", user);
         return "user_info/user_order";
     }
 
     @GetMapping("/my-order-detail")
     public String showUserOrderDetail(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-
+        UserResult user = userService.getById(userPrincipal.getId());
         List<?> orderResults = orderService.findAllByUserId(userPrincipal.getId());
 
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
 
         model.addAttribute("username", userPrincipal.getUsername());
         model.addAttribute("roleCode", roleCode);
+        model.addAttribute("user", user);
         model.addAttribute("order", orderResults);
 
         return "user_info/user_order_detail";

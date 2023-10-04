@@ -1,5 +1,6 @@
 package com.cg.product.dto;
 
+import com.cg.model.Category;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

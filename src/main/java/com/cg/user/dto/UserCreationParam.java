@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 public class UserCreationParam {
-
     @NotNull(message = "{validate.user.fullName.notBlank}")
     @Length(min = 5, max = 50, message = "{validate.user.fullName.length}")
     private String fullName;

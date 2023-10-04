@@ -263,7 +263,8 @@
                     <div class="row">
 
                         <div class="dropdown col-sm-4">
-                            <button class="btn btn-category dropdown-toggle" id="categoryDropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-category dropdown-toggle" id="categoryDropdown" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                 Danh mục
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
@@ -295,7 +296,8 @@
                         </div>
 
                         <div class="dropdown col-sm-5">
-                            <button class="btn btn-category dropdown-toggle" id="priceDropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-category dropdown-toggle" id="priceDropdown" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                 Lọc giá
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="priceDropdown">
@@ -351,7 +353,7 @@
                 <div class="col-lg-2 col-md-3">
                     <div class="tf__menu_search">
                         <button class="common_btn" type="button">
-                           Tìm kiếm
+                            Tìm kiếm
                         </button>
                     </div>
                 </div>
@@ -360,7 +362,7 @@
 
 
         <div class="row">
-            <div id="product-carts" class="row product-carts" style= "padding-left: 12px;">
+            <div id="product-carts" class="row product-carts" style="padding-left: 12px;">
 
             </div>
         </div>
@@ -376,7 +378,7 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
     </div>
 </section>
 
@@ -406,7 +408,7 @@
 
 <ul class="menu_icon d-flex flex-wrap">
     <li>
-        <a  class="btn" style="color: white" href="/shop/cart"><i class="fas fa-shopping-basket"></i>
+        <a class="btn" style="color: white" href="/shop/cart"><i class="fas fa-shopping-basket"></i>
             <span class="cart-count" id="count-cart">0</span></a>
     </li>
 </ul>
@@ -416,7 +418,6 @@
 <th:block th:replace="layout/script"/>
 
 <script src="/assets/sweetalert2/sweetalert2.all.min.js"></script>
-
 
 
 <script>
@@ -476,7 +477,7 @@
     page.dialogs.elements.wardCr = $('#wardCr')
     page.dialogs.elements.addressCr = $('#addressCr')
 
-    page.commands.getAllProducts = (pageProduct , pageSize) => {
+    page.commands.getAllProducts = (pageProduct, pageSize) => {
         $.ajax({
             type: 'GET',
             url: page.urls.getAllProducts,
@@ -657,7 +658,7 @@
     }
 
 
-    page.commands.search = (pageProduct , pageSize) => {
+    page.commands.search = (pageProduct, pageSize) => {
         let keyword = page.elements.inputSearch.val();
         let categoryIds = '';
         $("input[name='category']:checked").each(function () {
@@ -696,7 +697,7 @@
         priceRanges.sort(function (a, b) {
             return a - b
         });
-        if(count === 0) {
+        if (count === 0) {
             minPrice = '';
             maxPrice = '';
         } else {
@@ -707,6 +708,12 @@
 
         console.log(minPrice)
         console.log(maxPrice)
+        if (keyword.length === 0) keyword = undefined;
+        if (categoryIds.length === 0) categoryIds = undefined;
+        if (minPrice.length === 0) minPrice = undefined;
+        if (maxPrice.length === 0) maxPrice = undefined;
+
+
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -716,7 +723,7 @@
             url: page.urls.getSearch,
             data: {
                 search: keyword,
-                ids: categoryIds,
+                categoryIds: categoryIds,
                 minPrice: minPrice,
                 maxPrice: maxPrice,
                 page: pageProduct,
@@ -725,7 +732,7 @@
             dataType: 'json',
         })
             .done((data) => {
-                if(data === undefined) {
+                if (data === undefined) {
                     page.elements.pagination.empty();
                     page.elements.productCarts.empty();
                     page.elements.divProducts.empty();
@@ -879,7 +886,7 @@
         $('.changeQuantity').on('click', function () {
             let cartDetailId = $(this).data('id');
             let quantity = $(this).find('.quantity-input').val()
-            if(Number(quantity) <= 0) {
+            if (Number(quantity) <= 0) {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -891,12 +898,11 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         page.dialogs.commands.doDelete(cartDetailId);
-                    }else {
+                    } else {
                         $('.quantity-input').val('1')
                     }
                 })
-            }
-            else {
+            } else {
                 let cartItem = {
                     quantity: quantity
                 }
@@ -1158,7 +1164,7 @@
 
     page.loadData = () => {
         page.commands.getAllCartDetail();
-        page.commands.getAllProducts(1,8);
+        page.commands.getAllProducts(1, 8);
         page.commands.resetLocationRegion();
 
     }
@@ -1171,15 +1177,15 @@
         $("#search").on('keydown', (event) => {
             if (event.keyCode === 13) {
                 event.preventDefault();
-                page.commands.search(1,8);
+                page.commands.search(1, 8);
             }
         });
         $('.dropdown-item').on('click', () => {
-            page.commands.search(1,8);
+            page.commands.search(1, 8);
         });
 
         $('.common_btn').on('click', () => {
-            page.commands.search(1,8);
+            page.commands.search(1, 8);
         });
     }
 

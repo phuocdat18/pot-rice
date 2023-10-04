@@ -1,5 +1,6 @@
 package com.cg.product;
 
+import com.cg.model.Category;
 import com.cg.product.dto.ProductCreationParam;
 import com.cg.product.dto.ProductFilter;
 import com.cg.product.dto.ProductResult;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +31,7 @@ public class ProductAPI {
                                    @RequestParam(name = "maxPrice", required = false) BigDecimal maxPrice,
                                    @RequestParam("page") int page,
                                    @RequestParam("pageSize") int pageSize) {
-        List<Long> categoryIds = null;
+        List<Long> categoryIds = new ArrayList<>();
         if (categoryIdList != null)
             categoryIds = Arrays.stream(categoryIdList.split(","))
                     .map(Long::parseLong)
@@ -40,8 +42,6 @@ public class ProductAPI {
                 .setCategoryIds(categoryIds)
                 .setMinPrice(minPrice)
                 .setMaxPrice(maxPrice);
-
-//        return (Page<?>) productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
 
         return productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
 

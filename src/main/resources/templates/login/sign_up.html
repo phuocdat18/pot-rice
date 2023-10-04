@@ -195,17 +195,28 @@
     page.elements.phoneError = $('.phoneError')
 
     page.commands.register = () => {
+
         let fullName = page.elements.fullNameReg.val();
+        if (fullName.length === 0) fullName = undefined;
+
+        let username= page.elements.usernameReg.val()
+        if (username.length === 0) username = undefined;
+
+        let password= page.elements.passwordReg.val()
+        if (password.length === 0) password = undefined;
+
+        let email= page.elements.emailReg.val()
+        if (email.length === 0) email = undefined;
+
+        let phone= page.elements.phoneReg.val()
+        if (phone.length === 0) phone = undefined;
+
         let user = {
-            fullName: fullName.length > 0 ? fullName : undefined,
-            username: page.elements.usernameReg.val(),
-            password: page.elements.passwordReg.val(),
-            email: page.elements.emailReg.val(),
-            phone: page.elements.phoneReg.val(),
-            role: {
-                id: 4,
-                code: 'CUSTOMER'
-            }
+            fullName: fullName,
+            username: username,
+            password: password,
+            email: email,
+            phone: phone,
         }
 
         $.ajax({
