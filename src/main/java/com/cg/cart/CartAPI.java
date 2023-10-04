@@ -2,7 +2,10 @@ package com.cg.cart;
 
 import com.cg.cart.cartDetail.ICartDetailService;
 import com.cg.cart.cartDetail.dto.CartItemParam;
+import com.cg.cart.cartDetail.dto.CartItemResult;
+import com.cg.cart.dto.CartResult;
 import com.cg.model.Cart;
+import com.cg.model.CartItem;
 import com.cg.model.UserPrincipal;
 import com.cg.order.IOrderItemService;
 import com.cg.order.IOrderService;
@@ -17,27 +20,41 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/carts")
 public class CartAPI {
     private final ICartService cartService;
+    private final ICartDetailService cartDetailService;
 
+    @GetMapping("/{cartId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CartResult findAllCart(@PathVariable Long cartId) {
+        return cartService.getById(cartId);
+    }
 
-//    @GetMapping("/{userId}/cart/{cartId}")
-//    @PreAuthorize("#userId == principal.id")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<?> findAllCartDetail(@PathVariable Long userId, Long cartId) {
-//        return cartService.findAllByUserIdAndCartId(userId, cartId);
+    @GetMapping("/cartItem/{cartId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CartItem> findAllCartItem(@PathVariable Long cartId) {
+        return cartDetailService.findAllByCartId(cartId);
+    }
+
+//    @PostMapping("/addToCart/{cartId}")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public CartResult addToCart(@Valid @RequestBody CartItemParam cartItemParam, @PathVariable Long cartId) {
+////       @AuthenticationPrincipal UserPrincipal principal
+//        cartService.addCartItem(cartId, cartItemParam, cartItemParam.getUserId());
+//
+//        return cartService.getById(cartId);
 //    }
 
-    @PostMapping("/{cartId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Cart addToCart(@Valid @RequestBody CartItemParam cartItemParam, @PathVariable Long cartId, @AuthenticationPrincipal UserPrincipal principal) {
-        cartService.addCartItem(cartId, cartItemParam, principal.getId());
-
-        return null;
+    @PostMapping("/addToCart/{cartId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CartResult addToCart(@RequestBody CartItemParam cartItemParam, @PathVariable Long cartId) {
+        cartService.addCartItem(cartId, cartItemParam, cartItemParam.getUserId());
+        return cartService.getById(cartId);
     }
 
 //    @PostMapping("/payment")

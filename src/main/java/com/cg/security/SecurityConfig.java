@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**").disable();
-        http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
+//        http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
 
         http.authorizeRequests()
                 .antMatchers(
@@ -82,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/bills/**"
 
                 ).permitAll()
-                .antMatchers("/api/bills/**").permitAll()
+                .antMatchers("/api/bills/**", "/api/carts/**").permitAll()
                 .antMatchers("/dashboard", "/dashboard/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/shop", "/shop/**").hasAnyAuthority("CUSTOMER")
                 .antMatchers("/resources/**", "/assets/**").permitAll()

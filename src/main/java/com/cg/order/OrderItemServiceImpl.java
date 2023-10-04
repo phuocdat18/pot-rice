@@ -44,10 +44,10 @@ public class OrderItemServiceImpl implements IOrderItemService {
 
     }
 
-    @Override
-    public OrderItem addBillDetail(OrderItem orderItem, CartItem cartItem) {
-        OrderItem orderItem1 = orderItemRepository.save(orderItem);
-        cartItemRepository.delete(cartItem);
-        return orderItem1;
-    }
+//    @Override
+//    public OrderItem addBillDetail(OrderItem orderItem, CartItem cartItem) {
+//        OrderItem orderItem1 = orderItemRepository.save(orderItem);
+//        cartItemRepository.delete(cartItem);
+//        return orderItem1;
+//    }
 }

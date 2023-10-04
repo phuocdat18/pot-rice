@@ -13,9 +13,10 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 public class CartItemResult {
     private Long id;
-    private String title;
-    private BigDecimal price;
     private ProductResult productResult;
+    private String title;
+    private String unit;
+    private BigDecimal price;
     private Long quantity;
     private Long cartId;
     private CartResult cartResult;

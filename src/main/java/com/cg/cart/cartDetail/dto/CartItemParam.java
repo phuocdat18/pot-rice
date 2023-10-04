@@ -16,4 +16,6 @@ public class CartItemParam {
     private Long productId;
     @Size(min = 1, message = "")
     private Long quantity;
+
+    private Long userId;
 }

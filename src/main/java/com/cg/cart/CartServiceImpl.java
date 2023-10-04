@@ -2,6 +2,7 @@ package com.cg.cart;
 
 import com.cg.cart.cartDetail.CartItemRepository;
 import com.cg.cart.cartDetail.dto.CartItemParam;
+import com.cg.cart.cartDetail.dto.CartItemResult;
 import com.cg.cart.dto.CartResult;
 import com.cg.model.Cart;
 import com.cg.model.CartItem;
@@ -56,12 +57,17 @@ public class CartServiceImpl implements ICartService {
         Long quantity = param.getQuantity();
 
         Product product = productService.findById(productId);
-        if (cartItems.size() == 0) {
+        if (cartItems.isEmpty()) {
             CartItem cartItem = new CartItem();
             cartItem.setCartId(cartId)
+                    .setCart(cart)
+                    .setTitle(product.getTitle())
+                    .setUnit(product.getUnit())
+                    .setProduct(product)
                     .setProductId(productId)
                     .setQuantity(quantity)
-                    .setPrice(product.getPrice());
+                    .setPrice(product.getPrice())
+            ;
             cartItemRepository.save(cartItem);
         }
         for (CartItem item : cartItems) {
@@ -70,14 +76,15 @@ public class CartServiceImpl implements ICartService {
             } else {
                 CartItem cartItem = new CartItem();
                 cartItem.setCartId(cartId)
+                        .setProduct(product)
+                        .setTitle(product.getTitle())
+                        .setUnit(product.getUnit())
                         .setProductId(productId)
                         .setQuantity(quantity)
                         .setPrice(product.getPrice());
-
             }
             cartItemRepository.save(item);
         }
-
     }
 
     @Override
