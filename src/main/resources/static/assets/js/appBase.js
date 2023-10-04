@@ -2,6 +2,7 @@ class AppBase {
 
     static DOMAIN_SERVER = 'http://localhost:8088'
 
+    // http://localhost:8088/api/carts
     // static DOMAIN_SERVER = 'http://192.168.1.73:8088';
 
 
@@ -30,10 +31,11 @@ class AppBase {
 
 
     static API_CART_DETAIL = this.API_SERVER + '/carts'
-    static API_ADD_TO_CART = this.API_CART_DETAIL + '/add-to-cart'
+    static API_ADD_TO_CART = this.API_CART_DETAIL + '/addToCart'
     static API_PAYMENT = this.API_CART_DETAIL + '/payment'
     static API_DELETED_CART_ITEM = this.API_CART_DETAIL + '/delete'
     static API_CHANGE_QUANTITY = this.API_CART_DETAIL + '/change-quantity'
+    static API_CART_ITEM = this.API_CART_DETAIL + '/cartItem'
 
     static API_STATUS_BILL = this.API_CART_DETAIL + '/bill'
 

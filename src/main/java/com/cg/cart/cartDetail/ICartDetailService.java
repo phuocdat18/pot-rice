@@ -15,4 +15,6 @@ public interface ICartDetailService {
 
     void deleteById(Long id);
 
+    List<CartItem> findAllByCartId(Long cartId);
+
 }
