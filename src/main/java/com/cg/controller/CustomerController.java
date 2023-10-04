@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -83,6 +84,8 @@ public class CustomerController {
     private String viewCart(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
 
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
+
+        model.addAttribute("userId", userPrincipal.getId());
         model.addAttribute("username", userPrincipal.getUsername());
         model.addAttribute("roleCode", roleCode);
 

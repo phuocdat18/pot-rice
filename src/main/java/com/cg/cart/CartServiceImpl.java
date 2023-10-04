@@ -47,6 +47,46 @@ public class CartServiceImpl implements ICartService {
         return cartMapper.toDTOList(entities);
     }
 
+//    @Override
+//    @Transactional
+//    public void addCartItem(Long cartId, CartItemParam param, Long userId) {
+//        Cart cart = findById(cartId);
+//        List<CartItem> cartItems = cartItemRepository.findAllByCartId(cartId);
+//
+//        Long productId = param.getProductId();
+//        Long quantity = param.getQuantity();
+//
+//        Product product = productService.findById(productId);
+//        if (cartItems.isEmpty()) {
+//            CartItem cartItem = new CartItem();
+//            cartItem.setCartId(cartId)
+//                    .setCart(cart)
+//                    .setTitle(product.getTitle())
+//                    .setUnit(product.getUnit())
+//                    .setProduct(product)
+//                    .setProductId(productId)
+//                    .setQuantity(quantity)
+//                    .setPrice(product.getPrice())
+//            ;
+//            cartItemRepository.save(cartItem);
+//        }
+//        for (CartItem item : cartItems) {
+//            if (item.getProductId().equals(productId)) {
+//                item.setQuantity(quantity);
+//            } else {
+//                CartItem cartItem = new CartItem();
+//                cartItem.setCartId(cartId)
+//                        .setProduct(product)
+//                        .setTitle(product.getTitle())
+//                        .setUnit(product.getUnit())
+//                        .setProductId(productId)
+//                        .setQuantity(quantity)
+//                        .setPrice(product.getPrice());
+//            }
+//            cartItemRepository.save(item);
+//        }
+//    }
+
     @Override
     @Transactional
     public void addCartItem(Long cartId, CartItemParam param, Long userId) {
@@ -55,9 +95,19 @@ public class CartServiceImpl implements ICartService {
 
         Long productId = param.getProductId();
         Long quantity = param.getQuantity();
-
         Product product = productService.findById(productId);
-        if (cartItems.isEmpty()) {
+
+        boolean found = false;
+
+        for (CartItem item : cartItems) {
+            if (item.getProductId().equals(productId)) {
+                item.setQuantity(item.getQuantity() + quantity);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
             CartItem cartItem = new CartItem();
             cartItem.setCartId(cartId)
                     .setCart(cart)
@@ -66,25 +116,11 @@ public class CartServiceImpl implements ICartService {
                     .setProduct(product)
                     .setProductId(productId)
                     .setQuantity(quantity)
-                    .setPrice(product.getPrice())
-            ;
-            cartItemRepository.save(cartItem);
+                    .setPrice(product.getPrice());
+            cartItems.add(cartItem);
         }
-        for (CartItem item : cartItems) {
-            if (item.getProductId().equals(productId)) {
-                item.setQuantity(quantity);
-            } else {
-                CartItem cartItem = new CartItem();
-                cartItem.setCartId(cartId)
-                        .setProduct(product)
-                        .setTitle(product.getTitle())
-                        .setUnit(product.getUnit())
-                        .setProductId(productId)
-                        .setQuantity(quantity)
-                        .setPrice(product.getPrice());
-            }
-            cartItemRepository.save(item);
-        }
+//        cart.setCartItems(cartItems);
+        cartRepository.save(cart);
     }
 
     @Override

@@ -118,6 +118,7 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="#">
                                 <span class="pro-user-name ml-1" th:text="${username}">
+                                    <span hidden="true" class="pro-user-id ml-1" th:text="${userId}">
                             </span> <i class="far fa-angle-down"></i></a>
                                 <ul class="droap_menu">
                                     <li><a href="/shop/myaccount">Tài khoản của tôi</a></li>
@@ -133,6 +134,7 @@
                             <li class="nav-item" style="margin-left: 982px;">
                                 <a class="nav-link active" href="#" >
                                 <span class="pro-user-name ml-1" th:text="${username}">
+                                    <span hidden="true"  class="pro-user-id ml-1" th:text="${userId}"></span>
                             </span> <i class="far fa-angle-down"></i></a>
                                 <ul class="droap_menu">
                                     <li><a href="/logout">Đăng xuất</a></li>
