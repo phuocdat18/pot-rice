@@ -59,6 +59,7 @@
 <section class="tf__cart_view mt_100 xs_mt_70 mb_100 xs_mb_70" id="mdCart">
     <div class="container">
 <!--        <div class="row">-->
+            <input type="button" id="idUser" th:value="${userId}" hidden="true">
             <div class="col-lg-12 wow fadeInUp" data-wow-duration="1s">
                 <div class="tf__cart_list">
                     <div class="table-responsive">
@@ -276,6 +277,10 @@
     page.dialogs.elements.wardCr = $('#wardCr')
     page.dialogs.elements.addressCr = $('#addressCr')
 
+    let user = new User();
+    let userId = $('#idUser').val();
+    console.log(userId)
+
     page.commands.getAllProducts = (pageProduct , pageSize) => {
         $.ajax({
             type: 'GET',
@@ -469,16 +474,18 @@
     }
 
     page.commands.renderCart = (obj) => {
-        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_100_h_80_Q_90 + '/' + obj.avatar.fileFolder + '/' + obj.avatar.fileName;
+        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_100_h_80_Q_90 + '/' + obj.product.productAvatar.fileFolder + '/' + obj.product.productAvatar.fileName;
         const price = obj.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-        const amount = obj.amount.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+        const totalAmount = obj.price * obj.quantity
+        const amount = totalAmount.toLocaleString('vi', {style: 'currency', currency: 'VND'});
         return `
                 <tr id="tr_${obj.id}">
                     <td>
                         <span class="product-id">${obj.id}</span>
+                        <span class="productId" hidden="true">${obj.productId}</span>
                     </td>
                      <td class="col-2">
-                         <img src="${imageUrl}" style="max-width: 100%" class="card-img-top" alt="...">
+                        <img src="${imageUrl}" alt="menu" class="img-fluid w-100">
                     </td>
                     <td>${obj.title}</td>
 
@@ -639,11 +646,92 @@
         })
     }
 
+    // page.commands.changeQuantity = () => {
+    //     $('.changeQuantity').on('click', function () {
+    //         let cartDetailId = $(this).data('id');
+    //         let quantity = $(this).find('.quantity-input').val()
+    //         if(Number(quantity) <= 0) {
+    //             Swal.fire({
+    //                 title: 'Are you sure?',
+    //                 text: "You won't be able to revert this!",
+    //                 icon: 'warning',
+    //                 showCancelButton: true,
+    //                 confirmButtonColor: '#3085D6',
+    //                 cancelButtonColor: '#d33',
+    //                 confirmButtonText: 'Yes, delete it!'
+    //             }).then((result) => {
+    //                 if (result.isConfirmed) {
+    //                     page.dialogs.commands.doDelete(cartDetailId);
+    //                 }else {
+    //                     $('.quantity-input').val('1')
+    //                 }
+    //             })
+    //         }
+    //         else {
+    //             let cartItem = {
+    //                 quantity: quantity
+    //             }
+    //             $.ajax({
+    //                 type: "PATCH",
+    //                 headers: {
+    //                     'Accept': 'application/json',
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 // url: page.urls.getChangeQuantity + '/' + cartDetailId,
+    //                 url: page.urls.getAllCartItem + '/' + cartIdCookie,
+    //                 data: JSON.stringify(cartItem)
+    //             })
+    //                 .done((data) => {
+    //                     page.dialogs.elements.tbCart.empty();
+    //                     let vat = 0;
+    //                     let subTotalAmount = 0;
+    //                     let totalAmount = 0;
+    //                     let count = 0;
+    //                     $.each(data, (index, item) => {
+    //                         const str = page.commands.renderCart(item);
+    //                         subTotalAmount = subTotalAmount + item.amount;
+    //                         page.dialogs.elements.tbCart.prepend(str)
+    //                         count = count + item.quantity
+    //                     })
+    //                     vat = (subTotalAmount * 10) / 100;
+    //                     totalAmount = subTotalAmount + vat;
+    //                     page.elements.countCart.text(count)
+    //                     page.dialogs.elements.totalAmount.text(totalAmount.toLocaleString('vi', {
+    //                         style: 'currency',
+    //                         currency: 'VND'
+    //                     }));
+    //                     page.dialogs.elements.subTotalAmount.text(subTotalAmount.toLocaleString('vi', {
+    //                         style: 'currency',
+    //                         currency: 'VND'
+    //                     }));
+    //                     page.dialogs.elements.vat.text(vat.toLocaleString('vi', {
+    //                         style: 'currency',
+    //                         currency: 'VND'
+    //                     }));
+    //                     page.commands.deleteProduct();
+    //                     page.commands.changeQuantity();
+    //                 })
+    //                 .fail((err) => {
+    //                     console.log(err)
+    //                     AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+    //                 })
+    //         }
+    //     })
+    // }
+
     page.commands.changeQuantity = () => {
+
         $('.changeQuantity').on('click', function () {
             let cartDetailId = $(this).data('id');
-            let quantity = $(this).find('.quantity-input').val()
-            if(Number(quantity) <= 0) {
+            let productId = $(this).closest('tr').find('.productId').text();
+            let quantity = $(this).find('.quantity-input').val();
+            let currentQuantity = 1;
+            if ($(this).hasClass('increase')) {
+                currentQuantity = 1;
+            } else if ($(this).hasClass('decrease')) {
+                currentQuantity = -1;
+            }
+            if (Number(quantity) <= 0) {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -659,18 +747,20 @@
                         $('.quantity-input').val('1')
                     }
                 })
-            }
-            else {
+            } else {
                 let cartItem = {
-                    quantity: quantity
-                }
+                    productId: productId,
+                    quantity: currentQuantity,
+                    userId: userId,
+                };
+
                 $.ajax({
-                    type: "PATCH",
+                    type: "POST",
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    url: page.urls.getChangeQuantity + '/' + cartDetailId,
+                    url: page.urls.getAddToCart + '/' + cartIdCookie,
                     data: JSON.stringify(cartItem)
                 })
                     .done((data) => {
@@ -702,14 +792,16 @@
                         }));
                         page.commands.deleteProduct();
                         page.commands.changeQuantity();
+
+                        page.commands.getAllCartDetail();
                     })
                     .fail((err) => {
-                        console.log(err)
+                        console.log(err);
                         AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
-                    })
+                    });
             }
-        })
-    }
+        });
+    };
 
     page.commands.getAllBillsDone = () => {
         $.ajax({

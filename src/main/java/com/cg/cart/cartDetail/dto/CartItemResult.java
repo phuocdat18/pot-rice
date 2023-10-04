@@ -1,5 +1,6 @@
 package com.cg.cart.cartDetail.dto;
 
+import com.cg.avatar.dto.ProductAvatarDTO;
 import com.cg.cart.dto.CartResult;
 import com.cg.product.dto.ProductResult;
 import lombok.Getter;
@@ -20,4 +21,5 @@ public class CartItemResult {
     private Long quantity;
     private Long cartId;
     private CartResult cartResult;
+    private ProductAvatarDTO avatar;
 }

@@ -87,6 +87,8 @@ public class CustomerController {
     private String viewCart(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
 
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
+
+        model.addAttribute("userId", userPrincipal.getId());
         model.addAttribute("username", userPrincipal.getUsername());
         model.addAttribute("roleCode", roleCode);
 

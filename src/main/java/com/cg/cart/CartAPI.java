@@ -2,24 +2,12 @@ package com.cg.cart;
 
 import com.cg.cart.cartDetail.ICartDetailService;
 import com.cg.cart.cartDetail.dto.CartItemParam;
-import com.cg.cart.cartDetail.dto.CartItemResult;
 import com.cg.cart.dto.CartResult;
-import com.cg.model.Cart;
 import com.cg.model.CartItem;
-import com.cg.model.UserPrincipal;
-import com.cg.order.IOrderItemService;
-import com.cg.order.IOrderService;
-import com.cg.product.IProductService;
-import com.cg.user.IUserService;
-import com.cg.utils.AppUtils;
-import com.cg.utils.ValidateUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,20 +29,19 @@ public class CartAPI {
         return cartDetailService.findAllByCartId(cartId);
     }
 
-//    @PostMapping("/addToCart/{cartId}")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public CartResult addToCart(@Valid @RequestBody CartItemParam cartItemParam, @PathVariable Long cartId) {
-////       @AuthenticationPrincipal UserPrincipal principal
-//        cartService.addCartItem(cartId, cartItemParam, cartItemParam.getUserId());
-//
-//        return cartService.getById(cartId);
-//    }
-
     @PostMapping("/addToCart/{cartId}")
     @ResponseStatus(HttpStatus.OK)
     public CartResult addToCart(@RequestBody CartItemParam cartItemParam, @PathVariable Long cartId) {
+//        @AuthenticationPrincipal UserPrincipal principal
         cartService.addCartItem(cartId, cartItemParam, cartItemParam.getUserId());
         return cartService.getById(cartId);
+    }
+
+    @PatchMapping("/change-quantity/{cartItemId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CartItem changeQuantity(@RequestBody CartItemParam cartItemParam, @PathVariable Long cartItemId) {
+        cartDetailService.changeQuantity(cartItemId, cartItemParam);
+        return cartDetailService.findById(cartItemId);
     }
 
 //    @PostMapping("/payment")
@@ -136,7 +123,7 @@ public class CartAPI {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
 //    }
-//
+
 //    @PatchMapping("/change-quantity/{id}")
 //    public ResponseEntity<List<?>> changeQuantity(@PathVariable String id, @RequestBody CartDetailChangeReqDTO cartDetailChangeReqDTO) throws IOException {
 //        String username = appUtils.getPrincipalUsername();
