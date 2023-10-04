@@ -35,14 +35,11 @@ import javax.validation.Valid;
 public class AuthAPI {
     private final UserMapper userMapper;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
-    @Autowired
-    private IUserService userService;
+    private final IUserService userService;
 
 
     @PostMapping("/register")

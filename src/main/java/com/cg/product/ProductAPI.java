@@ -35,12 +35,13 @@ public class ProductAPI {
                     .map(Long::parseLong)
                     .collect(Collectors.toList());
 
-        ProductFilter filter = new ProductFilter().setKeyword(search)
+        ProductFilter filter = new ProductFilter()
+                .setKeyword(search)
                 .setCategoryIds(categoryIds)
                 .setMinPrice(minPrice)
                 .setMaxPrice(maxPrice);
 
-//        return (List<?>) productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
+//        return (Page<?>) productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
 
         return productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
 

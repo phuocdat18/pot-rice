@@ -1,7 +1,7 @@
 package com.cg.avatar;
 
 import com.cg.model.ProductAvatar;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProductAvatarServiceImpl implements IProductAvatarService {
 
-    @Autowired
-    private ProductAvatarRepository productAvatarRepository;
+    private final ProductAvatarRepository productAvatarRepository;
 
 
     @Override
@@ -32,13 +32,4 @@ public class ProductAvatarServiceImpl implements IProductAvatarService {
         return productAvatarRepository.save(productAvatar);
     }
 
-    @Override
-    public void delete(ProductAvatar productAvatar) {
-
-    }
-
-    @Override
-    public void deleteById(String id) {
-
-    }
 }

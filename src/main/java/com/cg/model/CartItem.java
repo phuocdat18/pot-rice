@@ -39,4 +39,6 @@ public class CartItem extends BaseEntity {
 
     @Column(name = "cart_id", insertable = false, updatable = false)
     private Long cartId;
+
+
 }

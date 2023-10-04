@@ -25,7 +25,6 @@ public class CustomerController {
 
     private final IProductService productService;
     private final IOrderService orderService;
-
     private final ICartService cartService;
 
 
@@ -35,9 +34,7 @@ public class CustomerController {
             CartResult cart = cartService.newCart(userPrincipal.getId());
             Cookie cookie = new Cookie("cartId", cart.getId().toString());
             response.addCookie(cookie);
-
         }
-
         String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
 
         model.addAttribute("username", userPrincipal.getUsername());
@@ -101,15 +98,6 @@ public class CustomerController {
         model.addAttribute("username", userPrincipal.getUsername());
         model.addAttribute("roleCode", roleCode);
         return "user_info/user_myaccount";
-    }
-
-    @GetMapping("/editInfo")
-    public String showUserInfoEdit(Model model, @AuthenticationPrincipal UserPrincipal userPrincipal) {
-        String roleCode = userPrincipal.getAuthorities().get(0).getAuthority();
-
-        model.addAttribute("username", userPrincipal.getUsername());
-        model.addAttribute("roleCode", roleCode);
-        return "user_info/user_info_edit";
     }
 
     @GetMapping("/my-order")

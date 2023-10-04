@@ -21,11 +21,17 @@ public interface ProductFilterRepository extends JpaRepository<Product, Integer>
             List<Predicate> predicates = new ArrayList<>();
             if (filter.getKeyword() != null) {
                 Predicate predicateTitle = criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), '%' + filter.getKeyword() + '%');
-//                Predicate predicateCustomerCode = criteriaBuilder.like(root.get("customerCode"), '%' + filter.getKeyword() + '%');
-//                Predicate predicatePhoneNumber = criteriaBuilder.like(root.get("phoneNumber"), '%' + filter.getKeyword() + '%');
-//                Predicate predicateKw = criteriaBuilder.or(predicateCustomerCode, predicateFullName, predicatePhoneNumber);
                 predicates.add(predicateTitle);
             }
+//            if (!filter.getCategoryIds().isEmpty()) {
+//                Predicate predicateCategory = criteriaBuilder.or(root.get("category").get("id").in(filter.getCategoryIds()));
+//                predicates.add(predicateCategory);
+//            }
+            if (filter.getMinPrice() != null && filter.getMaxPrice() != null) {
+                Predicate predicatePrice = criteriaBuilder.between(root.get("price"), filter.getMinPrice(), filter.getMaxPrice());
+                predicates.add(predicatePrice);
+            }
+
 
 //            if (!filter.getGroupIds().isEmpty()) {
 //                Predicate predicate = criteriaBuilder.or(root.get("group").get("id").in(filter.getGroupIds()));

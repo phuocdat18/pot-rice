@@ -23,7 +23,7 @@ import java.util.List;
 public class RevenueAPI {
     private final IProductService productService;
     private final IOrderService billService;
-    private ICategoryService categoryService;
+    private final ICategoryService categoryService;
     private final ValidateUtils validateUtils;
 
     @GetMapping

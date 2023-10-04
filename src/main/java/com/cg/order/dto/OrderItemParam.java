@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -12,6 +13,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class OrderItemParam {
     private Long productId;
-    private String quantity;
+    @Size(min = 1, message = "")
+    private Long quantity;
     private String unit;
 }

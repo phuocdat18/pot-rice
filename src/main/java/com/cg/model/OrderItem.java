@@ -37,11 +37,6 @@ public class OrderItem extends BaseEntity {
     @Column(precision = 10, scale = 0, nullable = false)
     private BigDecimal amount;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "order_id", nullable = false, foreignKey = @ForeignKey(name = "fk_product_order"))
-//    private Order order;
-
     @ManyToOne
     @JoinColumn(name = "bill_id", nullable = false, foreignKey = @ForeignKey(name = "fk_product_order"))
     private Order order;

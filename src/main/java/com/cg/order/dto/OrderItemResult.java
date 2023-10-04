@@ -3,6 +3,7 @@ package com.cg.order.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Getter
@@ -12,5 +13,6 @@ public class OrderItemResult {
     private String productTitle;
     private String unit;
     private BigDecimal price;
+    @Size(min = 1, message = "")
     private Long quantity;
 }

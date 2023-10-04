@@ -1,4 +1,5 @@
 package com.cg.api;
+
 import com.cg.category.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class CategoryAPI {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<?> getAll() {
-      return categoryService.findAll();
+        return categoryService.findAll();
 
     }
 

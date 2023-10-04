@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Getter
@@ -16,6 +17,7 @@ public class ProductCreationParam {
     @Column(nullable = false)
     private BigDecimal price;
     @Column(nullable = false)
+    @Size(min = 1, message = "")
     private Long quantity;
     @Column(nullable = false)
     private String description;

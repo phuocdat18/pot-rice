@@ -591,12 +591,13 @@
                 page.commands.changeQuantity();
             })
             .fail((jqXHR) => {
-                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                console.log(jqXHR);
             })
     }
 
     page.commands.renderCart = (obj) => {
-        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_280_h_180_Q_100 + '/' + obj.productDTO.avatar.fileFolder + '/' + obj.productDTO.avatar.fileName;
+        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_280_h_180_Q_100 + '/' + obj.avatar.fileFolder + '/' + obj.avatar.fileName;
         const price = obj.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
         const amount = obj.amount.toLocaleString('vi', {style: 'currency', currency: 'VND'});
         return `
@@ -721,6 +722,7 @@
             })
             .fail((jqXHR) => {
                 AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                console.log(jqXHR);
             })
     }
 

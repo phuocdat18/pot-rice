@@ -32,18 +32,6 @@ public class CartDetailServiceImpl implements ICartDetailService {
         return cartItemRepository.save(cartItem);
     }
 
-//    @Override
-//    public void delete(CartItem cartItem) {
-//        cartItemRepository.delete(cartItem);
-//        List<CartItem> cartItems = cartItemRepository.findAll();
-//        BigDecimal totalAmount = BigDecimal.ZERO;
-//        for (CartItem cartItem1 : cartItems) {
-//            totalAmount.add(cartItem1.getAmount());
-//        }
-//        Cart cart = cartItem.getCart();
-//        cart.setTotalAmount(totalAmount);
-//        cartRepository.save(cart);
-//    }
 
     @Override
     public void deleteById(Long id) {

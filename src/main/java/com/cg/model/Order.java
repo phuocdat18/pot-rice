@@ -1,6 +1,7 @@
 package com.cg.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "bills")
 @Accessors(chain = true)
 public class Order extends BaseEntity {
@@ -47,7 +49,4 @@ public class Order extends BaseEntity {
         this.status = status;
     }
 
-    public Order() {
-
-    }
 }

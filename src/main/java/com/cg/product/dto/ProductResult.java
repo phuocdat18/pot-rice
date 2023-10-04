@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Getter
@@ -20,6 +21,7 @@ public class ProductResult {
     private Long id;
     private String title;
     private BigDecimal price;
+    @Size(min = 1, message = "")
     private Long quantity;
     private String description;
     private String unit;
