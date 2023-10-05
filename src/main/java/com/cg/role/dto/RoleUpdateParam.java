@@ -7,5 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class RoleUpdateParam extends BaseRole{
+public class RoleUpdateParam {
+    @NotNull(message = "name not null")
+    private String name;
 }

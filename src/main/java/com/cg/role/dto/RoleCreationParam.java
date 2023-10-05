@@ -10,8 +10,10 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class RoleCreationParam extends BaseRole {
+public class RoleCreationParam {
     @NotNull(message = "name not null")
     private RoleCode id;
+    @NotNull(message = "name not null")
+    private String name;
 
 }

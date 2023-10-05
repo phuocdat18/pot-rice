@@ -58,12 +58,9 @@
                                 <div class="tf_dash_personal_info">
                                     <div class="personal_info_text">
                                         <input type="button" id="idUser" th:value="${user.id}" hidden="true">
-                                        <p><span>Tên:</span> <span id="fullNameUpdate"
-                                                                   th:text="${user.fullName}"></span></p>
-                                        <p><span>Email:</span> <span id="emailUpdate" th:text="${user.email}"></span>
-                                        </p>
-                                        <p><span>Số điện thoại:</span> <span id="phoneUpdate"
-                                                                             th:text="${user.phone}"></span></p>
+                                        <p><span>Tên:</span> <span id="fullNameUpdate" th:text="${user.fullName}"></span></p>
+                                        <p><span>Email:</span> <span id="emailUpdate" th:text="${user.email}"></span></p>
+                                        <p><span>Số điện thoại:</span> <span id="phoneUpdate" th:text="${user.phone}"></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -77,6 +74,7 @@
 <!--=========================
     DASHBOARD END
 ==========================-->
+
 
 
 <!--=============================
@@ -100,6 +98,7 @@
 <!--jquery library js-->
 <th:block th:replace="layout/script"/>
 <th:block th:replace="/user_info/modal_update"/>
+
 
 
 <script>
@@ -132,6 +131,8 @@
     page.dialogs.elements.userEmailUp = $('#userEmailUp')
     page.dialogs.elements.userPhoneUp = $('#userPhoneUp')
     page.dialogs.elements.btnUpdate = $('#btnUpdate')
+
+
 
 
     let user = new User();
@@ -177,31 +178,33 @@
 
         page.elements.loader.removeClass("hide");
         page.dialogs.elements.btnUpdate.prop('disabled', true);
+        // page.commands.showLoadingSpinner();
 
 
-        let obj = {
-            fullName: page.dialogs.elements.userNameUp.val(),
-            email: page.dialogs.elements.userEmailUp.val(),
-            phone: page.dialogs.elements.userPhoneUp.val()
-        }
+        let formData = new FormData();
+        formData.append("fullName", page.dialogs.elements.userNameUp.val());
+        formData.append("email", page.dialogs.elements.userEmailUp.val());
+        formData.append("phone", page.dialogs.elements.userPhoneUp.val());
+
 
         $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
             type: "PATCH",
+            contentType: false,
+            cache: false,
+            processData: false,
             url: page.url.doUpdateUser + '/' + userId,
-            data: JSON.stringify(obj),
+            data: formData
         }).done((data) => {
             user = data;
             page.dialogs.elements.modalUpdate.modal('hide');
 
             AppBase.SweetAlert.showSuccessAlert(AppBase.AlertMessageEn.SUCCESS_UPDATED);
-
+            // location.reload(true);
             $("#fullNameUpdate").text(data.fullName);
             $("#emailUpdate").text(data.email);
             $("#phoneUpdate").text(data.phone);
+
+            // page.commands.showUpdateUser();
 
             page.dialogs.elements.frmUpdateUser.trigger("reset");
 
@@ -219,7 +222,7 @@
                 page.dialogs.elements.errorUpdateAreaModal.append(str).removeClass('hide').removeAttr('style').addClass('show');
 
                 console.log(jqXHR);
-            }).always(function () {
+    }).always(function () {
             page.elements.loader.addClass("hide");
             page.dialogs.elements.btnUpdate.prop('disabled', false);
         });
@@ -228,6 +231,7 @@
     page.commands.clearForm = () => {
         $('.btnClose').on('click', () => {
 
+            // page.dialogs.elements.errorUpdateArea.removeClass("show").addClass("hide").empty();
             $("#mdUpdate .error-area").removeClass("show").addClass("hide").empty();
             $("#frmUpdateUser input.error").removeClass("error");
             page.dialogs.elements.frmUpdateUser.trigger("reset");

@@ -1270,16 +1270,16 @@
         page.loadData();
         page.initializeControlEvent();
     })
-    // const autoRefreshData = () => {
-    //     setInterval(() => {
-    //         page.commands.getAllBillsORDER();
-    //         page.commands.getAllBillsShip();
-    //         page.commands.getAllBillsDone();
-    //         page.commands.getAllBills();
-    //         page.commands.countAllBillsORDER();
-    //     }, 500);
-    // };
-    // autoRefreshData();
+    const autoRefreshData = () => {
+        setInterval(() => {
+            page.commands.getAllBillsORDER();
+            page.commands.getAllBillsShip();
+            page.commands.getAllBillsDone();
+            page.commands.getAllBills();
+            page.commands.countAllBillsORDER();
+        }, 500);
+    };
+    autoRefreshData();
 
 
 </script>

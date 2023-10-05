@@ -35,7 +35,7 @@ public class UserAPI {
         return IRoleService.findAll();
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserResult update(@PathVariable Long id, @RequestBody UserUpdateParam param) {
         return userService.update(id, param);

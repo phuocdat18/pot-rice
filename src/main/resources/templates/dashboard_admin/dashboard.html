@@ -260,7 +260,7 @@
                 page.elements.countOrders.text(count)
             })
             .fail((jqXHR) => {
-                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             });
     };
 
@@ -291,7 +291,7 @@
             })
             .fail(function () {
                 console.log()
-                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             });
     }
 
@@ -520,7 +520,7 @@
         })
             .fail((err) => {
             console.log(err)
-            // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+            AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
         })
             .always(function () {
             page.elements.loader.addClass("hide");
@@ -571,7 +571,7 @@
 
         }).fail((err) => {
             console.log(err)
-            // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
+            AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_400);
         }).always(function () {
             page.elements.loader.addClass("hide");
             page.dialogs.elements.btnUpdate.prop('disabled', false);
@@ -865,7 +865,7 @@
                 page.commands.showCart();
             })
             .fail((jqXHR) => {
-                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             })
     }
 
