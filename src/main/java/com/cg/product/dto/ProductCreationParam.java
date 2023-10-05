@@ -1,8 +1,11 @@
 package com.cg.product.dto;
 
+import com.cg.avatar.dto.ProductAvatarResDTO;
+import com.cg.model.ProductAvatar;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Size;
@@ -25,5 +28,5 @@ public class ProductCreationParam {
     private String unit;
     @Column(nullable = false)
     private Long categoryId;
-    @Column(nullable = false)
-    private String productAvatarId;}
+
+    private MultipartFile avatar;}

@@ -79,7 +79,12 @@ public class UserServiceImpl implements IUserService {
     public UserResult signup(UserCreationParam creationParam) {
         validateByUsername(creationParam.getUsername());
         validateByEmail(creationParam.getEmail());
+<<<<<<< HEAD
         User entity = userMapper.toEntity(creationParam);
+=======
+//        User entity = userMapper.toEntity(creationParam);
+        User entity = modelMapper.map(creationParam, User.class);
+>>>>>>> dat-dev
         entity.setRoleId(RoleCode.CUSTOMER);
         String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
         entity.setPassword(passwordEncode);
