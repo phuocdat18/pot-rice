@@ -19,4 +19,17 @@ public class LocationRegionParam {
     private String wardId;
     private String wardName;
     private String address;
+
+    public LocationRegion toLocationRegion(Long id) {
+        return new LocationRegion()
+                .setId(id)
+                .setProvinceId(provinceId)
+                .setProvinceName(provinceName)
+                .setDistrictId(districtId)
+                .setDistrictName(districtName)
+                .setWardId(wardId)
+                .setWardName(wardName)
+                .setAddress(address)
+                ;
+    }
 }

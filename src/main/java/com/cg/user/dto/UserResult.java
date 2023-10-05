@@ -1,5 +1,6 @@
 package com.cg.user.dto;
 
+import com.cg.model.RoleCode;
 import com.cg.model.User;
 import com.cg.role.dto.RoleResult;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,5 +41,5 @@ public class UserResult {
     private boolean deleted;
 
     private RoleResult roleResult;
-    private Long roleId;
+    private RoleCode roleId;
 }

@@ -44,4 +44,17 @@ public class OrderItem extends BaseEntity {
     @Column(name = "order_id", insertable = false, updatable = false)
     private int orderId;
 
+    public OrderItem(Product product, String title, String unit, BigDecimal price, Long quantity, BigDecimal amount, Order order) {
+        this.product = product;
+        this.title = title;
+        this.unit = unit;
+        this.price = price;
+        this.quantity = quantity;
+        this.amount = amount;
+        this.order = order;
+    }
+
+    public OrderItem() {
+
+    }
 }

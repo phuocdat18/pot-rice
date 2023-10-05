@@ -8,6 +8,7 @@ import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import vn.rananu.shared.exceptions.NotFoundException;
 import vn.rananu.shared.exceptions.ValidationException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,13 +26,24 @@ public class UserServiceImpl implements IUserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
+
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<UserResult> findAll() {
+//        List<User> entities = userRepository.findAll();
+//        return userMapper.toDTOList(entities);
+//    }
 
     @Override
     @Transactional(readOnly = true)
     public List<UserResult> findAll() {
         List<User> entities = userRepository.findAll();
-        return userMapper.toDTOList(entities);
+        return entities.stream()
+                .map(user -> modelMapper.map(user, UserResult.class))
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public User findById(Long id) {

@@ -1,6 +1,7 @@
 package com.cg.user;
 
 import com.cg.model.User;
+import com.cg.role.RoleMapper;
 import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;

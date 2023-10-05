@@ -1,4 +1,4 @@
-package com.cg.dtotest;
+package com.cg;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -11,7 +11,7 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT);
+                .setMatchingStrategy(MatchingStrategies.STANDARD);
         return modelMapper;
     }
 }

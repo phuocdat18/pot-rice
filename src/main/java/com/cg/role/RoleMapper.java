@@ -11,6 +11,15 @@ import java.util.stream.Collectors;
 
 @Component
 public class RoleMapper {
+
+    private static RoleMapper INSTANCE;
+
+    public static RoleMapper getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new RoleMapper();
+        }
+        return INSTANCE;
+    }
     public Role toEntity(RoleCreationParam creationParam) {
         return new Role()
                 .setId(creationParam.getId())

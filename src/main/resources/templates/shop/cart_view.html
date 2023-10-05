@@ -482,7 +482,6 @@
                 <tr id="tr_${obj.id}">
                     <td>
                         <span class="product-id">${obj.id}</span>
-                        <span class="productId" hidden="true">${obj.productId}</span>
                     </td>
                      <td class="col-2">
                         <img src="${imageUrl}" alt="menu" class="img-fluid w-100">
@@ -646,92 +645,11 @@
         })
     }
 
-    // page.commands.changeQuantity = () => {
-    //     $('.changeQuantity').on('click', function () {
-    //         let cartDetailId = $(this).data('id');
-    //         let quantity = $(this).find('.quantity-input').val()
-    //         if(Number(quantity) <= 0) {
-    //             Swal.fire({
-    //                 title: 'Are you sure?',
-    //                 text: "You won't be able to revert this!",
-    //                 icon: 'warning',
-    //                 showCancelButton: true,
-    //                 confirmButtonColor: '#3085D6',
-    //                 cancelButtonColor: '#d33',
-    //                 confirmButtonText: 'Yes, delete it!'
-    //             }).then((result) => {
-    //                 if (result.isConfirmed) {
-    //                     page.dialogs.commands.doDelete(cartDetailId);
-    //                 }else {
-    //                     $('.quantity-input').val('1')
-    //                 }
-    //             })
-    //         }
-    //         else {
-    //             let cartItem = {
-    //                 quantity: quantity
-    //             }
-    //             $.ajax({
-    //                 type: "PATCH",
-    //                 headers: {
-    //                     'Accept': 'application/json',
-    //                     'Content-Type': 'application/json'
-    //                 },
-    //                 // url: page.urls.getChangeQuantity + '/' + cartDetailId,
-    //                 url: page.urls.getAllCartItem + '/' + cartIdCookie,
-    //                 data: JSON.stringify(cartItem)
-    //             })
-    //                 .done((data) => {
-    //                     page.dialogs.elements.tbCart.empty();
-    //                     let vat = 0;
-    //                     let subTotalAmount = 0;
-    //                     let totalAmount = 0;
-    //                     let count = 0;
-    //                     $.each(data, (index, item) => {
-    //                         const str = page.commands.renderCart(item);
-    //                         subTotalAmount = subTotalAmount + item.amount;
-    //                         page.dialogs.elements.tbCart.prepend(str)
-    //                         count = count + item.quantity
-    //                     })
-    //                     vat = (subTotalAmount * 10) / 100;
-    //                     totalAmount = subTotalAmount + vat;
-    //                     page.elements.countCart.text(count)
-    //                     page.dialogs.elements.totalAmount.text(totalAmount.toLocaleString('vi', {
-    //                         style: 'currency',
-    //                         currency: 'VND'
-    //                     }));
-    //                     page.dialogs.elements.subTotalAmount.text(subTotalAmount.toLocaleString('vi', {
-    //                         style: 'currency',
-    //                         currency: 'VND'
-    //                     }));
-    //                     page.dialogs.elements.vat.text(vat.toLocaleString('vi', {
-    //                         style: 'currency',
-    //                         currency: 'VND'
-    //                     }));
-    //                     page.commands.deleteProduct();
-    //                     page.commands.changeQuantity();
-    //                 })
-    //                 .fail((err) => {
-    //                     console.log(err)
-    //                     AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
-    //                 })
-    //         }
-    //     })
-    // }
-
     page.commands.changeQuantity = () => {
-
         $('.changeQuantity').on('click', function () {
             let cartDetailId = $(this).data('id');
-            let productId = $(this).closest('tr').find('.productId').text();
-            let quantity = $(this).find('.quantity-input').val();
-            let currentQuantity = 1;
-            if ($(this).hasClass('increase')) {
-                currentQuantity = 1;
-            } else if ($(this).hasClass('decrease')) {
-                currentQuantity = -1;
-            }
-            if (Number(quantity) <= 0) {
+            let quantity = $(this).find('.quantity-input').val()
+            if(Number(quantity) <= 0) {
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -747,37 +665,58 @@
                         $('.quantity-input').val('1')
                     }
                 })
-            } else {
-                let cartItem = {
-                    productId: productId,
-                    quantity: currentQuantity,
-                    userId: userId,
-                };
-
+            }
+            else {
+                let cartDetail = {
+                    quantity: quantity
+                }
                 $.ajax({
-                    type: "POST",
+                    type: "PATCH",
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    url: page.urls.getAddToCart + '/' + cartIdCookie,
-                    data: JSON.stringify(cartItem)
+                    url: page.urls.getChangeQuantity + '/' + cartDetailId,
+                    data: JSON.stringify(cartDetail)
                 })
                     .done((data) => {
-                        page.dialogs.elements.tbCart.empty();
                         let vat = 0;
                         let subTotalAmount = 0;
                         let totalAmount = 0;
                         let count = 0;
+                        const existingProducts = {};
+                        page.dialogs.elements.tbCart.find('.cart-item').each(function() {
+                            const productId = $(this).data('product-id');
+                            existingProducts[productId] = $(this).clone();
+                            subTotalAmount += parseFloat($(this).data('amount'));
+                            count += parseInt($(this).data('quantity'));
+                        });
                         $.each(data, (index, item) => {
-                            const str = page.commands.renderCart(item);
-                            subTotalAmount = subTotalAmount + item.amount;
-                            page.dialogs.elements.tbCart.prepend(str)
-                            count = count + item.quantity
-                        })
+                            const productId = item.productId;
+                            const existingProduct = existingProducts[productId];
+
+                            if (existingProduct) {
+                                existingProduct.data('quantity', item.quantity);
+                                existingProduct.data('amount', item.amount);
+                                existingProduct.find('.quantity').text(item.quantity);
+                                existingProduct.find('.amount').text(item.amount.toLocaleString('vi', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }));
+                                existingProduct.remove();
+                                page.dialogs.elements.tbCart.prepend(existingProduct);
+                            } else {
+                                const str = page.commands.renderCart(item);
+                                subTotalAmount += item.amount;
+                                page.dialogs.elements.tbCart.prepend(str);
+                                count += item.quantity;
+                            }
+                        });
+
                         vat = (subTotalAmount * 10) / 100;
                         totalAmount = subTotalAmount + vat;
-                        page.elements.countCart.text(count)
+
+                        page.elements.countCart.text(count);
                         page.dialogs.elements.totalAmount.text(totalAmount.toLocaleString('vi', {
                             style: 'currency',
                             currency: 'VND'
@@ -790,18 +729,13 @@
                             style: 'currency',
                             currency: 'VND'
                         }));
+
                         page.commands.deleteProduct();
                         page.commands.changeQuantity();
-
-                        page.commands.getAllCartDetail();
                     })
-                    .fail((err) => {
-                        console.log(err);
-                        AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
-                    });
             }
-        });
-    };
+        })
+    }
 
     page.commands.getAllBillsDone = () => {
         $.ajax({
@@ -879,7 +813,7 @@
                 'Content-Type': 'application/json'
             },
             type: 'POST',
-            url: page.urls.getPayment,
+            url: page.urls.getPayment+ '/' + cartIdCookie,
             data: JSON.stringify(order)
         })
             .done((data) => {
@@ -1091,21 +1025,18 @@
     })
 
 
-    // Hàm định dạng giá tiền thành 1.000.000 đ
+
     function formatPrice(price) {
-        // Sử dụng hàm toLocaleString() để format số thành chuỗi có dấu chấm phân cách hàng nghìn
         return parseFloat(price).toLocaleString() + " đ";
     }
 
-    // Lấy giá trị từ input
     var inputElement = document.querySelector(".current_price");
     var inputValue = inputElement.value;
 
-    // Lấy đối tượng span
     var spanElement = document.querySelector(".current_price-format");
 
-    // Gán giá trị đã format vào span
     spanElement.innerText = formatPrice(inputValue);
+
 
 
 </script>

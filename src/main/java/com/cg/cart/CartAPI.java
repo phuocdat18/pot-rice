@@ -4,6 +4,7 @@ import com.cg.cart.cartDetail.ICartDetailService;
 import com.cg.cart.cartDetail.dto.CartItemParam;
 import com.cg.cart.dto.CartResult;
 import com.cg.model.CartItem;
+import com.cg.order.dto.OrderCreationParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -44,37 +45,12 @@ public class CartAPI {
         return cartDetailService.findById(cartItemId);
     }
 
-//    @PostMapping("/payment")
-//    public ResponseEntity<?> payment(@Valid @RequestBody OrderCreationParam orderCreationParam, @AuthenticationPrincipal UserPrincipal principal) {
-//        Long principalId = principal.getId();
-//        Optional<Cart> cartOptional = cartService.findByUserId(principalId);
-//
-//
-//        Cart cart = cartOptional.orElseThrow(() -> new DataInputException("Cart invalid"));
-//
-//
-//        List<CartDetail> cartDetails = cartDetailService.findCartDetailsByCartId(cart.getId());
-//
-//        if (cartDetails.isEmpty()) {
-//            throw new DataInputException("CartDetail invalid");
-//        }
-//        for (CartDetail cartDetail : cartDetails) {
-//            Optional<Product> productOptional = Optional.ofNullable(productService.findById(cartDetail.getProduct().getId()));
-//            Product product = productOptional.get();
-//            if (product.getQuantity() < cartDetail.getQuantity()) {
-//                throw new DataInputException("Số lượng sản phẩm " + cartDetail.getId() + " không đủ!");
-//            }
-//            Long quantityNew = product.getQuantity() - cartDetail.getQuantity();
-//            product.setQuantity(quantityNew);
-//            productService.save(product);
-//        }
-//        BigDecimal vat = cartOptional.get().getTotalAmount().multiply(BigDecimal.valueOf(0.1));
-//        BigDecimal totalBill = cartOptional.get().getTotalAmount().add(vat).add(BigDecimal.valueOf(15000));
-//
-//        cartService.delete(cartOptional.get());
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PostMapping("/payment/{cartId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CartResult payment(@RequestBody CartItemParam cartItemParam, OrderCreationParam orderCreationParam, @PathVariable Long cartId) {
+        cartService.payment(cartId, cartItemParam, orderCreationParam, cartItemParam.getUserId());
+        return cartService.getById(cartId);
+    }
 
 
 //    @PatchMapping("/order/{id}")
@@ -124,37 +100,4 @@ public class CartAPI {
 //        }
 //    }
 
-//    @PatchMapping("/change-quantity/{id}")
-//    public ResponseEntity<List<?>> changeQuantity(@PathVariable String id, @RequestBody CartDetailChangeReqDTO cartDetailChangeReqDTO) throws IOException {
-//        String username = appUtils.getPrincipalUsername();
-//
-//        List<User> userOptional = userService.findUserByUsername(username);
-//        if (!validateUtils.isNumberValid(id)) {
-//            throw new DataInputException("Cart detail không hợp lệ");
-//        }
-//        Long cartDetailId = Long.parseLong(id);
-//
-//        Optional<CartDetail> cartDetailOptional = cartDetailService.findById(cartDetailId);
-//
-//        CartDetail cartDetail = cartDetailOptional.get();
-//        BigDecimal newAmout = cartDetail.getPrice().multiply(BigDecimal.valueOf(cartDetailChangeReqDTO.getQuantity()));
-//
-//        cartDetail.setQuantity(cartDetailChangeReqDTO.getQuantity());
-//        cartDetail.setAmount(newAmout);
-//
-//        cartDetailService.create(cartDetail);
-//
-//        try {
-//            List<CartDetailResult> cartDetailResults = cartDetailService.findAllCartDetailDTO(userOptional.get().getId());
-//
-//            if (cartDetailResults.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//
-//            return new ResponseEntity<>(cartDetailResults, HttpStatus.OK);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
 }

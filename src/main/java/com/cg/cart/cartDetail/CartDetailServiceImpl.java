@@ -57,26 +57,10 @@ public class CartDetailServiceImpl implements ICartDetailService {
 
         if (optionalCartItem.isPresent()) {
             CartItem cartItem = optionalCartItem.get();
-            Long productId = cartItemParam.getProductId();
             Long quantity = cartItemParam.getQuantity();
 
-            Product product = productService.findById(productId);
-
-            if (cartItem.getProductId().equals(productId)) {
-                cartItem.setQuantity(quantity);
-                cartItemRepository.save(cartItem);
-            } else {
-                CartItem newCartItem = new CartItem();
-                newCartItem.setCartId(cartItem.getCartId())
-                        .setCart(cartItem.getCart())
-                        .setTitle(product.getTitle())
-                        .setUnit(product.getUnit())
-                        .setProduct(product)
-                        .setProductId(productId)
-                        .setQuantity(quantity)
-                        .setPrice(product.getPrice());
-                cartItemRepository.save(newCartItem);
-            }
+            cartItem.setQuantity(quantity);
+            cartItemRepository.save(cartItem);
         }
     }
 }

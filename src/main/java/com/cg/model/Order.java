@@ -42,9 +42,9 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    public Order(BigDecimal totalAmount, User user, LocationRegion locationRegion, OrderStatus status) {
+    public Order(BigDecimal totalAmount, Long userId, LocationRegion locationRegion, OrderStatus status) {
         this.totalAmount = totalAmount;
-        this.user = user;
+        this.userId = userId;
         this.locationRegion = locationRegion;
         this.status = status;
     }

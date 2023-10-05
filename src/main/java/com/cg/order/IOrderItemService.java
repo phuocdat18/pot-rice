@@ -6,5 +6,5 @@ import com.cg.service.IGeneralService;
 
 public interface IOrderItemService extends IGeneralService<OrderItem, Long> {
 
-    OrderItem addBillDetail(OrderItem orderItem, CartItem cartItem);
+    void addOrderItem(OrderItem orderItem, CartItem cartItem);
 }
