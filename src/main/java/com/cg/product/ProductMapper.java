@@ -5,52 +5,32 @@ import com.cg.model.Product;
 import com.cg.product.dto.ProductCreationParam;
 import com.cg.product.dto.ProductResult;
 import com.cg.product.dto.ProductUpdateParam;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class ProductMapper {
+    private final ModelMapper modelMapper;
     public Product toEntity(ProductCreationParam creationParam){
-        return new Product()
-                .setTitle(creationParam.getTitle())
-                .setPrice(creationParam.getPrice())
-                .setUnit(creationParam.getUnit())
-                .setDescription(creationParam.getDescription())
-                .setQuantity(creationParam.getQuantity())
-                .setCategoryId(creationParam.getCategoryId())
-                .setProductAvatarId(creationParam.getProductAvatarId());
+        return modelMapper.map(creationParam, Product.class);
 
     }
 
     public void transferFields(Product entity, ProductUpdateParam updateParam){
-        entity.setTitle(updateParam.getTitle());
-        entity.setPrice(updateParam.getPrice());
-        entity.setUnit(updateParam.getUnit());
-        entity.setDescription(updateParam.getDescription());
-        entity.setQuantity(updateParam.getQuantity());
-        entity.setCategoryId(updateParam.getCategoryId());
-        entity.setProductAvatarId(updateParam.getProductAvatarId());
+        modelMapper.map(entity,updateParam);
     }
 
     public ProductResult toDTO(Product entity){
-        return new ProductResult()
-                .setId(entity.getId())
-                .setTitle(entity.getTitle())
-                .setPrice(entity.getPrice())
-                .setUnit(entity.getUnit())
-                .setDescription(entity.getDescription())
-                .setQuantity(entity.getQuantity())
-                .setCategory(entity.getCategory())
-                .setAvatar(entity.getAvatar())
-                ;
+        return modelMapper.map(entity,ProductResult.class);
     }
 
     public List<ProductResult> toDTOList(List<Product> entities){
-        return entities.stream().map(this::toDTO).collect(Collectors.toList());
+        return entities.stream().map(entity->modelMapper.map(entity, ProductResult.class)).collect(Collectors.toList());
     }
-
-
     
 }

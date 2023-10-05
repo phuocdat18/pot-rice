@@ -16,9 +16,6 @@ import java.util.stream.Collectors;
 public class RoleMapper {
     private final ModelMapper modelMapper;
     public Role toEntity(RoleCreationParam creationParam) {
-//        return new Role()
-//                .setId(creationParam.getId())
-//                .setName(creationParam.getName());
         return modelMapper.map(creationParam,Role.class);
     }
 
@@ -27,18 +24,14 @@ public class RoleMapper {
     }
 
     public void transferFields(Role entity, RoleUpdateParam dto) {
-        entity.setName(dto.getName());
+        modelMapper.map(entity,dto);
     }
 
     public RoleResult toDTO(Role entity) {
-//        return new RoleResult()
-//                .setId(entity.getId())
-//                .setName(entity.getName());
         return modelMapper.map(entity, RoleResult.class);
     }
 
     public List<RoleResult> toDTOList(List<Role> entities) {
-//        return entities.stream().map(this::toDTO).collect(Collectors.toList());
         return entities.stream().map(entity->modelMapper.map(entity, RoleResult.class)).collect(Collectors.toList());
     }
 

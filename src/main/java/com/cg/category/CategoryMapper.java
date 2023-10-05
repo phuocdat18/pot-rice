@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class CategoryMapper {
 
     public Category toEntity(CategoryCreationParam param){
+
         return new Category().setTitle(param.getTitle());
     }
 

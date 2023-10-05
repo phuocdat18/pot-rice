@@ -3,13 +3,10 @@ package com.cg.user;
 import com.cg.model.RoleCode;
 import com.cg.model.User;
 import com.cg.model.UserPrincipal;
-import com.cg.role.RoleRepository;
 import com.cg.user.dto.UserCreationParam;
 import com.cg.user.dto.UserResult;
 import com.cg.user.dto.UserUpdateParam;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +15,6 @@ import vn.rananu.shared.exceptions.NotFoundException;
 import vn.rananu.shared.exceptions.ValidationException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +22,6 @@ public class UserServiceImpl implements IUserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ModelMapper modelMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -43,8 +38,8 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public UserResult getById(Long id) {
-        User user = findById(id);
-        return modelMapper.map(user, UserResult.class);
+        User entity = findById(id);
+        return userMapper.toDTO(entity);
     }
 
     @Override
@@ -52,7 +47,7 @@ public class UserServiceImpl implements IUserService {
     public UserResult findByUsername(String username) {
         User entity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("username invalid"));
-        return modelMapper.map(entity, UserResult.class);
+        return userMapper.toDTO(entity);
     }
 
     @Override
@@ -75,8 +70,8 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public UserResult update(Long id, UserUpdateParam param) {
         User entity = findById(id);
-        userMapper.transferFields(entity, param);
-        return modelMapper.map(entity, UserResult.class);
+        userMapper.transferFields(param, entity);
+        return userMapper.toDTO(entity);
     }
 
     @Override
@@ -84,14 +79,12 @@ public class UserServiceImpl implements IUserService {
     public UserResult signup(UserCreationParam creationParam) {
         validateByUsername(creationParam.getUsername());
         validateByEmail(creationParam.getEmail());
-
-//        User entity = userMapper.toEntity(creationParam);
-        User entity = modelMapper.map(creationParam, User.class);
+        User entity = userMapper.toEntity(creationParam);
         entity.setRoleId(RoleCode.CUSTOMER);
         String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
         entity.setPassword(passwordEncode);
         entity = userRepository.save(entity);
-        return modelMapper.map(entity, UserResult.class);
+        return userMapper.toDTO(entity);
     }
 
     @Override

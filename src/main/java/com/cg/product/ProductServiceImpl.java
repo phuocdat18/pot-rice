@@ -51,7 +51,6 @@ public class ProductServiceImpl implements IProductService {
     @Transactional(readOnly = true)
     public Page<ProductResult> findAllByFilter(ProductFilter filter, Pageable pageable) {
         Page<Product> entities = filterRepository.findAllByFilter(filter, pageable);
-
         return entities.map(product -> modelMapper.map(product, ProductResult.class));
     }
 
