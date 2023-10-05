@@ -38,7 +38,7 @@ public class Product extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "product_avatar_id", nullable = false)
-    private ProductAvatar productAvatar;
+    private ProductAvatar avatar;
     @Column(name = "product_avatar_id", insertable = false, updatable = false)
     private String productAvatarId;
 
@@ -48,7 +48,7 @@ public class Product extends BaseEntity {
     }
 
     public Product setProductAvatarId(String productAvatarId) {
-        productAvatar = new ProductAvatar(this.productAvatarId = productAvatarId);
+        avatar = new ProductAvatar(this.productAvatarId = productAvatarId);
         return this;
     }
 

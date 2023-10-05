@@ -43,9 +43,8 @@ public class ProductMapper {
                 .setDescription(entity.getDescription())
                 .setQuantity(entity.getQuantity())
                 .setCategory(entity.getCategory())
-                .setAvatar(entity.getProductAvatar())
+                .setAvatar(entity.getAvatar())
                 ;
-
     }
 
     public List<ProductResult> toDTOList(List<Product> entities){

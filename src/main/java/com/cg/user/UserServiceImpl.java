@@ -35,30 +35,10 @@ public class UserServiceImpl implements IUserService {
         return userMapper.toDTOList(entities);
     }
 
-<<<<<<< HEAD
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<UserResult> findAll() {
-//        List<User> entities = userRepository.findAll();
-//        return entities.stream()
-//                .map(user -> modelMapper.map(user, UserResult.class))
-//                .collect(Collectors.toList());
-//    }
-
-
-=======
->>>>>>> dat-dev
     @Override
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found"));
     }
-
-//    @Override
-//    @Transactional(readOnly = true)
-//    public UserResult getById(Long id) {
-//        User entity = findById(id);
-//        return userMapper.toDTO(entity);
-//    }
 
     @Override
     @Transactional(readOnly = true)
