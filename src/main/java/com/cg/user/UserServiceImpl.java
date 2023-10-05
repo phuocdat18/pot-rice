@@ -35,6 +35,7 @@ public class UserServiceImpl implements IUserService {
         return userMapper.toDTOList(entities);
     }
 
+<<<<<<< HEAD
 //    @Override
 //    @Transactional(readOnly = true)
 //    public List<UserResult> findAll() {
@@ -45,16 +46,25 @@ public class UserServiceImpl implements IUserService {
 //    }
 
 
+=======
+>>>>>>> dat-dev
     @Override
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found"));
     }
 
+//    @Override
+//    @Transactional(readOnly = true)
+//    public UserResult getById(Long id) {
+//        User entity = findById(id);
+//        return userMapper.toDTO(entity);
+//    }
+
     @Override
     @Transactional(readOnly = true)
     public UserResult getById(Long id) {
-        User entity = findById(id);
-        return userMapper.toDTO(entity);
+        User user = findById(id);
+        return modelMapper.map(user, UserResult.class);
     }
 
     @Override
@@ -62,7 +72,7 @@ public class UserServiceImpl implements IUserService {
     public UserResult findByUsername(String username) {
         User entity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("username invalid"));
-        return userMapper.toDTO(entity);
+        return modelMapper.map(entity, UserResult.class);
     }
 
     @Override
@@ -86,7 +96,7 @@ public class UserServiceImpl implements IUserService {
     public UserResult update(Long id, UserUpdateParam param) {
         User entity = findById(id);
         userMapper.transferFields(entity, param);
-        return userMapper.toDTO(entity);
+        return modelMapper.map(entity, UserResult.class);
     }
 
     @Override
@@ -95,12 +105,13 @@ public class UserServiceImpl implements IUserService {
         validateByUsername(creationParam.getUsername());
         validateByEmail(creationParam.getEmail());
 
-        User entity = userMapper.toEntity(creationParam);
+//        User entity = userMapper.toEntity(creationParam);
+        User entity = modelMapper.map(creationParam, User.class);
         entity.setRoleId(RoleCode.CUSTOMER);
         String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
         entity.setPassword(passwordEncode);
         entity = userRepository.save(entity);
-        return userMapper.toDTO(entity);
+        return modelMapper.map(entity, UserResult.class);
     }
 
     @Override

@@ -41,56 +41,9 @@ public class UserAPI {
         return userService.update(id, param);
     }
 
-//    @PatchMapping("/update/{id}")
-//
-//    public ResponseEntity<?> updateUser(@PathVariable String id, @ModelAttribute UserUpdateParam userUpdateParam, BindingResult bindingResult) {
-//
-//        new UserUpdateParam();
-//
-//        if (bindingResult.hasErrors())
-//            return appUtils.mapErrorToResponse(bindingResult);
-//
-//        if (!validateUtils.isNumberValid(id)) {
-//            throw new DataInputException("Mã sản phẩm không hợp lệ");
-//        }
-//
-//        Long userId = Long.parseLong(id);
-//
-//        Optional<User> userOptional = Optional.ofNullable(userService.findById(userId));
-//
-//        if (userOptional.isPresent()) {
-//            User user = userService.update(userOptional.get(), userUpdateParam);
-//            UserUpdateParam userUpdateParam1 = user.toUserUpdateResDTO();
-//
-//            return new ResponseEntity<>(userUpdateParam1, HttpStatus.OK);
-//        } else {
-//            throw new DataInputException("Thông tin người dùng không hợp lệ");
-//        }
-//    }
-
-
-
-//    @GetMapping("/{id}")
-//    public ResponseEntity<?> findUserById(@PathVariable String id) {
-//        if (!validateUtils.isNumberValid(id)) {
-//            throw new DataInputException("ID không hợp lệ");
-//        }
-//        Long userId = Long.parseLong(id);
-//
-//        try {
-//            Optional<User> user = userService.findById(userId);
-//
-//            if (user.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//
-//            return new ResponseEntity<>(user.get().toUserDTO(), HttpStatus.OK);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
-
-
+    @GetMapping("/username/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserResult findByUsername(@PathVariable String username) {
+        return userService.findByUsername(username);
+    }
 }
