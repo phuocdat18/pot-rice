@@ -70,7 +70,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public UserResult update(Long id, UserUpdateParam param) {
         User entity = findById(id);
-        userMapper.transferFields(param, entity);
+        userMapper.transferFields(param, entity,true);
         return userMapper.toDTO(entity);
     }
 
