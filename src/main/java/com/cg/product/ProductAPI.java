@@ -1,6 +1,5 @@
 package com.cg.product;
 
-import com.cg.model.Category;
 import com.cg.product.dto.ProductCreationParam;
 import com.cg.product.dto.ProductFilter;
 import com.cg.product.dto.ProductResult;
@@ -44,7 +43,6 @@ public class ProductAPI {
                 .setMaxPrice(maxPrice);
 
         return productService.findAllByFilter(filter, PageRequest.of(page - 1, pageSize));
-
     }
 
     @GetMapping("/{id}")
@@ -53,13 +51,13 @@ public class ProductAPI {
         return productService.getById(id);
     }
 
-    @PostMapping("create")
-    public ProductResult create(@RequestBody ProductCreationParam creationParam) {
+    @PostMapping
+    public ProductResult create(@ModelAttribute ProductCreationParam creationParam) {
         return productService.create(creationParam);
     }
 
     @PatchMapping("/{id}")
-    public ProductResult update(@PathVariable Long id, @RequestBody ProductUpdateParam param) {
+    public ProductResult update(@PathVariable Long id, @ModelAttribute ProductUpdateParam param) {
         return productService.update(id, param);
     }
 

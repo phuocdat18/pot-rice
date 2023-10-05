@@ -9,9 +9,9 @@ import com.cg.order.dto.OrderCreationParam;
 import com.cg.order.dto.OrderResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import vn.rananu.shared.exceptions.NotFoundException;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -39,7 +39,6 @@ public class OrderServiceImpl implements IOrderService {
     public OrderResult getById(Long id) {
         Order entity = findById(id);
         return orderMapper.toDTO(entity);
-
     }
 
     @Override
@@ -48,7 +47,6 @@ public class OrderServiceImpl implements IOrderService {
         List<Order> entities = orderRepository.findAllByStatus(orderStatus);
         return orderMapper.toDTOList(entities);
     }
-
 
     @Override
     public List<OrderResult> findAllByUserId(Long userId) {

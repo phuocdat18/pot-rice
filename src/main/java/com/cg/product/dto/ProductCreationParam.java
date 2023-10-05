@@ -1,6 +1,8 @@
 package com.cg.product.dto;
 
 import com.cg.avatar.dto.ProductAvatarResDTO;
+import com.cg.model.Category;
+import com.cg.model.Product;
 import com.cg.model.ProductAvatar;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,19 +16,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class ProductCreationParam {
-    @Column(nullable = false)
-    private String title;
-    @Column(nullable = false)
-    private BigDecimal price;
-    @Column(nullable = false)
-    @Size(min = 1, message = "")
-    private Long quantity;
-    @Column(nullable = false)
-    private String description;
-    @Column(nullable = false)
-    private String unit;
-    @Column(nullable = false)
-    private Long categoryId;
+public class ProductCreationParam extends BaseProduct {
 
-    private MultipartFile avatar;}
+}
+
+

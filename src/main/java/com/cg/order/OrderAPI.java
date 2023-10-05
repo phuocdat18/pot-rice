@@ -1,6 +1,8 @@
 package com.cg.order;
 
 
+import com.cg.cart.cartDetail.dto.CartItemParam;
+import com.cg.order.dto.OrderResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,6 +34,14 @@ public class OrderAPI {
         if (status != null)
             return orderService.findAllByUserIdAndStatus(userId, status);
         return orderService.findAllByUserId(userId);
+    }
+
+    @GetMapping("/status/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderResult> findAllByStatus(@PathVariable String status) {
+        if (status != null)
+            return orderService.findAllByStatus(status);
+        return orderService.findAll();
     }
 
 

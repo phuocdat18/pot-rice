@@ -33,7 +33,6 @@ public class CartAPI {
     @PostMapping("/addToCart/{cartId}")
     @ResponseStatus(HttpStatus.OK)
     public CartResult addToCart(@RequestBody CartItemParam cartItemParam, @PathVariable Long cartId) {
-//        @AuthenticationPrincipal UserPrincipal principal
         cartService.addCartItem(cartId, cartItemParam, cartItemParam.getUserId());
         return cartService.getById(cartId);
     }
