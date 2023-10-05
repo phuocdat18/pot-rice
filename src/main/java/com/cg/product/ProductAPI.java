@@ -53,7 +53,7 @@ public class ProductAPI {
         return productService.getById(id);
     }
 
-    @PostMapping
+    @PostMapping("create")
     public ProductResult create(@RequestBody ProductCreationParam creationParam) {
         return productService.create(creationParam);
     }

@@ -33,41 +33,46 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductResult getById(Long id) {
-        Product entity = findById(id);
-        return modelMapper.map(entity, ProductResult.class);
+        Product product = findById(id);
+        return modelMapper.map(product, ProductResult.class);
     }
-
-//    @Override
-//    @Transactional(readOnly = true)
-//    public Page<ProductResult> findAllByFilter(ProductFilter filter, Pageable pageable) {
-//        Page<Product> entities = filterRepository.findAllByFilter(filter, pageable);
-//
-//        return entities.stream()
-//                .map(product -> modelMapper.map(product, ProductResult.class))
-//                .collect(Collectors.toList());
-//    }
 
     @Override
     @Transactional(readOnly = true)
     public Page<ProductResult> findAllByFilter(ProductFilter filter, Pageable pageable) {
         Page<Product> entities = filterRepository.findAllByFilter(filter, pageable);
-
         return entities.map(product -> modelMapper.map(product, ProductResult.class));
     }
 
     @Override
     @Transactional
     public ProductResult create(ProductCreationParam param) {
-        Product entity = productMapper.toEntity(param);
-        entity = productRepository.save(entity);
-        return productMapper.toDTO(entity);
+//        Product product = productMapper.toEntity(param);
+        Product product = modelMapper.map(param, Product.class);
+        product = productRepository.save(product);
+        return modelMapper.map(product, ProductResult.class);
     }
+
+//    @Override
+//    @Transactional
+//    public UserResult signup(UserCreationParam creationParam) {
+//        validateByUsername(creationParam.getUsername());
+//        validateByEmail(creationParam.getEmail());
+//
+//        User entity = modelMapper.map(creationParam, User.class);
+//        entity.setRoleId(RoleCode.CUSTOMER);
+//        String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
+//        entity.setPassword(passwordEncode);
+//        entity = userRepository.save(entity);
+//
+//        return modelMapper.map(entity, UserResult.class);
+//    }
 
     @Override
     @Transactional
     public ProductResult update(Long id, ProductUpdateParam param) {
-        Product entity = findById(id);
-        productMapper.transferFields(entity, param);
-        return productMapper.toDTO(entity);
+        Product product = findById(id);
+        productMapper.transferFields(product, param);
+        return modelMapper.map(product, ProductResult.class);
     }
 }
