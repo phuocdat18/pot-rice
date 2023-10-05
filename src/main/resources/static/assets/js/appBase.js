@@ -27,7 +27,7 @@ class AppBase {
     static API_RESTORE_USER = this.API_USER + '/restore'
     static API_CATEGORY = this.API_SERVER + '/categories'
     static API_SEARCH_PRODUCT = this.API_PRODUCT
-    static API_USER_UPDATE = this.API_USER + '/update'
+    static API_USER_UPDATE = this.API_USER
 
 
     static API_CART_DETAIL = this.API_SERVER + '/carts'
@@ -39,7 +39,7 @@ class AppBase {
 
     static API_STATUS_BILL = this.API_CART_DETAIL + '/bill'
 
-    static API_BILL = this.API_SERVER + '/bills'
+    static API_BILL = this.API_SERVER + '/orders'
 
     static API_BILLORDER = this.API_SERVER + '/bills/order'
     static API_BILLLOADING = this.API_SERVER + '/bills/loading'
@@ -221,9 +221,9 @@ class Product {
 
 }
 class User {
-    constructor(id,fullname,email,phone,deleted) {
+    constructor(id,fullName,email,phone,deleted) {
         this.id = id;
-        this.fullname = fullname;
+        this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.deleted = deleted;

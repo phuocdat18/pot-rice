@@ -66,7 +66,7 @@ public class ProductServiceImpl implements IProductService {
     @Transactional
     public ProductResult update(Long id, ProductUpdateParam param) {
         Product entity = findById(id);
-        productMapper.transferFields(entity, param);
+        productMapper.transferFields(param,entity);
         return productMapper.toDTO(entity);
     }
 }

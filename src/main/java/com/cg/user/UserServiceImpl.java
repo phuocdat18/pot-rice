@@ -70,7 +70,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public UserResult update(Long id, UserUpdateParam param) {
         User entity = findById(id);
-        userMapper.transferFields(param, entity);
+        userMapper.transferFields(param, entity,true);
         return userMapper.toDTO(entity);
     }
 
@@ -79,6 +79,7 @@ public class UserServiceImpl implements IUserService {
     public UserResult signup(UserCreationParam creationParam) {
         validateByUsername(creationParam.getUsername());
         validateByEmail(creationParam.getEmail());
+
         User entity = userMapper.toEntity(creationParam);
         entity.setRoleId(RoleCode.CUSTOMER);
         String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
