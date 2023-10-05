@@ -17,7 +17,8 @@ public class RoleAPI {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RoleResult findById(@PathVariable Long id) {
+    public RoleResult findById(@PathVariable String id) {
+
         return roleService.getById(id);
     }
 
@@ -35,13 +36,8 @@ public class RoleAPI {
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RoleResult update(@PathVariable Long id, @RequestBody RoleUpdateParam param) {
+    public RoleResult update(@PathVariable String id, @RequestBody RoleUpdateParam param) {
         return roleService.update(id, param);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable Long id) {
-        roleService.deleteById(id);
-    }
 }

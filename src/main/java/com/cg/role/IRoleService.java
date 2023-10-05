@@ -9,15 +9,14 @@ import com.cg.role.dto.RoleUpdateParam;
 import java.util.List;
 
 public interface IRoleService {
-    Role findById(Long id);
+    Role findById(String id);
 
-    RoleResult getById(Long id);
+    RoleResult getById(String id);
 
     RoleResult create(RoleCreationParam param);
 
     List<RoleResult> findAll();
 
-    RoleResult update(Long id, RoleUpdateParam param);
+    RoleResult update(String id, RoleUpdateParam param);
 
-    void deleteById(Long id);
 }

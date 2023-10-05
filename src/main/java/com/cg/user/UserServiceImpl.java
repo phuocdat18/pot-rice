@@ -28,21 +28,21 @@ public class UserServiceImpl implements IUserService {
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<UserResult> findAll() {
-//        List<User> entities = userRepository.findAll();
-//        return userMapper.toDTOList(entities);
-//    }
-
     @Override
     @Transactional(readOnly = true)
     public List<UserResult> findAll() {
         List<User> entities = userRepository.findAll();
-        return entities.stream()
-                .map(user -> modelMapper.map(user, UserResult.class))
-                .collect(Collectors.toList());
+        return userMapper.toDTOList(entities);
     }
+
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<UserResult> findAll() {
+//        List<User> entities = userRepository.findAll();
+//        return entities.stream()
+//                .map(user -> modelMapper.map(user, UserResult.class))
+//                .collect(Collectors.toList());
+//    }
 
 
     @Override

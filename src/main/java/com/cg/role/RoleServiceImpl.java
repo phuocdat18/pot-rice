@@ -1,6 +1,7 @@
 package com.cg.role;
 
 import com.cg.model.Role;
+import com.cg.model.RoleCode;
 import com.cg.role.dto.RoleCreationParam;
 import com.cg.role.dto.RoleResult;
 import com.cg.role.dto.RoleUpdateParam;
@@ -22,23 +23,16 @@ public class RoleServiceImpl implements IRoleService {
     public List<RoleResult> findAll() {
         List<Role> entities = roleRepository.findAll();
         return roleMapper.toDTOList(entities);
-//        List<RoleResult> dtoList = new ArrayList<>();
-//        for (Role entity : entities) {
-//            RoleResult dto = roleMapper.toDTO(entity);
-//            dtoList.add(dto);
-//        }
-//        return dtoList;
-//        return entities.stream().map(roleMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Role findById(Long id) {
+    public Role findById(String id) {
         return roleRepository.findById(id).orElseThrow(() -> new NotFoundException("role not found"));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public RoleResult getById(Long id) {
+    public RoleResult getById(String id) {
         Role entity = findById(id);
         return roleMapper.toDTO(entity);
     }
@@ -53,15 +47,11 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     @Transactional
-    public RoleResult update(Long id, RoleUpdateParam param) {
+    public RoleResult update(String id, RoleUpdateParam param) {
         Role entity = findById(id);
         roleMapper.transferFields(entity, param);
         return roleMapper.toDTO(entity);
     }
 
-    @Override
-    public void deleteById(Long id) {
-        roleRepository.deleteById(id);
-    }
 
 }
