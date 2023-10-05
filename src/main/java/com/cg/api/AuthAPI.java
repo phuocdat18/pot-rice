@@ -44,8 +44,6 @@ public class AuthAPI {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserCreationParam creationParam) {
-
-
         UserResult dto = userService.signup(creationParam);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
