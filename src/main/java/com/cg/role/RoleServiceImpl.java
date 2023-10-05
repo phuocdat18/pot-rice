@@ -49,7 +49,7 @@ public class RoleServiceImpl implements IRoleService {
     @Transactional
     public RoleResult update(String id, RoleUpdateParam param) {
         Role entity = findById(id);
-        roleMapper.transferFields(entity, param);
+        roleMapper.transferFields(param,entity);
         return roleMapper.toDTO(entity);
     }
 

@@ -373,7 +373,7 @@
 
             })
             .fail((jqXHR) => {
-                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             });
     }
 
@@ -390,7 +390,7 @@
                 page.elements.countOrders.text(count)
             })
             .fail((jqXHR) => {
-                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             });
     };
 
@@ -423,7 +423,7 @@
                 }));
             })
             .fail((jqXHR) => {
-                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             })
     }
 
@@ -452,7 +452,7 @@
 
             })
             .fail((jqXHR) => {
-                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             })
     }
 
@@ -464,8 +464,8 @@
         return `
         <tr id="tr_${obj.id}">
             <td><span>${obj.id}</span></td>
-            <td><span>${obj.userDTO.fullName}</span></td>
-            <td><span>${obj.userDTO.username}</span></td>
+            <td><span>${obj.fullName}</span></td>
+            <td><span>${obj.username}</span></td>
             <td>
              <span>${totalAmount}</span>
             </td>
