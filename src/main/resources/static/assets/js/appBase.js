@@ -27,7 +27,7 @@ class AppBase {
     static API_RESTORE_USER = this.API_USER + '/restore'
     static API_CATEGORY = this.API_SERVER + '/categories'
     static API_SEARCH_PRODUCT = this.API_PRODUCT
-    static API_USER_UPDATE = this.API_USER + '/update'
+    static API_USER_UPDATE = this.API_USER
 
 
     static API_CART_DETAIL = this.API_SERVER + '/carts'
@@ -39,12 +39,11 @@ class AppBase {
 
     static API_STATUS_BILL = this.API_CART_DETAIL + '/bill'
 
-    static API_ORDER = this.API_SERVER + '/orders'
-    static API_ORDER_STATUS = this.API_ORDER + '/status'
+    static API_BILL = this.API_SERVER + '/orders'
 
-    static API_BILLORDER = this.API_ORDER_STATUS + '/ORDER'
-    static API_BILLLOADING = this.API_ORDER_STATUS + '/LOADING'
-    static API_BILLSHIPPING = this.API_ORDER_STATUS + '/SHIPPING'
+    static API_BILLORDER = this.API_SERVER + '/bills/order'
+    static API_BILLLOADING = this.API_SERVER + '/bills/loading'
+    static API_BILLSHIPPING = this.API_SERVER + '/bills/shipping'
 
     static API_BILL_DETAIL_BY_USER = this.API_BILL + '/bill-detail-by-user'
     static API_BILL_DETAIL_BY_BILL = this.API_BILL + '/bill-detail-by-bill'
@@ -222,9 +221,9 @@ class Product {
 
 }
 class User {
-    constructor(id,fullname,email,phone,deleted) {
+    constructor(id,fullName,email,phone,deleted) {
         this.id = id;
-        this.fullname = fullname;
+        this.fullName = fullName;
         this.email = email;
         this.phone = phone;
         this.deleted = deleted;
