@@ -49,4 +49,9 @@ public class OrderItemServiceImpl implements IOrderItemService {
         OrderItem orderItem1 = orderItemRepository.save(orderItem);
         cartItemRepository.delete(cartItem);
     }
+
+    @Override
+    public List<OrderItem> findAllByOrderId(Long orderId) {
+        return orderItemRepository.findAllByOrderId(orderId);
+    }
 }

@@ -37,14 +37,13 @@ class AppBase {
     static API_CHANGE_QUANTITY = this.API_CART_DETAIL + '/change-quantity'
     static API_CART_ITEM = this.API_CART_DETAIL + '/cartItem'
 
-    static API_STATUS_BILL = this.API_CART_DETAIL + '/bill'
-
     static API_ORDER = this.API_SERVER + '/orders'
     static API_ORDER_STATUS = this.API_ORDER + '/status'
 
     static API_BILLORDER = this.API_ORDER_STATUS + '/ORDER'
     static API_BILLLOADING = this.API_ORDER_STATUS + '/LOADING'
     static API_BILLSHIPPING = this.API_ORDER_STATUS + '/SHIPPING'
+    static API_BILLDONE = this.API_ORDER_STATUS + '/DONE'
 
     static API_BILL_DETAIL_BY_USER = this.API_BILL + '/bill-detail-by-user'
     static API_BILL_DETAIL_BY_BILL = this.API_BILL + '/bill-detail-by-bill'

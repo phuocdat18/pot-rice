@@ -2,6 +2,9 @@ package com.cg.order;
 
 
 import com.cg.cart.cartDetail.dto.CartItemParam;
+import com.cg.model.CartItem;
+import com.cg.model.OrderItem;
+import com.cg.order.dto.OrderItemResult;
 import com.cg.order.dto.OrderResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import java.util.List;
 public class OrderAPI {
 
     private final IOrderService orderService;
+    private final IOrderItemService orderItemService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -34,6 +38,12 @@ public class OrderAPI {
         if (status != null)
             return orderService.findAllByUserIdAndStatus(userId, status);
         return orderService.findAllByUserId(userId);
+    }
+
+    @GetMapping("/{orderId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderItem> findAllOrderItem(@PathVariable Long orderId) {
+        return orderItemService.findAllByOrderId(orderId);
     }
 
     @GetMapping("/status/{status}")

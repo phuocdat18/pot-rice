@@ -474,7 +474,7 @@
     }
 
     page.commands.renderCart = (obj) => {
-        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_100_h_80_Q_90 + '/' + obj.product.productAvatar.fileFolder + '/' + obj.product.productAvatar.fileName;
+        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_100_h_80_Q_90 + '/' + obj.product.avatar.fileFolder + '/' + obj.product.avatar.fileName;
         const price = obj.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
         const totalAmount = obj.price * obj.quantity
         const amount = totalAmount.toLocaleString('vi', {style: 'currency', currency: 'VND'});

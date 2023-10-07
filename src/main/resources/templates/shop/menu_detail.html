@@ -126,6 +126,26 @@
         .changqtt:hover{
             background-color: #231f40;
         }
+
+        .cart-count {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 4px;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 14px;
+        }
+
+        .btn {
+            position: relative;
+        }
     </style>
 </head>
 
@@ -485,7 +505,7 @@
         urls: {
             getAllCategories: AppBase.API_CATEGORY,
             getAllProducts: AppBase.API_PRODUCT,
-            getAllCartDetails: AppBase.API_CART_DETAIL,
+            getAllCartDetails: AppBase.API_CART_ITEM,
             getAddToCart: AppBase.API_ADD_TO_CART,
             getPayment: AppBase.API_PAYMENT,
             getDelete: AppBase.API_DELETED_CART_ITEM,
@@ -676,10 +696,28 @@
     }
 
 
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(';');
+        for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+        return "";
+    }
+
+    var cartIdCookie = getCookie("cartId");
+
     page.commands.getAllCartDetail = () => {
         $.ajax({
             type: 'GET',
-            url: page.urls.getAllCartDetails
+            url: page.urls.getAllCartDetails + '/' + cartIdCookie,
         })
             .done((data) => {
                 let totalAmount = 0;
@@ -699,23 +737,25 @@
                 page.commands.changeQuantity();
             })
             .fail((jqXHR) => {
-                // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
             })
     }
 
     page.commands.renderCart = (obj) => {
-        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_280_h_180_Q_100 + '/' + obj.productDTO.avatar.fileFolder + '/' + obj.productDTO.avatar.fileName;
+        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_100_h_80_Q_90 + '/' + obj.product.avatar.fileFolder + '/' + obj.product.avatar.fileName;
         const price = obj.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-        const amount = obj.amount.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+        const totalAmount = obj.price * obj.quantity
+        const amount = totalAmount.toLocaleString('vi', {style: 'currency', currency: 'VND'});
         return `
                 <tr id="tr_${obj.id}">
                     <td>
                         <span class="product-id">${obj.id}</span>
                     </td>
-                    <td>${obj.title}</td>
-                    <td>
-                         <img src="${imageUrl}" class="card-img-top" alt="...">
+                     <td class="col-2">
+                        <img src="${imageUrl}" alt="menu" class="img-fluid w-100">
                     </td>
+                    <td>${obj.title}</td>
+
                     <td>${obj.unit}</td>
                     <td>
                         <span class="price-obj" hidden="true">${obj.price}</span>
@@ -730,9 +770,9 @@
                         <span class="amount">${amount}</span>
                     </td>
                     <td>
-                        <a class="btn btn-outline-danger delete" data-id="${obj.id}" >
+                        <button class="btn btn-outline-danger delete" data-id="${obj.id}" >
                             <i class="far fa-trash-alt"></i>
-                        </a>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -859,24 +899,73 @@
         })
     }
 
+    // page.commands.doAddToCart = () => {
+    //     $('.btnAddCart').on('click', function () {
+    //         let productId = $(this).data('id');
+    //         let cartItem = {
+    //             productId: productId,
+    //             quantity: 1
+    //         }
+    //         $.ajax({
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             type: 'POST',
+    //             url: page.urls.getAddToCart,
+    //             data: JSON.stringify(cartItem)
+    //         })
+    //             .done((data) => {
+    //                 page.dialogs.elements.tbCart.empty();
+    //                 let totalAmount = 0;
+    //                 let count = 0;
+    //                 $.each(data, (index, item) => {
+    //                     const str = page.commands.renderCart(item);
+    //                     totalAmount = totalAmount + item.amount;
+    //                     page.dialogs.elements.tbCart.prepend(str)
+    //                     count = count + item.quantity
+    //                 })
+    //                 page.elements.countCart.text(count)
+    //                 page.dialogs.elements.totalAmount.text(totalAmount.toLocaleString('vi', {
+    //                     style: 'currency',
+    //                     currency: 'VND'
+    //                 }));
+    //                 page.commands.deleteProduct();
+    //                 page.commands.changeQuantity();
+    //             })
+    //             .fail((err) => {
+    //                 AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+    //             })
+    //     })
+    // }
+
+    var currentUrl = window.location.href;
+    var parts = currentUrl.split('/');
+    var productId = parts[parts.length - 1];
+
+
     page.commands.doAddToCart = () => {
-        $('.btnAddCart').on('click', function () {
-            let productId = $(this).data('id');
+        console.log(cartIdCookie);
+        console.log(productId);
+        $('#btn-addCart').on('click', function () {
+            let quantityInput = document.getElementById("quantityInput");
+            let quantityValue = parseInt(quantityInput.value);
+
             let cartItem = {
                 productId: productId,
-                quantity: 1
+                quantity: quantityValue
             }
-            // console.log(quantityInput)
             $.ajax({
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 type: 'POST',
-                url: page.urls.getAddToCart,
+                url: 'http://localhost:8088/api/carts/addToCart' + '/' + cartIdCookie,
                 data: JSON.stringify(cartItem)
             })
                 .done((data) => {
+                    AppBase.Notify.showSuccessAlert("Thêm sản phẩm vào giỏ hàng thành công");
                     page.dialogs.elements.tbCart.empty();
                     let totalAmount = 0;
                     let count = 0;
@@ -893,9 +982,10 @@
                     }));
                     page.commands.deleteProduct();
                     page.commands.changeQuantity();
+                    page.commands.getAllCartDetail();
                 })
                 .fail((err) => {
-                    // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                    AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
                 })
         })
     }
@@ -1269,8 +1359,6 @@
         // setTimeout(() => {
         //     $('.exzoom_img_ul:eq(1)').css('display', 'none');
         // }, 100)
-
-
     }
 
     $(() => {
@@ -1281,47 +1369,40 @@
 
     // Hàm định dạng giá tiền thành 1.000.000 đ
     function formatPrice(price) {
-        // Sử dụng hàm toLocaleString() để format số thành chuỗi có dấu chấm phân cách hàng nghìn
         return parseFloat(price).toLocaleString() + " đ";
     }
 
-    // Lấy giá trị từ input
+
     var inputElement = document.querySelector(".current_price");
     var inputValue = inputElement.value;
 
-    // Lấy đối tượng span
     var spanElement = document.querySelector(".current_price-format");
 
-    // Gán giá trị đã format vào span
     spanElement.innerText = formatPrice(inputValue);
 
     var quantityInput = document.getElementById("quantityInput");
-
-    // Kiểm tra giá trị nhập vào phải là số dương
     quantityInput.addEventListener("input", function() {
-        if (quantityInput.value < 0) {
-            // Nếu không phải số dương thì đặt giá trị mặc định là 1
+        var inputValue = quantityInput.value;
+
+        var numericValue = inputValue.replace(/[^0-9]/g, '');
+
+        if (numericValue < 1) {
             quantityInput.value = "1";
+        } else {
+            quantityInput.value = numericValue;
         }
     });
 
-
     function changeQuantity(value) {
-        // Lấy giá trị hiện tại của ô nhập liệu
         var quantityInput = document.getElementById("quantityInput");
         var currentValue = parseInt(quantityInput.value);
 
-        // Kiểm tra nếu giá trị là số hợp lệ (không phải NaN)
         if (!isNaN(currentValue)) {
-            // Tính giá trị mới
             var newValue = currentValue + value;
 
-            // Đảm bảo giá trị mới không nhỏ hơn 1
             if (newValue < 1) {
                 newValue = 1;
             }
-
-            // Cập nhật giá trị mới vào ô nhập liệu
             quantityInput.value = newValue;
         }
     }

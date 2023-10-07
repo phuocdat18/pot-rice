@@ -104,7 +104,6 @@
         }
 
         .btn {
-
             position: relative;
         }
 
@@ -426,7 +425,7 @@
         urls: {
             getAllCategories: AppBase.API_CATEGORY,
             getAllProducts: AppBase.API_PRODUCT,
-            getAllCartDetails: AppBase.API_CART_DETAIL,
+            getAllCartDetails: AppBase.API_CART_ITEM,
             getAddToCart: AppBase.API_ADD_TO_CART,
             getPayment: AppBase.API_PAYMENT,
             getDelete: AppBase.API_DELETED_CART_ITEM,
@@ -617,18 +616,20 @@
     }
 
     page.commands.renderCart = (obj) => {
-        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_280_h_180_Q_100 + '/' + obj.avatar.fileFolder + '/' + obj.avatar.fileName;
+        const imageUrl = AppBase.BASE_URL_CLOUD_IMAGE + '/' + AppBase.IMAGE_SCALE_W_100_h_80_Q_90 + '/' + obj.product.avatar.fileFolder + '/' + obj.product.avatar.fileName;
         const price = obj.price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-        const amount = obj.amount.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+        const totalAmount = obj.price * obj.quantity
+        const amount = totalAmount.toLocaleString('vi', {style: 'currency', currency: 'VND'});
         return `
                 <tr id="tr_${obj.id}">
                     <td>
                         <span class="product-id">${obj.id}</span>
                     </td>
-                    <td>${obj.title}</td>
-                    <td>
-                         <img src="${imageUrl}" class="card-img-top" alt="...">
+                     <td class="col-2">
+                        <img src="${imageUrl}" alt="menu" class="img-fluid w-100">
                     </td>
+                    <td>${obj.title}</td>
+
                     <td>${obj.unit}</td>
                     <td>
                         <span class="price-obj" hidden="true">${obj.price}</span>
@@ -643,9 +644,9 @@
                         <span class="amount">${amount}</span>
                     </td>
                     <td>
-                        <a class="btn btn-outline-danger delete" data-id="${obj.id}" >
+                        <button class="btn btn-outline-danger delete" data-id="${obj.id}" >
                             <i class="far fa-trash-alt"></i>
-                        </a>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -780,6 +781,7 @@
     }
 
     page.commands.doAddToCart = () => {
+        console.log(cartIdCookie);
         $('.btnAddCart').on('click', function () {
             let productId = $(this).data('id');
             let cartItem = {
@@ -792,10 +794,11 @@
                     'Content-Type': 'application/json'
                 },
                 type: 'POST',
-                url: page.urls.getAddToCart,
+                url: 'http://localhost:8088/api/carts/addToCart' + '/' + cartIdCookie,
                 data: JSON.stringify(cartItem)
             })
                 .done((data) => {
+                    AppBase.Notify.showSuccessAlert("Thêm sản phẩm vào giỏ hàng thành công");
                     page.dialogs.elements.tbCart.empty();
                     let totalAmount = 0;
                     let count = 0;
@@ -812,9 +815,10 @@
                     }));
                     page.commands.deleteProduct();
                     page.commands.changeQuantity();
+                    page.commands.getAllCartDetail();
                 })
                 .fail((err) => {
-                    // AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
+                    AppBase.SweetAlert.showErrorAlert(AppBase.AlertMessageVi.ERROR_404);
                 })
         })
     }

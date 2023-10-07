@@ -118,12 +118,12 @@ public class CartServiceImpl implements ICartService {
         BigDecimal vat = totalAmount.multiply(BigDecimal.valueOf(0.1));
         BigDecimal totalBill = totalAmount.add(vat).add(BigDecimal.valueOf(15000));
 
-        Order order = orderRepository.save(new Order(totalBill, userId, orderCreationParam.getLocationRegion().toLocationRegion(null) , orderCreationParam.getStatus()));
-        for (CartItem item : cartItems) {
-            BigDecimal amount = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
-            orderItemService.addOrderItem(new OrderItem(item.getProduct(), item.getTitle(), item.getUnit(), item.getPrice(), item.getQuantity(), amount, order), item);
-            totalAmount = totalAmount.add(amount);
-        }
+//        Order order = orderRepository.save(new Order(totalBill, userId, orderCreationParam.getLocationRegion().toLocationRegion(null) , orderCreationParam.getStatus()));
+//        for (CartItem item : cartItems) {
+//            BigDecimal amount = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
+//            orderItemService.addOrderItem(new OrderItem(item.getProduct(), item.getTitle(), item.getUnit(), item.getPrice(), item.getQuantity(), amount, order), item);
+//            totalAmount = totalAmount.add(amount);
+//        }
 
 //        Bill bill = billService.save(new Bill(totalBill, userOptional.get(), billReqDTO.getLocationRegionReqDTO().toLocationRegion(null) , billReqDTO.getStatus()));
 //        for (CartDetail cartDetail : cartDetails) {
