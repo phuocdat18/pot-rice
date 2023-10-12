@@ -124,7 +124,7 @@
             getChangeQuantity: AppBase.API_CHANGE_QUANTITY,
             getSearch: AppBase.API_SEARCH_PRODUCT,
             getAllBillDetails: AppBase.API_BILL_DETAIL_BY_USER,
-            getAllBills: AppBase.API_BILL,
+            getAllBills: AppBase.API_ORDER,
 
             getAllProvinces: 'https://vapi.vnappmob.com/api/province/',
             getAllDistricts: 'https://vapi.vnappmob.com/api/province/district/',
@@ -210,7 +210,7 @@
                         <span class="amount">${amount}</span>
                     </td>
                     <td>
-                        <span class="province">${obj.locationRegionDTO.provinceName},${obj.locationRegionDTO.districtName},${obj.locationRegionDTO.wardName},${obj.locationRegionDTO.address}</span>
+                        <span class="province">${obj.locationRegionReqDTO.provinceName},${obj.locationRegionReqDTO.districtName},${obj.locationRegionReqDTO.wardName},${obj.locationRegionReqDTO.address}</span>
                     </td>
 
                     <td>

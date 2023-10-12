@@ -1,5 +1,6 @@
 package com.cg.user;
 
+import com.cg.model.Address;
 import com.cg.model.RoleCode;
 import com.cg.model.User;
 import com.cg.model.UserPrincipal;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.rananu.shared.exceptions.NotFoundException;
 import vn.rananu.shared.exceptions.ValidationException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -81,6 +83,11 @@ public class UserServiceImpl implements IUserService {
         validateByEmail(creationParam.getEmail());
 
         User entity = userMapper.toEntity(creationParam);
+        Address address=new Address().setLine1("28 Nguyen Tri Phuiong").setCity("Sai Gon").setDistrict("Nha TrANG");
+        entity.setAddress(address);
+        ArrayList<String> a = new ArrayList<>() ;
+        a.add("sf");
+        entity.setExtensions(a);
         entity.setRoleId(RoleCode.CUSTOMER);
         String passwordEncode = passwordEncoder.encode(creationParam.getPassword());
         entity.setPassword(passwordEncode);

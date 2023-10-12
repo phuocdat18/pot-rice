@@ -1,5 +1,6 @@
 package com.cg.user.dto;
 
+import com.cg.model.Address;
 import com.cg.model.RoleCode;
 import com.cg.model.User;
 import com.cg.role.dto.RoleResult;
@@ -10,6 +11,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,4 +44,7 @@ public class UserResult {
 
     private RoleResult roleResult;
     private RoleCode roleId;
+
+    private Address address;
+    private List<String> extensions;
 }
